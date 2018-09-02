@@ -1,0 +1,6 @@
+*.sw[po]
+*.pyc
+*~
+/.env/
+/.gem/
+/.bin/

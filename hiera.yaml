@@ -1,0 +1,28 @@
+---
+:backends:
+  - yaml
+  - eyaml
+:yaml:
+  :datadir: hieradata
+:eyaml:
+  :datadir: hieradata
+  :encrypt_method: 'gpg'
+:hierarchy:
+  # Common credentials deployed per host
+  - "hosts/%{::fqdn}"
+  - "hosts/%{::fqdn}/pass"
+  - "hosts/%{::fqdn}/ssl"
+  - "hosts/%{::fqdn}/ssh"
+  - "hosts/%{::fqdn}/hosts"
+  - "roles/%{role}"
+  - common
+  - pam
+  - pki
+  - rsyslog
+  - mail
+  - ntp
+  - ssh/root
+  - ssh/server
+  - ssh/client
+  - ssh/known_hosts
+  - packages

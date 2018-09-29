@@ -1,0 +1,8 @@
+---
+forge:
+    baseurl: 'http://localhost:8080'
+cachedir: ~/.puppet-module-cache
+sources:
+    control:
+        remote: ssh://APKAJDPJF5U7FEJ7LACA@git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/puppet
+    basedir: modules

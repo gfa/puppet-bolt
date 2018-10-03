@@ -5,3 +5,4 @@
 /.gem/
 /.bin/
 modules
+Gemfile.lock

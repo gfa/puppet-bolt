@@ -9,11 +9,11 @@
   :encrypt_method: 'gpg'
 :hierarchy:
   # Common credentials deployed per host
-  - "hosts/%{::fqdn}"
-  - "hosts/%{::fqdn}/pass"
-  - "hosts/%{::fqdn}/ssl"
-  - "hosts/%{::fqdn}/ssh"
-  - "hosts/%{::fqdn}/hosts"
+  - "hosts/%{::hostname}"
+  - "hosts/%{::hostname}/pass"
+  - "hosts/%{::hostname}/ssl"
+  - "hosts/%{::hostname}/ssh"
+  - "hosts/%{::hostname}/hosts"
   - "roles/%{role}"
   - common
   - pam

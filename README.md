@@ -12,3 +12,4 @@ Things to do
 - create a chain FILTERS in iptables
 - make fail2ban to use chan FILTERS
 - manage firewall
+- limit ciphers sshd accepts

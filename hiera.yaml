@@ -1,28 +1,16 @@
 ---
 :backends:
   - yaml
-  - eyaml
+# - eyaml
+:merge_behavior: deeper
 :yaml:
   :datadir: hieradata
 :eyaml:
   :datadir: hieradata
   :encrypt_method: 'gpg'
 :hierarchy:
-  # Common credentials deployed per host
   - "hosts/%{::hostname}"
-  - "hosts/%{::hostname}/pass"
-  - "hosts/%{::hostname}/ssl"
-  - "hosts/%{::hostname}/ssh"
-  - "hosts/%{::hostname}/hosts"
-  - "roles/%{role}"
   - common
-  - pam
-  - pki
-  - rsyslog
   - mail
-  - ntp
-  - ssh/root
-  - ssh/server
-  - ssh/client
-  - ssh/known_hosts
   - packages
+  - mysql

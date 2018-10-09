@@ -5,12 +5,12 @@ node default {
   include apt
 }
 
-node pi {
+node 'pi' {
   include base
   include interactive
 }
 
-node instance-3 {
+node 'instance-3' {
   include base
   include site_mysql::server
 }

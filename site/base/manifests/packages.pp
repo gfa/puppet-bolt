@@ -4,7 +4,7 @@
 #
 
 class base::packages (
-  Hash[String, Hash] $packages = lookup('base::packages'),
+  Hash[String, Hash] $packages,
 ) {
 
   create_resources(package, $packages, {'ensure' => 'present'})

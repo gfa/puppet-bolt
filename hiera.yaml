@@ -9,6 +9,7 @@
   :datadir: hieradata
   :encrypt_method: 'gpg'
 :hierarchy:
+  - infrastructure
   - "hosts/%{::hostname}"
   - common
   - mail

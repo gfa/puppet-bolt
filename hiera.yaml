@@ -1,17 +1,16 @@
 ---
-:backends:
-  - yaml
-# - eyaml
-:merge_behavior: deeper
-:yaml:
-  :datadir: hieradata
-:eyaml:
-  :datadir: hieradata
-  :encrypt_method: 'gpg'
-:hierarchy:
-  - infrastructure
-  - "hosts/%{::hostname}"
-  - common
-  - mail
-  - packages
-  - mysql
+version: 5
+defaults:
+  datadir: data
+  data_hash: yaml_data
+hierarchy:
+  - name: 'Infrastructure definitions'
+    path: 'infrastructure.yaml'
+  - name: 'Per node data'
+    path: "hosts/%{::hostname}.yaml"
+  - name: 'Common definitions'
+    path: 'common.yaml'
+  - name: 'Package definitions'
+    path: 'packages.yaml'
+  - name: 'MySQL definitions'
+    path: 'mysql.yaml'

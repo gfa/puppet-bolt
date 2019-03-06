@@ -25,5 +25,6 @@ class site_firewall {
   }
 
   contain site_firewall::pre
+  contain site_firewall::common
   contain site_firewall::post
 }

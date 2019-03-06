@@ -5,14 +5,6 @@ class site_firewall::pre {
 
   Firewall { require => undef, }
 
-  if $facts['ipaddress_eth0'] {
-    firewall { '001 munin monitoring input ipv4':
-      chain       => 'INPUT',
-      proto       => 'all',
-      destination => $facts['ipaddress_eth0'],
-    }
-  }
-
   firewall { '100 Allow OUTPUT for root':
     chain  => 'OUTPUT',
     proto  => 'all',

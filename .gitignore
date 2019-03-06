@@ -6,3 +6,6 @@
 /.bin/
 modules
 Gemfile.lock
+/logs/
+/modules/
+/keys/

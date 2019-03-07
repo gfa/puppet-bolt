@@ -7,5 +7,6 @@ class base {
   include base::packages
   include base::disable_puppet
   include site_firewall
+  include site_firewall::ipset
 
 }

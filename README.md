@@ -23,6 +23,23 @@ This invocation will run profiles::nginx_install
 Docs:
 https://puppet.com/blog/introducing-masterless-puppet-bolt
 
+How to install bolt
+-------------------
+
+~~~~
+git clone `this repo`
+
+cd `this repo`
+
+mkdir .gem
+export GEM_HOME=$PWD/.gem
+export GEM_PATH=$PWD/.gem
+export PATH="$GEM_HOME/bin:$PATH"
+gem install bundler
+bundler install
+bolt puppetfile install
+~~~
+
 Things to do
 ------------
 

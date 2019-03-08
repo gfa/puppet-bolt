@@ -3,6 +3,34 @@
 
 class site_firewall::post {
 
-  Firewall { before => undef, }
+  Firewallchain <| title == 'INPUT:filter:IPv6' |> {
+    policy => 'drop',
+    before => undef,
+  }
+
+  Firewallchain <| title == 'INPUT:filter:IPv4' |> {
+    policy => 'drop',
+    before => undef,
+  }
+
+  Firewallchain <| title == 'FORWARD:filter:IPv6' |> {
+    policy => 'drop',
+    before => undef,
+  }
+
+  Firewallchain <| title == 'FORWARD:filter:IPv4' |> {
+    policy => 'drop',
+    before => undef,
+  }
+
+  Firewallchain <| title == 'OUTPUT:filter:IPv6' |> {
+    policy => 'drop',
+    before => undef,
+  }
+
+  Firewallchain <| title == 'OUTPUT:filter:IPv4' |> {
+    policy => 'drop',
+    before => undef,
+  }
 
 }

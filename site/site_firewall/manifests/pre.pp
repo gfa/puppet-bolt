@@ -15,7 +15,7 @@ class site_firewall::pre {
   firewall { '090 Allow INPUT SSH':
     chain  => 'INPUT',
     proto  => 'tcp',
-    port   => '22',
+    dport  => '22',
     state  => 'NEW',
     action => 'accept',
   }

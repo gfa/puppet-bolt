@@ -15,17 +15,24 @@ class site_firewall::ipset (
   # }
 
   file { '/etc/iptables/ipsets':
-    ensure => present,
-    mode   => '0644',
-    owner  => 'root',
-    group  => 'root',
+    ensure  => present,
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    content => template('site_firewall/ipsets.erb'),
+    notify  => Service['netfilter-persistent'],
   }
 
-  $ipsets.each |$name, $data| {
-    file_line { $name:
-      path   => '/etc/iptables/ipsets',
-      line   => "create ${name} ${data['type']} family ${data['family']} hashsize 1024 maxelem 65536",
-      notify => Service['netfilter-persistent'],
+  $ipsets.each |$name, $hash| {
+    file { "/etc/dnsmasq.d/20-${name}-ipset":
+      ensure  => present,
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'root',
+      content => template('site_firewall/dnsmasq-ipset.erb'),
+      notify  => Service['dnsmasq'],
+      require => Package['dnsmasq'],
     }
   }
+
 }

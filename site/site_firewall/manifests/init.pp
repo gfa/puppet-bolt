@@ -59,6 +59,7 @@ class site_firewall {
       '-j f2b-[\w]+',
       '-j fail2ban-[\w]+',
       '-j sshguard',
+      '-j FILTERS',
     ]
   }
 
@@ -69,6 +70,7 @@ class site_firewall {
       '-j f2b-[\w]+',
       '-j fail2ban-[\w]+',
       '-j sshguard',
+      '-j FILTERS',
     ]
   }
 

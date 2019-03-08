@@ -26,11 +26,13 @@ class site_firewall::post {
   Firewallchain <| title == 'OUTPUT:filter:IPv6' |> {
     policy => 'drop',
     before => undef,
+    require  => Package['dnsmasq'],
   }
 
   Firewallchain <| title == 'OUTPUT:filter:IPv4' |> {
-    policy => 'drop',
-    before => undef,
+    policy   => 'drop',
+    before   => undef,
+    require  => Package['dnsmasq'],
   }
 
 }

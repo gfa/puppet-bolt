@@ -1,0 +1,4 @@
+<% @ipsets.each do |name, hash| -%>
+create <%= name %>4 <%= hash['type'] %> family inet  hashsize 1024 maxelem 65536
+create <%= name %>6 <%= hash['type'] %> family inet6 hashsize 1024 maxelem 65536
+<% end -%>

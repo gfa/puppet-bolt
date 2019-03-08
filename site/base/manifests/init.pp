@@ -4,9 +4,11 @@
 class base {
 
   include apt
-  include base::packages
   include base::disable_puppet
+  include base::packages
   include site_firewall
   include site_firewall::ipset
+  include base::dnsmasq
+  include base::resolvconf
 
 }

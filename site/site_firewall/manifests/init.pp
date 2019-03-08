@@ -82,5 +82,6 @@ class site_firewall {
   class { ['site_firewall::pre', 'site_firewall::post' ]: }
 
   contain site_firewall::common
+  contain site_firewall::fail2ban
 
 }

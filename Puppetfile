@@ -11,6 +11,7 @@ mod 'alexharvey-firewall_multi', '1.12.0'
 mod 'puppetlabs-firewall', '1.15.1'
 mod 'saz-dnsmasq', '1.4.0'
 mod 'saz-resolv_conf', '4.1.0'
+mod 'LeLutin-fail2ban', '3.1.0'
 
 # Core modules used by 'apply'
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile

@@ -7,14 +7,16 @@ hierarchy:
   - name: 'Global data'
     lookup_key: eyaml_lookup_key
     paths:
+      - "hosts/%{::hostname}.yaml"
       - 'infrastructure.yaml'
       - 'base.yaml'
       - 'firewall.yaml'
       - 'common.yaml'
       - 'apt.yaml'
+      - 'unattended_upgrades.yaml'
       - 'mysql.yaml'
       - 'packages.yaml'
-      - "hosts/%{::hostname}.yaml"
+      - 'needrestart.yaml'
     options:
       # encrypt_method: gpg
       # gpg_always_trust: true

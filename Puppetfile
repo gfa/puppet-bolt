@@ -2,7 +2,7 @@ forge 'http://forge.puppetlabs.com'
 
 mod 'puppetlabs/stdlib', '4.24.0'
 mod 'thias/sysctl', '1.0.6'
-mod 'puppet-unattended_upgrades', '3.2.0'
+mod 'puppet-unattended_upgrades', '3.2.1'
 mod 'puppetlabs-apt', '6.0.0'
 mod 'puppetlabs-mysql', '6.2.0'
 mod 'puppet/archive', '3.2.1'
@@ -12,6 +12,7 @@ mod 'puppetlabs-firewall', '1.15.1'
 mod 'saz-dnsmasq', '1.4.0'
 mod 'saz-resolv_conf', '4.1.0'
 mod 'LeLutin-fail2ban', '3.1.0'
+mod 'hetzner-needrestart', '1.0.3'
 
 # Core modules used by 'apply'
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile

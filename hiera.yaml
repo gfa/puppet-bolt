@@ -17,6 +17,7 @@ hierarchy:
       - 'mysql.yaml'
       - 'packages.yaml'
       - 'needrestart.yaml'
+      - 'munin.yaml'
     options:
       # encrypt_method: gpg
       # gpg_always_trust: true

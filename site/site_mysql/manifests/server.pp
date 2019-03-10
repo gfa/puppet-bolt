@@ -18,6 +18,4 @@ class site_mysql::server (
     restart                 => $restart,
   }
 
-  include site_mysql::server::firewall
-
 }

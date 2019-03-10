@@ -12,6 +12,7 @@ class base {
   include base::resolvconf
   include base::unattended_upgrades
   include needrestart
+  include site_munin
 
   # include classes from hiera
   hiera_include('classes') | $key | {"Key '${key}' not found" }

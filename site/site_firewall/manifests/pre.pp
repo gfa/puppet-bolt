@@ -22,18 +22,18 @@ class site_firewall::pre {
     provider => [ 'iptables', 'ip6tables'],
   }
 
-  firewallchain { 'FILTER:filter:IPv4':
+  firewallchain { 'FILTERS:filter:IPv4':
     ensure  => present,
   }
 
-  firewallchain { 'FILTER:filter:IPv6':
+  firewallchain { 'FILTERS:filter:IPv6':
     ensure  => present,
   }
 
   firewall_multi { '099 fail2ban':
     chain    => 'INPUT',
     proto    => 'all',
-    jump     => 'FILTER',
+    jump     => 'FILTERS',
     provider => [ 'iptables', 'ip6tables'],
   }
 

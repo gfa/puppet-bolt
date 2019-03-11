@@ -22,5 +22,5 @@ hierarchy:
       encrypt_method: gpg
       gpg_always_trust: true
       gpg_recipients_file: "hiera-eyaml-gpg.recipients"
-      # pkcs7_private_key: 'keys/private_key.pkcs7.pem'
-      # pkcs7_public_key: 'keys/public_key.pkcs7.pem'
+      pkcs7_private_key: 'keys/private_key.pkcs7.pem'
+      pkcs7_public_key: 'keys/public_key.pkcs7.pem'

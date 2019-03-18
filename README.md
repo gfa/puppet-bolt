@@ -55,3 +55,6 @@ Things to do
 - make fail2ban to use chan FILTERS
 - manage firewall
 - limit ciphers sshd accepts
+
+
+bolt plan run base -n db.zumbi.com.ar

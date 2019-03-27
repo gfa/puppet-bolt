@@ -14,6 +14,7 @@ mod 'saz-resolv_conf', '4.1.0'
 mod 'LeLutin-fail2ban', '3.1.0'
 mod 'hetzner-needrestart', '1.0.3'
 mod 'ssm-munin', '0.2.0'
+mod 'stm-debconf', '2.3.0'
 
 # Core modules used by 'apply'
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile

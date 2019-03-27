@@ -15,6 +15,8 @@ mod 'LeLutin-fail2ban', '3.1.0'
 mod 'hetzner-needrestart', '1.0.3'
 mod 'ssm-munin', '0.2.0'
 mod 'stm-debconf', '2.3.0'
+mod 'saz-ssh', '5.0.0'
+mod 'puppetlabs-concat', '5.3.0'
 
 # Core modules used by 'apply'
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile

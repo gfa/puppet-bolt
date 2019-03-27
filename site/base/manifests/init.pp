@@ -14,6 +14,10 @@ class base {
   include needrestart
   include site_munin::node
 
+  class { 'ssh':
+    validate_sshd_file => true,
+  }
+
   # include classes from hiera
   # use a default emtpy class so the lookup()
   # never fails

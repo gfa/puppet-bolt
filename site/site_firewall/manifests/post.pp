@@ -35,4 +35,8 @@ class site_firewall::post {
     require  => Package['dnsmasq'],
   }
 
+  exec { 'start_fail2ban':
+    command => '/usr/sbin/invoke-rc.d fail2ban start',
+  }
+
 }

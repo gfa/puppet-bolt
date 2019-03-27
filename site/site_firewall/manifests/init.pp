@@ -5,18 +5,14 @@ class site_firewall {
 
   class { 'firewall': }
 
-  # do not purge other firewall rules
-  # or fail2ban breaks
   resources { 'firewall':
-    purge => false,
+    purge => true,
   }
 
   resources { 'firewallchain':
     purge => false,
   }
 
-  # but purge the default tables
-  # https://tickets.puppetlabs.com/browse/MODULES-2314
   firewallchain {
     [
       'INPUT:filter:IPv4',
@@ -47,31 +43,10 @@ class site_firewall {
       'POSTROUTING:nat:IPv6',
       'PREROUTING:raw:IPv6',
       'OUTPUT:raw:IPv6',
+      'FILTERS:filter:IPv6',
+      'FILTERS:filter:IPv4'
     ]:
-      purge => true,
-  }
-
-  # ignore fail2ban and sshguard rules
-  Firewallchain <| title == 'INPUT:filter:IPv4' |> {
-    ignore +> [
-      '-j f2b-ssh',
-      '-j fail2ban-ssh',
-      '-j f2b-[\w]+',
-      '-j fail2ban-[\w]+',
-      '-j sshguard',
-      '-j FILTERS',
-    ]
-  }
-
-  Firewallchain <| title == 'INPUT:filter:IPv6' |> {
-    ignore +> [
-      '-j f2b-ssh',
-      '-j fail2ban-ssh',
-      '-j f2b-[\w]+',
-      '-j fail2ban-[\w]+',
-      '-j sshguard',
-      '-j FILTERS',
-    ]
+      purge =>  true,
   }
 
   Firewall {

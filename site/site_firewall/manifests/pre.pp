@@ -3,6 +3,17 @@
 
 class site_firewall::pre {
 
+  # tried many things but either
+  # - fail2ban rules are saved to disk
+  # - fail2ban breaks because rules/chains are missing
+  # sadly, the most reliable thing to do is restart fail2ban
+  #
+  # fail2ban >=0.10.2 restores the banned hosts after restart :)
+
+  exec { 'stop_fail2ban':
+    command => '/usr/sbin/invoke-rc.d fail2ban stop || true',
+  }
+
   Firewall { require => undef, }
 
   # INPUT
@@ -20,14 +31,6 @@ class site_firewall::pre {
     action   => 'accept',
     iniface  => 'lo',
     provider => ['iptables', 'ip6tables'],
-  }
-
-  firewallchain { 'FILTERS:filter:IPv4':
-    ensure  => present,
-  }
-
-  firewallchain { 'FILTERS:filter:IPv6':
-    ensure  => present,
   }
 
   firewall_multi { '099 fail2ban':

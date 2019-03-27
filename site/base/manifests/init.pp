@@ -15,5 +15,11 @@ class base {
   include site_munin::node
 
   # include classes from hiera
-  hiera_include('classes') | $key | {"Key '${key}' not found" }
+  # use a default emtpy class so the lookup()
+  # never fails
+  lookup({
+      name          => 'classes',
+      merge         => 'deep',
+      default_value => 'base::empty',
+  }).include
 }

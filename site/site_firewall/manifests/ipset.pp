@@ -9,10 +9,18 @@ class site_firewall::ipset (
   Hash $ipsets,
 ) {
 
-  # w8t for buster
+  # w8t for buster backports
   # package { 'ipset-persistent':
   #   ensure => present,
   # }
+
+  file { '/etc/default/netfilter-persistent':
+    ensure  => present,
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    content => template('site_firewall/netfilter-persistent.erb'),
+  }
 
   file { '/etc/iptables/ipsets':
     ensure  => present,

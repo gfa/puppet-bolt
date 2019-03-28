@@ -17,6 +17,10 @@ mod 'ssm-munin', '0.2.0'
 mod 'stm-debconf', '2.3.0'
 mod 'saz-ssh', '5.0.0'
 mod 'puppetlabs-concat', '5.3.0'
+mod 'nullmailer',
+    git: 'https://github.com/gfa/dphilpot-nullmailer.git',
+    ref: 'v0.0.4'
+mod 'stm-gai', '1.2.0'
 
 # Core modules used by 'apply'
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile

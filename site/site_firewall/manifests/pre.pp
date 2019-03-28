@@ -117,4 +117,19 @@ class site_firewall::pre {
     action   => 'accept',
   }
 
+  firewall_multi { '102 allow output icmp':
+    chain    => 'OUTPUT',
+    proto    => 'ipv6-icmp',
+    icmp     => [135, 136],
+    action   => 'accept',
+    provider => ['ip6tables'],
+  }
+
+  firewall_multi { '999 log icmp':
+    chain    => ['INPUT', 'OUTPUT'],
+    proto    => 'ipv6-icmp',
+    jump     => 'LOG',
+    provider => ['ip6tables'],
+  }
+
 }

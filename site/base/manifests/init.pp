@@ -18,6 +18,7 @@ class base {
     validate_sshd_file => true,
   }
 
+  include site_ssl
   # include classes from hiera
   # use a default emtpy class so the lookup()
   # never fails

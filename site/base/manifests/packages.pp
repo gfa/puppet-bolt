@@ -9,4 +9,15 @@ class base::packages (
 
   create_resources(package, $base, {'ensure' => 'present'})
 
+  apt::pin { 'backports':
+    packages => [
+      'fail2ban',
+      'ipset-persistent',
+      'iptables-persistent',
+      'netfilter-persistent',
+    ],
+    priority => 990,
+    release  => "${facts['os']['distro']['codename']}-backports",
+  }
+
 }

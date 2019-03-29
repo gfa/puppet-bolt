@@ -17,7 +17,7 @@ class site_firewall::pre {
   Firewall { require => undef, }
 
   # INPUT
-  firewall_multi { '001 allow input related and established':
+  firewall_multi { '003 allow input related and established':
     chain    => 'INPUT',
     state    => ['RELATED', 'ESTABLISHED'],
     proto    => 'all',
@@ -25,7 +25,7 @@ class site_firewall::pre {
     provider => ['iptables', 'ip6tables'],
   }
 
-  firewall_multi { '002 allow input lo':
+  firewall_multi { '001 allow input lo':
     chain    => 'INPUT',
     proto    => 'all',
     action   => 'accept',
@@ -74,7 +74,7 @@ class site_firewall::pre {
     provider => ['ip6tables'],
   }
 
-  firewall_multi { '001 allow output related and established':
+  firewall_multi { '003 allow output related and established':
     chain    => 'OUTPUT',
     state    => ['RELATED', 'ESTABLISHED'],
     proto    => 'all',
@@ -82,7 +82,7 @@ class site_firewall::pre {
     provider => ['iptables', 'ip6tables'],
   }
 
-  firewall_multi { '002 allow output lo':
+  firewall_multi { '001 allow output lo':
     chain    => 'OUTPUT',
     proto    => 'all',
     action   => 'accept',
@@ -90,7 +90,7 @@ class site_firewall::pre {
     provider => ['iptables', 'ip6tables'],
   }
 
-  firewall_multi { '003 allow output for root':
+  firewall_multi { '004 allow output for root':
     chain    => 'OUTPUT',
     proto    => 'all',
     uid      => 'root',
@@ -98,7 +98,7 @@ class site_firewall::pre {
     provider => ['iptables', 'ip6tables'],
   }
 
-  firewall_multi { '004 allow output icmp echo':
+  firewall_multi { '005 allow output icmp echo':
     chain    => 'OUTPUT',
     proto    => 'icmp',
     icmp     => [0, 8],
@@ -106,7 +106,7 @@ class site_firewall::pre {
     provider => ['iptables'],
   }
 
-  firewall_multi { '005 Allow OUTPUT dnsmasq':
+  firewall_multi { '006 Allow OUTPUT dnsmasq':
     chain    => 'OUTPUT',
     state    => 'NEW',
     proto    => ['tcp', 'udp'],

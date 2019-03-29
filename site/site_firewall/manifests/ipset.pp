@@ -32,15 +32,16 @@ class site_firewall::ipset (
   }
 
   $ipsets.each |$name, $hash| {
-    file { "/etc/dnsmasq.d/20-${name}-ipset":
-      ensure  => present,
-      mode    => '0644',
-      owner   => 'root',
-      group   => 'root',
-      content => template('site_firewall/dnsmasq-ipset.erb'),
-      notify  => Service['dnsmasq'],
-      require => Package['dnsmasq'],
+    if $hash['hosts'] {
+      file { "/etc/dnsmasq.d/20-${name}-ipset":
+        ensure  => present,
+        mode    => '0644',
+        owner   => 'root',
+        group   => 'root',
+        content => template('site_firewall/dnsmasq-ipset.erb'),
+        notify  => Service['dnsmasq'],
+        require => Package['dnsmasq'],
+      }
     }
   }
-
 }

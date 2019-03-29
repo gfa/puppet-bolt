@@ -3,6 +3,11 @@
 
 class base {
 
+  # IPv6 is broken in GCE
+  if $facts['dmi']['bios']['vendor'] == 'Google' {
+    class { 'gai::preferipv4': }
+  }
+
   include apt
   include base::disable_puppet
   include base::packages
@@ -19,6 +24,7 @@ class base {
   }
 
   include site_ssl
+
   # include classes from hiera
   # use a default emtpy class so the lookup()
   # never fails

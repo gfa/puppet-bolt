@@ -48,8 +48,12 @@ TODO
 ----
 
 
-- send nginx error logs to syslog
-- send tor to syslog
+- nginx
+- dehydrated
+- postfix
+- spamassassin
+- radicale
+- tor
 - prosody to syslog
 - radicale to syslog
 

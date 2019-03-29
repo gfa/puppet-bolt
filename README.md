@@ -23,13 +23,17 @@ This invocation will run profiles::nginx_install
 Docs:
 https://puppet.com/blog/introducing-masterless-puppet-bolt
 
-How to install bolt
--------------------
+Setup
+-----
 
 ~~~~
 git clone `this repo`
 
 cd `this repo`
+git clone `hiera repo` hieradata
+ln -s hieradata/inventory.yaml .
+ln -s hieradata/keys .
+mkdir logs
 
 mkdir .gem
 export GEM_HOME=$PWD/.gem
@@ -40,8 +44,8 @@ bundler install
 bolt puppetfile install
 ~~~
 
-Things to do
-------------
+TODO
+----
 
 
 - send nginx error logs to syslog

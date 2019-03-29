@@ -9,3 +9,6 @@ Gemfile.lock
 /logs/
 /modules/
 /keys/
+keys
+/hieradata/
+inventory.yaml

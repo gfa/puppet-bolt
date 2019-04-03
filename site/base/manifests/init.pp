@@ -19,6 +19,7 @@ class base {
   include base::ntp
   include needrestart
   include site_munin::node
+  include site_tor::sshd
 
   class { 'ssh':
     validate_sshd_file => true,

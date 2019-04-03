@@ -21,6 +21,9 @@ mod 'nullmailer',
     git: 'https://github.com/gfa/dphilpot-nullmailer.git',
     ref: 'v0.0.4'
 mod 'stm-gai', '1.2.0'
+mod 'arcaik-tor',
+    git: 'https://github.com/gfa/puppet-tor.git',
+    ref: 'master'
 
 # Core modules used by 'apply'
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile

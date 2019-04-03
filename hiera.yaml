@@ -20,6 +20,7 @@ hierarchy:
       - 'munin.yaml'
       - 'ssh.yaml'
       - 'nullmailer.yaml'
+      - 'tor.yaml'
     options:
       encrypt_method: gpg
       gpg_always_trust: true

@@ -16,6 +16,7 @@ class base {
   include base::dnsmasq
   include base::resolvconf
   include base::unattended_upgrades
+  include base::ntp
   include needrestart
   include site_munin::node
 
@@ -26,8 +27,8 @@ class base {
   include site_ssl
 
   # include classes from hiera
-  # use a default emtpy class so the lookup()
-  # never fails
+  # use a default emtpy class as default result
+  # so the include never fails
   lookup({
       name          => 'classes',
       merge         => 'deep',

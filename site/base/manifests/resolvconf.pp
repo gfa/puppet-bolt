@@ -3,10 +3,8 @@
 
 class base::resolvconf {
 
-  if $facts['dmi']['bios']['vendor'] == 'Google' {
-    package { 'resolvconf':
-      ensure => present,
-    }
+  package { 'resolvconf':
+    ensure => present,
   }
 
   class { 'resolv_conf':

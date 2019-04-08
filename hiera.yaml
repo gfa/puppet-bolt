@@ -21,6 +21,7 @@ hierarchy:
       - 'ssh.yaml'
       - 'nullmailer.yaml'
       - 'tor.yaml'
+      - 'logcheck.yaml'
     options:
       encrypt_method: gpg
       gpg_always_trust: true

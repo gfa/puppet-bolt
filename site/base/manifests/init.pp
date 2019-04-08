@@ -20,6 +20,7 @@ class base {
   include needrestart
   include site_munin::node
   include site_tor::sshd
+  include base::logcheck
 
   class { 'ssh':
     validate_sshd_file => true,

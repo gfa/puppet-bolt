@@ -3,7 +3,11 @@
 
 class site_firewall::fail2ban {
 
-  class { 'fail2ban':
+  package { 'sshguard':
+    ensure => purged,
+  }
+
+  -> class { 'fail2ban':
     bantime   => 3600,
     findtime  => 600,
     logtarget => 'SYSLOG',

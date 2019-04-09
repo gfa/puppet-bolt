@@ -1,7 +1,7 @@
 # base class
 #
 
-class base {
+node default {
 
   # IPv6 is broken in GCE
   if $facts['dmi']['bios']['vendor'] == 'Google' {

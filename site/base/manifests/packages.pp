@@ -15,6 +15,7 @@ class base::packages (
       'ipset-persistent',
       'iptables-persistent',
       'netfilter-persistent',
+      'facter',
     ],
     priority => 990,
     release  => "${facts['lsbdistcodename']}-backports",

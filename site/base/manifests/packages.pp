@@ -17,7 +17,7 @@ class base::packages (
       'netfilter-persistent',
     ],
     priority => 990,
-    release  => "${facts['os']['distro']['codename']}-backports",
+    release  => "${facts['lsbdistcodename']}-backports",
   }
 
 }

@@ -14,7 +14,7 @@ class site_tor::sshd {
   -> tor::instance { 'sshd':
     settings => {
       'HiddenServiceDir'  => '/var/lib/tor-instances/sshd/hidden_service/',
-      'HiddenServicePort' => "22 ${facts['networking']['ip']}:22",
+      'HiddenServicePort' => "22 ${facts['ipaddress']}:22",
       'SocksPort'         => '0',
     }
   }

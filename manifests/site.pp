@@ -4,7 +4,7 @@
 node default {
 
   # IPv6 is broken in GCE
-  if $facts['dmi']['bios']['vendor'] == 'Google' {
+  if $facts['bios_vendor'] == 'Google' {
     class { 'gai::preferipv4': }
   }
 

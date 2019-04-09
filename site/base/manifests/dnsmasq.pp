@@ -6,7 +6,11 @@ class base::dnsmasq (
   Hash $configs_hash,
 ) {
 
-  class { 'dnsmasq':
+  package { 'unbound':
+    ensure => purged,
+  }
+
+  -> class { 'dnsmasq':
     purge_config_dir => true,
     configs_hash     => $configs_hash,
   }

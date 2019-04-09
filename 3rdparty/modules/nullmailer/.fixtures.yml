@@ -1,0 +1,3 @@
+fixtures:
+  symlinks:
+    nullmailer: "#{source_dir}"

@@ -1,0 +1,155 @@
+# Tor
+
+[![Build Status](https://travis-ci.org/johanfleury/puppet-tor.svg?branch=master)](https://travis-ci.org/johanfleury/puppet-tor)
+
+## Overview
+
+*From the Tor project website*: Tor is free software and an open network that
+helps you defend against traffic analysis, a form of network surveillance that
+threatens personal freedom and privacy, confidential business activities and
+relationships, and state security.
+
+
+## Table of Contents
+
+1. [Module description](#module-description)
+2. [Usage](#usage)
+3. [Reference](#reference)
+  - [Public classes](#public-classes)
+  - [Private classes](#private-classes)
+  - [Public defined types](#public-defined-types)
+5. [Limitations](#limitations)
+6. [Development](#development)
+
+
+## Module description
+
+This module helps you run Tor relays by installing, configuring, and managing
+Tor service instances.
+
+
+## Usage
+
+The main `tor` class manages the installation options.
+
+The `tor::instance` type manages a Tor instance configuration.
+
+
+### Beginning with `tor`
+
+You must first include the main class with: `include ::tor`, then you can
+create an instance with:
+
+```puppet
+tor::instance { 'foo':
+  settings => {
+    Nickname => 'foo',
+    OrPort   => 9050,
+    DirPort  => 9030,
+  }
+}
+```
+
+The `instances` parameters of the main class, will be passed to
+`create_resources`.
+
+You may put you configuration options in hiera:
+
+```yaml
+---
+tor::instances:
+  foo:
+    settings:
+      Nickname: 'foo'
+      OrPort: 9050
+      DirPort: 9030
+```
+
+
+## Reference
+
+### Public classes
+
+#### Class `tor`
+
+##### Parameters
+
+###### `package_name`
+
+Optional. String. Sets the name of the Tor package (default: `tor`).
+
+###### `package_ensure`
+
+Optional. String. Controls the package resource's ensure attribute (default:
+`present`).
+
+See [Resource Type:
+package](https://docs.puppet.com/puppet/latest/types/package.html#package-attribute-ensure)
+for a list of allowed values.
+
+###### `config_dir`
+
+Optional. Stdlib::Absolutepath. Sets the directory where Tor's configuration
+files are located (default: `/etc/tor`).
+
+###### `instances_config_dir`
+
+Option. Stdlib::Absolutepath. Sets the directory where Tor's instances
+configuration files are located (default: `/etc/tor/instances`).
+
+###### `instances`
+
+Option. Hash. Sets the instances that will be passed to `create_resources`.
+
+
+### Private classes
+
+* `tor::params`
+* `tor::install`: handles the packages installation.
+* `tor::config`: handles the configuration file management.
+
+
+### Public defined types
+
+#### Defined type `tor::instance`:
+
+#### Parameters
+
+###### `ensure`
+
+Optional. String (absent or present).
+
+###### `settings`
+
+Optional. Hash. Sets the Tor instance configuration values (default: an empty
+hash).
+
+To repeat an options multiple times, its value can be an `Array`.
+
+For instance:
+
+```puppet
+tor::instance { "foo":
+  settings => {
+    Nickname => 'foo',
+    OrPort   => [ 9050, "9051 NoAdvertise" ]
+    DirPort  => 9030,
+  }
+}
+```
+
+
+## Limitations
+
+This module only works with systemd. It has only been tested on Debian 8
+(Jessie).
+
+
+## Development
+
+Puppet modules on the Puppet Forge are open projects, and community
+contributions are essential for keeping them great. Please follow our
+guidelines when contributing changes.
+
+For more information, see our [module contribution
+guide.](https://docs.puppetlabs.com/forge/contributing.html)

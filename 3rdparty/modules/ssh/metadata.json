@@ -1,0 +1,66 @@
+{
+  "name": "saz-ssh",
+  "version": "5.0.0",
+  "author": "saz",
+  "summary": "Manage SSH client and server via Puppet.",
+  "license": "Apache-2.0",
+  "source": "git://github.com/saz/puppet-ssh.git",
+  "project_page": "https://github.com/saz/puppet-ssh",
+  "issues_url": "https://github.com/saz/puppet-ssh/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.24.0 < 6.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 2.2.0 < 6.0.0"
+    }
+  ],
+  "data_provider": null,
+  "description": "Manage SSH client and server via puppet",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat"
+    },
+    {
+      "operatingsystem": "CentOS"
+    },
+    {
+      "operatingsystem": "OracleLinux"
+    },
+    {
+      "operatingsystem": "Scientific"
+    },
+    {
+      "operatingsystem": "Debian"
+    },
+    {
+      "operatingsystem": "Ubuntu"
+    },
+    {
+      "operatingsystem": "FreeBSD"
+    },
+    {
+      "operatingsystem": "DragonFly"
+    },
+    {
+      "operatingsystem": "OpenBSD"
+    },
+    {
+      "operatingsystem": "Gentoo"
+    },
+    {
+      "operatingsystem": "Solaris"
+    },
+    {
+      "operatingsystem": "ArchLinux"
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.10.10 < 7.0.0"
+    }
+  ]
+}

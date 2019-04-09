@@ -1,0 +1,11 @@
+# This file is managed by Puppet. DO NOT EDIT
+
+<%- @settings.each do |key, value| -%>
+  <%- if value.is_a?(Array) -%>
+    <%- value.each do |v| -%>
+<%= key %> <%= v %>
+    <%- end -%>
+  <%- else -%>
+<%= key %> <%= value %>
+  <%- end -%>
+<%- end -%>

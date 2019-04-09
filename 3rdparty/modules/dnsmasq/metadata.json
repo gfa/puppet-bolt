@@ -1,0 +1,24 @@
+{
+  "name": "saz-dnsmasq",
+  "version": "1.4.0",
+  "author": "saz",
+  "summary": "Manage dnsmasq with Puppet",
+  "license": "Apache-2.0",
+  "source": "https://github.com/saz/puppet-dnsmasq.git",
+  "project_page": "https://github.com/saz/puppet-dnsmasq",
+  "issues_url": "https://github.com/saz/puppet-dnsmasq/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=2.0.0 < 5.0.0"
+    }
+  ],
+  "data_provider": null,
+  "description": "Manage dnsmasq via Puppet",
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">=4.0.0 <6.0.0"
+    }
+  ]
+}

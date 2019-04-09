@@ -1,0 +1,10 @@
+# This file is used to override settings from needrestart.conf_main.
+# Overrides are managed by puppet
+
+<% @ignorelist.each do | name, services | -%>
+#<%= name %>
+<% services.sort.each do | service | -%>
+$nrconf{override_rc}->{qr(^<%= service %>)} = 0;
+<% end -%>
+
+<% end -%>

@@ -1,0 +1,146 @@
+
+# needrestart - Restart daemons after library updates.
+#
+# Authors:
+#   Thomas Liske <thomas@fiasko-nw.net>
+#
+# Copyright Holder:
+#   2013 - 2017 (C) Thomas Liske [http://fiasko-nw.net/~thomas/]
+#
+# License:
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+
+# This is the configuration file of needrestart. This is perl syntax.
+# needrstart uses reasonable default values, you might not need to
+# change anything.
+
+# Verbosity:
+#  0 => quiet
+#  1 => normal (default)
+#  2 => verbose
+#$nrconf{verbosity} = 2;
+
+# Path of the package manager hook scripts.
+#$nrconf{hook_d} = '/etc/needrestart/hook.d';
+
+# Path of user notification scripts.
+#$nrconf{notify_d} = '/etc/needrestart/notify.d';
+
+# If needrestart detects systemd it assumes that you use systemd's pam module.
+# This allows needrestart to easily detect user session. In case you use
+# systemd *without* pam_systemd.so you should set has_pam_systemd to false
+# to enable legacy session detection!
+<% if @has_pam_systemd == true -%>
+$nrconf{has_pam_systemd} = 1;
+<% else -%>
+#$nrconf{has_pam_systemd} = 0;
+<% end -%>
+
+# Disable sending notifications to user sessions running obsolete binaries
+# using scripts from $nrconf{notify_d}.
+#$nrconf{sendnotify} = 0;
+<% if @notify_user_obsolete_binaries == true -%>
+$nrconf{sendnotify} = 1;
+<% else -%>
+$nrconf{sendnotify} = 0;
+<% end -%>
+
+
+# Restart services (l)ist only, (i)nteractive or (a)utomatically.
+$nrconf{restart} = '<%= @action.chars.first %>';
+
+# Use prefered UI package.
+$nrconf{ui} = 'NeedRestart::UI::<%= @preferred_ui %>';
+
+# Change default answer to 'no' in (i)nteractive mode.
+#$nrconf{defno} = 1;
+
+# Blacklist binaries (list of regex).
+$nrconf{blacklist} = [
+    # ignore sudo (not a daemon)
+    qr(^/usr/bin/sudo(\.dpkg-new)?$),
+
+    # ignore DHCP clients
+    qr(^/sbin/(dhclient|dhcpcd5|pump|udhcpc)(\.dpkg-new)?$),
+
+    # ignore apt-get (Debian Bug#784237)
+    qr(^/usr/bin/apt-get(\.dpkg-new)?$),
+];
+
+# Blacklist services (list of regex) - USE WITH CARE.
+# You should prefere to put services to $nrconf{override_rc} instead.
+# Any service listed in $nrconf{blacklist_rc} we be ignored completely!
+#$nrconf{blacklist_rc} = [
+#];
+
+# Override service default selection (hash of regex).
+$nrconf{override_rc} = {
+    # DBus
+    qr(^dbus) => 0,
+
+    # display managers
+    qr(^gdm) => 0,
+    qr(^kdm) => 0,
+    qr(^nodm) => 0,
+    qr(^sddm) => 0,
+    qr(^wdm) => 0,
+    qr(^xdm) => 0,
+    qr(^lightdm) => 0,
+
+    # networking stuff
+    qr(^network-manager) => 0,
+    qr(^NetworkManager) => 0,
+    qr(^wpa_supplicant) => 0,
+    qr(^openvpn) => 0,
+    qr(^quagga) => 0,
+    qr(^tinc) => 0,
+
+    # gettys
+    qr(^getty@.+\.service) => 0,
+
+    # systemd --user
+    qr(^user@\d+\.service) => 0,
+
+    # misc
+    qr(^zfs-fuse) => 0,
+    qr(^mythtv-backend) => 0,
+
+    # workaround for broken systemd-journald
+    # (see also Debian Bug#771122 & #771254)
+    qr(^systemd-journald) => 0,
+
+    # more systemd stuff
+    # (see also Debian Bug#784238 & #784437)
+    qr(^emergency\.service$) => 0,
+    qr(^rescue\.service$) => 0,
+
+    # don't restart systemd-logind, see #798097
+    qr(^systemd-logind) => 0,
+};
+
+# Disable interpreter scanners.
+#$nrconf{interpscan} = 0;
+
+# Enable/disable hints on pending kernel upgrades:
+#  1: requires the user to acknowledge pending kernels
+#  0: disable kernel checks completely
+# -1: print kernel hints to stderr only
+<% if @disable_kernel_hints == true -%>
+$nrconf{kernelhints} = 0;
+<% else -%>
+$nrconf{kernelhints} = 1;
+<% end -%>
+
+
+# Read additional config snippets.
+if(-d q(/etc/needrestart/conf.d)) {
+      foreach my $fn (sort </etc/needrestart/conf.d/*.conf>) {
+	      print STDERR "$LOGPREF eval $fn\n" if($nrconf{verbose});
+	      eval do { local(@ARGV, $/) = $fn; <>};
+	      die "Error parsing $fn: $@" if($@);
+      }
+}

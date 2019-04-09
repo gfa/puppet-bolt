@@ -1,0 +1,21 @@
+{
+  "ChangeLog": "08bacba55779bae6908b56a6c1009f19",
+  "Gemfile": "5d912ccabf4b1240fe2ed44c3146f76a",
+  "LICENSE": "d6869a585931245be85fd4aece485172",
+  "README.md": "9a8f594d825d034f93de0e83800f6caa",
+  "Rakefile": "8a664a2f26fbf22c1ec5c11189fef34b",
+  "files/dnsmasq.conf": "6161ae53c6d8a5aee1eb4bb2fa902b2c",
+  "manifests/conf.pp": "324f825f7d0c99d88ff7aab63c548329",
+  "manifests/config.pp": "23c448c425cb340882e9c9f77f5ac7c8",
+  "manifests/dhcp_host.pp": "302e55714527be9c3c9a1a1e3289f3b7",
+  "manifests/host.pp": "3ef35ba4dd8da5e851eb5aaa36328886",
+  "manifests/init.pp": "8198d38facf19ed3382292458555d20c",
+  "manifests/install.pp": "2881ed7f8247a7d0f567c5f3677ca42c",
+  "manifests/params.pp": "f5461eced7322de367eacce4a7a1a74e",
+  "manifests/reload.pp": "32c71cf84c9db6a6d1bb17affbdd41ef",
+  "manifests/service.pp": "029fcb1743dc64ff6e24e5e4fa64d4d3",
+  "metadata.json": "da793a2a60712ce4dfd0374548ce8ef9",
+  "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+  "spec/spec_helper.rb": "d299eefaba54be2696f83cd38e0ba597",
+  "tests/init.pp": "ced9c820af1a950f6e910dc204fc6585"
+}

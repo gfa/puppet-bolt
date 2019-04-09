@@ -19,4 +19,4 @@ TODO
 
 
 
-puppet agent -t --environment $MYFEATUREBRANCH
+puppet agent --verbose --onetime --no-daemonize --show_diff  --environment development

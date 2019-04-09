@@ -9,7 +9,7 @@ node default {
   }
 
   include apt
-  include base::disable_puppet
+  include base::enable_puppet
   include base::packages
   include site_firewall
   include site_firewall::ipset

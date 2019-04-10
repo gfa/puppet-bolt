@@ -9,18 +9,23 @@ class site_puppet (
   Array $packages,
 ) {
 
-  create_resources(package, $packages, {'ensure' => 'purged'})
-  create_resources(service, $services, {'ensure' => 'stopped', 'enable' => false})
+  $services.each | Integer $index, String $value | {
+    service { $value:
+      ensure => stopped,
+      enable => false,
+    }
+  }
+
+  $packages.each | Integer $index2, String $package | {
+    package { $package:
+      ensure => purged,
+    }
+  }
 
   $content = "2 */2 * * * root chronic puppet agent --verbose --onetime --no-daemonize --show_diff\n"
 
   file { '/etc/cron.d/puppet-agent':
-    ensure  => file,
-    content => $content,
-    mode    => '0644',
-    owner   => 'root',
-    group   => 'root',
-    require => Package['moreutils', 'puppet'],
+    ensure  => absent,
   }
 
 }

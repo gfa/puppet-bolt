@@ -7,7 +7,7 @@ hierarchy:
   - name: 'Global data'
     lookup_key: eyaml_lookup_key
     paths:
-      - "hosts/%{::hostname}.yaml"
+      - "hosts/%{::hostname}.eyaml"
       - 'infrastructure.yaml'
       - 'base.yaml'
       - 'firewall.yaml'

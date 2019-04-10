@@ -44,6 +44,14 @@ bundler install
 bolt puppetfile install
 ~~~
 
+Install Puppet on all nodes
+---------------------------
+
+~~~
+bolt task run puppet_agent::install  -n all
+~~~
+
+
 TODO
 ----
 
@@ -57,5 +65,14 @@ TODO
 - prosody to syslog
 - radicale to syslog
 
+Links
+-----
 
-bolt plan run base -n db.zumbi.com.ar
+- https://github.com/puppetlabs/tasks-playground
+
+Run puppet like puppet apply/puppet agent
+-----------------------------------------
+
+~~~
+bolt plan run base -n all 
+~~~

@@ -18,4 +18,9 @@ class base::disable_puppet {
     enable => false,
   }
 
+  service { 'pxp-agent':
+    ensure => stopped,
+    enable => false,
+  }
+
 }

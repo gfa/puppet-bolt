@@ -8,10 +8,9 @@ class site_firewall::fail2ban {
   }
 
   -> class { 'fail2ban':
-    bantime   => 3600,
-    findtime  => 600,
-    logtarget => 'SYSLOG',
-    chain     => 'FILTERS',
+    bantime  => 3600,
+    findtime => 600,
+    chain    => 'FILTERS',
   }
 
   $ssh_params = lookup('fail2ban::jail::sshd')

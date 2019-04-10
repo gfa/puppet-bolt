@@ -4,8 +4,8 @@
 class base::enable_puppet {
 
   service { 'puppet':
-    ensure => running,
-    enable => true,
+    ensure => stopped,
+    enable => false,
   }
 
   service { 'mcollective':
@@ -35,6 +35,16 @@ class base::enable_puppet {
 
   package { 'puppetlabs-release':
     ensure => purged,
+  }
+
+  $content = "2 */2 * * * root chronic puppet agent --verbose --onetime --no-daemonize --show_diff\n"
+
+  file { '/etc/cron.d/puppet-agent':
+    ensure  => file,
+    content => $content,
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
   }
 
 }

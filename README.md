@@ -55,7 +55,7 @@ bolt task run puppet_agent::install  -n all
 TODO
 ----
 
-
+- on buster hosts, choose iptables-legacy
 - nginx
 - dehydrated
 - postfix
@@ -73,6 +73,13 @@ Links
 Run puppet like puppet apply/puppet agent
 -----------------------------------------
 
+Run noop using bolt apply (does not include includes and so on)
+
+~~~
+bolt apply --noop --verbose site/base/manifests/init.pp -n all
+~~~
+
+Run the default plan
 ~~~
 bolt plan run base -n all 
 ~~~

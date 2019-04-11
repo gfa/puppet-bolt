@@ -8,6 +8,7 @@ hierarchy:
     lookup_key: eyaml_lookup_key
     paths:
       - "hosts/%{::hostname}.eyaml"
+      - "hosts/%{::fqdn}.eyaml"
       - 'infrastructure.yaml'
       - 'base.yaml'
       - 'firewall.yaml'

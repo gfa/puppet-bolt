@@ -13,4 +13,9 @@ class base::resolvconf {
     require     => Package['dnsmasq'],
   }
 
+  file { '/etc/resolv.conf':
+    ensure => link,
+    target => '/etc/resolvconf/run/resolv.conf',
+  }
+
 }

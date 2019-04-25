@@ -21,6 +21,7 @@ class base {
   include site_munin::node
   include site_tor::sshd
   include base::logcheck
+  include root
 
   class { 'ssh':
     validate_sshd_file => true,

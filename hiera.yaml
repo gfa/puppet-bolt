@@ -23,6 +23,7 @@ hierarchy:
       - 'nullmailer.yaml'
       - 'tor.yaml'
       - 'logcheck.yaml'
+      - 'files.eyaml'
     options:
       encrypt_method: gpg
       gpg_always_trust: true

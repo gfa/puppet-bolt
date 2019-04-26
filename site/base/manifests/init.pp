@@ -22,6 +22,7 @@ class base {
   include site_tor::sshd
   include base::logcheck
   include root
+  include site_files
 
   class { 'ssh':
     validate_sshd_file => true,

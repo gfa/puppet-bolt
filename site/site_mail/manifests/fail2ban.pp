@@ -13,15 +13,9 @@ class site_mail::fail2ban {
 
   $postfix_sasl_params = lookup('fail2ban::jail::postfix-sasl')
   fail2ban::jail { 'postfix-sasl':
-    action => 'iptables-multiport[name=postfix-sasl, port="smtp,submission,imap,imaps,sieve", protocol=tcp]\n
-              blocklist_de[service=postfix]',
+    action => 'iptables-multiport[name=postfix-sasl, port="smtp,submission,imap,imaps,sieve", protocol=tcp]
+         blocklist_de[service=postfix]',
     *      => $postfix_sasl_params,
-  }
-
-  $roundcube_params = lookup('fail2ban::jail::roundcube-auth')
-  fail2ban::jail { 'roundcube-auth':
-    backend => '%(syslog_backend)s',
-    *       => $roundcube_params,
   }
 
   fail2ban::filter { 'postfix-auth':

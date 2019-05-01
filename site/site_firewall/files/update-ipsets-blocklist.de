@@ -18,12 +18,12 @@ wget -q ${URL}
 ipset create block-temp hash:ip family inet hashsize 1024 maxelem 65536
 ipset create block6-temp hash:ip family inet6 hashsize 1024 maxelem 65536
 
-for ip in $(cat all.txt | grep -v :)
+for ip in $(cat all.txt | grep -v : | sort | uniq)
   do
         ipset add block-temp $ip
 done
 
-for ip in $(cat all.txt | grep :)
+for ip in $(cat all.txt | grep : | sort | uniq)
   do
         ipset add block6-temp $ip
 done

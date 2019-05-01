@@ -19,6 +19,7 @@ mod 'puppetlabs-concat', '5.3.0'
 mod 'dphilpot-nullmailer', '0.0.4'
 mod 'stm-gai', '1.2.0'
 mod 'thias-root', '1.0.1'
+mod 'puppetlabs-inifile', '3.0.0'
 mod 'arcaik-tor',
     git: 'https://github.com/gfa/puppet-tor.git',
     ref: 'master'

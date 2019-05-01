@@ -11,4 +11,3 @@ log:
 
 ssh:
   user: root
-  host-key-check: false

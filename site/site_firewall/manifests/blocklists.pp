@@ -7,7 +7,7 @@ class site_firewall::blocklists {
 
   file { '/etc/cron.hourly/update-ipsets-blocklist.de':
     ensure => present,
-    mode   => '0744',
+    mode   => '0755',
     owner  => 'root',
     group  => 'root',
     source => "puppet:///modules/${module_name}/update-ipsets-blocklist.de",

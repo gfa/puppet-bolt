@@ -27,6 +27,7 @@ source ENV['GEM_SOURCE'] || 'https://rubygems.org' do
   gem 'puppetlabs_spec_helper'
   gem 'r10k'
   gem 'rspec-puppet'
+  gem 'rubocop-performance'
   gem 'rubocop-rspec'
   gem 'yaml-lint'
 end

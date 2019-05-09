@@ -1,5 +1,7 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org' do
+  gem 'bcrypt_pbkdf', '~> 1'
   gem 'bolt', '~> 1'
+  gem 'ed25519', '~> 1.2'
   gem 'gpgme'
   gem 'hiera-eyaml'
   gem 'hiera-eyaml-gpg'

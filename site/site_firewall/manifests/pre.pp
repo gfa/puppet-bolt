@@ -60,7 +60,7 @@ class site_firewall::pre {
   firewall_multi { '101 allow input icmp echo from subnet':
     chain    => 'INPUT',
     proto    => 'ipv6-icmp',
-    icmp     => [130, 131, 132, 143, 151, 152, 153],
+    icmp     => [130, 131, 132, 133, 135, 137, 143, 151, 152, 153],
     source   => 'fe80::/10',
     action   => 'accept',
     provider => ['ip6tables'],
@@ -120,9 +120,19 @@ class site_firewall::pre {
   firewall_multi { '102 allow output icmp':
     chain    => 'OUTPUT',
     proto    => 'ipv6-icmp',
-    icmp     => [135, 136],
+    icmp     => [128, 135, 136, 137],
     action   => 'accept',
     provider => ['ip6tables'],
+  }
+
+  firewall_multi { '101 allow output icmp to site-local and multicast':
+    chain       => 'OUTPUT',
+    proto       => 'ipv6-icmp',
+    icmp        => [131, 132, 133, 135, 137, 143],
+    destination => ['fc00::/7', 'ff00::/8'],
+    source      => 'fe80::/10',
+    action      => 'accept',
+    provider    => ['ip6tables'],
   }
 
   firewall_multi { '999 log icmp input':

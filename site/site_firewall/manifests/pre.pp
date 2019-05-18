@@ -125,11 +125,20 @@ class site_firewall::pre {
     provider => ['ip6tables'],
   }
 
-  firewall_multi { '999 log icmp':
-    chain    => ['INPUT', 'OUTPUT'],
-    proto    => 'ipv6-icmp',
-    jump     => 'LOG',
-    provider => ['ip6tables'],
+  firewall_multi { '999 log icmp input':
+    chain      => 'INPUT',
+    proto      => 'ipv6-icmp',
+    jump       => 'LOG',
+    log_prefix => 'INPUT ',
+    provider   => ['ip6tables'],
+  }
+
+  firewall_multi { '999 log icmp output':
+    chain      => 'OUTPUT',
+    proto      => 'ipv6-icmp',
+    jump       => 'LOG',
+    log_prefix => 'OUTPUT ',
+    provider   => ['ip6tables'],
   }
 
 }

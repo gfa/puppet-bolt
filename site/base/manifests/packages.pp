@@ -16,6 +16,8 @@ class base::packages (
       'iptables-persistent',
       'netfilter-persistent',
       'facter',
+      'prosody',
+      'prosody-modules',
     ],
     priority => 990,
     release  => "${facts['os']['distro']['codename']}-backports",

@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+set -u
+case "$1" in
+    "deploy_cert")
+        cp -f /var/lib/dehydrated/certs/<%= $fqdn -%>/privkey.pem /etc/prosody/certs/<%= $fqdn -%>/privkey.pem
+        chown prosody:root /etc/prosody/certs/<%= $fqdn -%>/privkey.pem
+        chmod 400 /etc/prosody/certs/<%= $fqdn -%>/privkey.pem
+        cp -f /var/lib/dehydrated/certs/<%= $fqdn -%>/fullchain.pem /etc/prosody/certs/<%= $fqdn -%>/fullchain.pem
+        chown prosody:root /etc/prosody/certs/<%= $fqdn -%>/fullchain.pem
+        chmod 400 /etc/prosody/certs/<%= $fqdn -%>/fullchain.pem
+
+        systemctl try-reload-or-restart prosody
+        ;;
+    *)
+        return
+esac

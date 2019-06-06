@@ -1,0 +1,12 @@
+---
+concurrency: 20
+format: human
+
+log:
+  console:
+    level: notice
+
+ssh:
+  user: root
+  host-key-check: false
+  private-key: /home/bolt/id_ed25519

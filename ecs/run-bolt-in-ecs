@@ -1,0 +1,2 @@
+#!/bin/sh
+su - bolt -c "bolt plan run base -n all"

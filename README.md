@@ -102,7 +102,49 @@ bolt task run puppet_agent::install  -n all
 This invocation will run site.pp on all servers
 
 ```shell
-$ bolt plan run site -n all
+$ bolt plan run base -n all
 ```
 
+Docker
+------
 
+This repo contains a `Dockerfile` to build a container with this code including hiera.
+
+
+AWS ECS 
+-------
+
+<warning> proprietary software ahead.</warning>
+
+I want to routinely apply this code to my servers, there are ~~2~~ many ways to do that
+
+
+- Puppet master
+  One more service to maintain :( .
+
+- Run `bolt` with a cronjob on a fix machine
+  It could have a SSH Key (~/.ssh/id_rsa) or a [security](https://www.nitrokey.com/) [token](https://www.yubico.com/)
+  but both cases open a window to someone to break into that machine and get the kingdom's keys.
+
+- Run `bolt` from a container
+  This is similar than the previous idea with the improvement that containers are short-lived, so
+  "harder" to break in.
+
+- Run https://github.com/jethrocarr/pupistry
+  This option actually looks pretty good. I'd use it if I wouldn't want to play with KMS.
+
+- Run `bolt` from a container with an ephemeral ssh key
+  Using a CA that generates short-lived SSH keys, an idea stolen from [bless](https://github.com/Netflix/bless).
+
+  [cashier](https://github.com/nsheridan/cashier) looks simpler to deploy, but both options are just too much
+  for single user infrastructure.
+
+
+- Run `bolt` from a container, retrieve the ssh key within the container
+  I could do this, storing the key in KMS/Barbican, If means that you completely trust your provider,
+  while in reality you *do* completely trust your provider, I prefer acting like I don't.
+  Also feels a bit lazy.
+
+- Run `bolt` from a container, retrieve the ssh key *password* within the container
+  Similar to the previous case but instead of giving the key to my provider, I give the key's password
+  to my provider while keeping the key someplace else.

@@ -1,6 +1,6 @@
 ---
 concurrency: 20
-format: human
+format: json
 
 log:
   console:

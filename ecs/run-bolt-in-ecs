@@ -1,2 +1,3 @@
 #!/bin/sh
-su - bolt -c "bolt plan run base -n all"
+su - bolt -c "bolt task run puppet_agent::version -n all"
+su - bolt -c "bolt plan run base --rerun success"

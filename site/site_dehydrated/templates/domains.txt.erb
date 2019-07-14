@@ -1,0 +1,9 @@
+<% @domains.each do |key, value| -%>
+  <% if value == nil %>
+<%= key -%>
+  <% else %>
+<%= key -%> <%= value.join(' ') -%>
+  <% end -%>
+<% end -%>
+<%# a new line %>
+<%= %>

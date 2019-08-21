@@ -33,10 +33,10 @@ class site_tor::sshd {
     ensure => directory,
   }
 
-  -> exec { 'stop_tor_sshd_instance':
-    command => 'systemctl stop tor && mv /etc/tor/instances/sshd /etc/tor/disabled-instances/sshd',
-    creates => '/etc/tor/disabled-instances/sshd',
-    path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-  }
+  #  -> exec { 'stop_tor_sshd_instance':
+  #    command => 'systemctl stop tor && mv /etc/tor/instances/sshd /etc/tor/disabled-instances/sshd',
+  #    creates => '/etc/tor/disabled-instances/sshd',
+  #    path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+  #  }
 
 }

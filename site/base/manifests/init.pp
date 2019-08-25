@@ -23,6 +23,7 @@ class base {
   include base::logcheck
   include root
   include site_files
+  include site_alternatives
 
   class { 'ssh':
     validate_sshd_file => true,

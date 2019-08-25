@@ -23,6 +23,7 @@ mod 'puppetlabs-inifile', '3.0.0'
 mod 'arcaik-tor',
     git: 'https://github.com/gfa/puppet-tor.git',
     ref: 'master'
+mod 'puppet-alternatives', '3.0.0'
 
 # Core modules used by 'apply'
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile

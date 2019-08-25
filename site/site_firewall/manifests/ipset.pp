@@ -9,10 +9,9 @@ class site_firewall::ipset (
   Hash $ipsets,
 ) {
 
-  # w8t for buster backports
-  # package { 'ipset-persistent':
-  #   ensure => present,
-  # }
+  package { 'ipset-persistent':
+    ensure => present,
+  }
 
   file { '/etc/default/netfilter-persistent':
     ensure  => present,

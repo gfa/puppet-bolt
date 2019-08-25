@@ -2,8 +2,11 @@ forge 'http://forge.puppetlabs.com'
 
 mod 'puppetlabs/stdlib', '5.2.0'
 mod 'thias/sysctl', '1.0.6'
-mod 'puppet-unattended_upgrades', '3.2.1'
-mod 'puppetlabs-apt', '6.0.0'
+#mod 'puppet-unattended_upgrades', '4.0.0'
+mod 'puppet-unattended_upgrades',
+    git: 'https://github.com/deubert-it/puppet-unattended_upgrades.git',
+    ref: 'master'
+mod 'puppetlabs-apt', '7.1.0'
 mod 'puppetlabs-mysql', '6.2.0'
 mod 'puppet/archive', '3.2.1'
 mod 'puppetlabs/translate', '1.2.0'

@@ -59,8 +59,8 @@ class site_prosody (
         $prosody_fqdn => {
           'type'    => 'proxy65',
           'options' => {
-            'proxy65_address' => $prosody_fqdn,
-            'proxy65_acl'     => $prosody_domain,
+            'proxy65_address' => "'${prosody_fqdn}'",
+            'proxy65_acl'     => "'${prosody_domain}'",
           }
         }
       },

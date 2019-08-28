@@ -3,12 +3,16 @@
 
 class site_alternatives {
 
-  alternatives { 'iptables':
-    path =>  '/usr/sbin/iptables-legacy',
-  }
+  if $facts['os']['distro']['codename'] != 'stretch' {
 
-  alternatives { 'ip6tables':
-    path =>  '/usr/sbin/ip6tables-legacy',
+    alternatives { 'iptables':
+      path =>  '/usr/sbin/iptables-legacy',
+    }
+
+    alternatives { 'ip6tables':
+      path =>  '/usr/sbin/ip6tables-legacy',
+    }
+
   }
 
 }

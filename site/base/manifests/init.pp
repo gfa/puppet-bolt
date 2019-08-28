@@ -20,7 +20,7 @@ class base {
   include needrestart
   include site_munin::node
   include base::logcheck
-  include root
+  include site_root
   include site_files
   include site_alternatives
 

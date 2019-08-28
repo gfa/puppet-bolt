@@ -7,6 +7,8 @@ class site_tor::exit (
   String $contact_email,
 ) {
 
+  include tor
+
   file { '/etc/tor/how_tor_works_thumb.png':
     ensure  => present,
     source  => 'puppet:///modules/site_tor/how_tor_works_thumb.png',

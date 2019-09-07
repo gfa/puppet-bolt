@@ -1,4 +1,14 @@
 #!/bin/sh
 cd /home/bolt
-bolt task run puppet_agent::version -n all
-bolt plan run base --rerun success
+
+HOSTS=$(cat inventory.yaml | yq '.nodes[][]' | sed 's/"//g')
+
+PUSHOVER_KEY=$(aws kms decrypt --ciphertext-blob fileb://hieradata/keys/pushover-key.kms --query Plaintext --output text | base64 --decode)
+PUSHOVER_USER=$(aws kms decrypt --ciphertext-blob fileb://hieradata/keys/pushover-user.kms --query Plaintext --output text | base64 --decode)
+
+for host in ${HOSTS}
+  do
+    bolt plan run base -n $host || curl -s -F "token=$PUSHOVER_KEY" \
+      -F "user=$PUSHOVER_USER" \
+      -F "message=puppet failed to apply on $host" https://api.pushover.net/1/messages.json
+done

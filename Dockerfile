@@ -6,7 +6,7 @@ RUN \
 RUN \
   apt dist-upgrade -y
 RUN \
-  apt -y install ruby-dev gems build-essential awscli
+  apt -y install ruby-dev gems build-essential awscli python-pip
 
 RUN \
   adduser --system --shell /bin/sh bolt
@@ -26,6 +26,9 @@ RUN \
 
 RUN \
   bundler install
+
+RUN \
+  pip install yq
 
 COPY ecs/decrypt-keys /usr/local/preinit/97-decrypt-keys
 

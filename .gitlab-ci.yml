@@ -1,0 +1,48 @@
+---
+image: debian
+
+before_script:
+  - 'which ssh-agent || ( apt-get -y update && apt-get -y install openssh-client )'
+  - apt-get -y install ruby-dev gems build-essential python3-pip curl git jq
+  - pip3 install yq
+  - gem install bundler
+  - bundler install
+  - mkdir -p ~/.puppetlabs/bolt/
+  - 'echo -e "disabled: true" > ~/.puppetlabs/bolt/analytics.yaml'
+  - head -n -1 ecs/bolt.yaml > bolt.yaml
+  - sed -i 's/20/1/g' bolt.yaml
+  - bolt puppetfile install
+  - eval $(ssh-agent -s)
+
+  ##
+  ## Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+  ## We're using tr to fix line endings which makes ed25519 keys work
+  ## without extra base64 encoding.
+  ## https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
+  ##
+  - echo "$SSH_KEY_PUPPET" | tr -d '\r' | ssh-add - > /dev/null
+
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+  ## This hack is to connect to a machine that has IPV6 only connectivity
+  - echo "$SSH_KEY_TUNNEL" > ~/ssh-tunnel
+  - chmod 0400 ~/ssh-tunnel
+  - ssh -i ~/ssh-tunnel $TUNNEL_USER@$TUNNEL_HOST -L 2222:127.0.0.1:5022 -Nf
+  - sleep 2
+  - echo -e "Host $NO_IPV4_MACHINE\n\t Hostname 127.0.0.1\n\tPort 2222\n" >> ~/.ssh/config
+
+deploy:
+  script:
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git hieradata
+    - ln -s hieradata/keys .
+    - HOSTS=$(cat hieradata/inventory.yaml | yq '.nodes[][]' | sed 's/"//g')
+    - |
+      for host in ${HOSTS}
+        do
+          bolt plan run base -n $host || curl -s -F "token=$PUSHOVER_KEY" \
+            -F "user=$PUSHOVER_USER" -F "message=puppet failed to apply on $host" \
+            https://api.pushover.net/1/messages.json
+      done

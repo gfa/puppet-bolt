@@ -11,7 +11,7 @@ before_script:
   - 'echo -e "disabled: true" > ~/.puppetlabs/bolt/analytics.yaml'
   - head -n -1 ecs/bolt.yaml > bolt.yaml
   - sed -i 's/20/1/g' bolt.yaml
-  - sed -i 's/format: json/format: human/g' bolt.yaml
+  - sed -i 's/json/human/g' bolt.yaml
   - bolt puppetfile install
   - eval $(ssh-agent -s)
 

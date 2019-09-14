@@ -37,6 +37,7 @@ before_script:
 
 deploy:
   script:
+    - curl icanhazip.com
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git hieradata
     - ln -s hieradata/keys .
     - HOSTS=$(cat hieradata/inventory.yaml | yq '.nodes[][]' | sed 's/"//g')

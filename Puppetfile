@@ -13,7 +13,9 @@ mod 'puppetlabs/translate', '1.2.0'
 mod 'alexharvey-firewall_multi', '1.12.0'
 mod 'puppetlabs-firewall', '1.15.1'
 mod 'saz-dnsmasq', '1.4.0'
-mod 'LeLutin-fail2ban', '3.1.0'
+mod 'LeLutin-fail2ban',
+    git: 'https://github.com/lelutin/puppet-fail2ban.git',
+    ref: 'master'
 mod 'hetzner-needrestart', '1.0.3'
 mod 'ssm-munin', '0.2.0'
 mod 'stm-debconf', '2.3.0'

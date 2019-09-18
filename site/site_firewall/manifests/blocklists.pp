@@ -2,8 +2,15 @@
 # IPs on the blocklist(s) are not allowed
 # to contact us, neither we are allow to
 # contact them
+#
+# @param countries_block countries to block in alpha-2 format
+# @param countries_allow countries to allow in alpha-2 format
+#
 
-class site_firewall::blocklists {
+class site_firewall::blocklists (
+  Array[String[2,2]] $countries_block,
+  Array[String[2,2]] $countries_allow,
+) {
 
   file { '/etc/cron.hourly/update-ipsets-blocklist.de':
     ensure => present,
@@ -11,6 +18,17 @@ class site_firewall::blocklists {
     owner  => 'root',
     group  => 'root',
     source => "puppet:///modules/${module_name}/update-ipsets-blocklist.de",
+  }
+
+  file { '/etc/cron.daily/update-countries-ipset':
+    ensure  => present,
+    mode    => '0755',
+    owner   => 'root',
+    group   => 'root',
+    content => epp("${module_name}/update-countries-ipset.epp",{
+        'countries_block' => join($countries_block, ' '),
+        'countries_allow' => join($countries_allow, ' '),
+    }),
   }
 
   firewall { '002 block botnets input ip4':

@@ -13,6 +13,7 @@ class base {
   include base::packages
   include site_firewall
   include site_firewall::ipset
+  include site_firewall::blocklists
   include base::dnsmasq
   include base::resolvconf
   include base::unattended_upgrades

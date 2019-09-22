@@ -1,0 +1,14 @@
+---
+concurrency: 1
+format: human
+
+log:
+  console:
+    level: notice
+  logs/debug.log:
+    level: debug
+    append: true
+
+ssh:
+  user: root
+  host-key-check: false

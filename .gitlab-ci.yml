@@ -7,11 +7,9 @@ before_script:
   - pip3 install yq
   - gem install bundler
   - bundler install
-  - mkdir -p ~/.puppetlabs/bolt/
+  - mkdir -p ~/.puppetlabs/bolt/ logs
   - 'echo -e "disabled: true" > ~/.puppetlabs/bolt/analytics.yaml'
-  - head -n -1 ecs/bolt.yaml > bolt.yaml
-  - sed -i 's/20/1/g' bolt.yaml
-  - sed -i 's/json/human/g' bolt.yaml
+  - mv -f .bolt.yaml.gitlab bolt.yaml
   - bolt puppetfile install
   - eval $(ssh-agent -s)
 
@@ -48,3 +46,8 @@ deploy:
             -F "user=$PUSHOVER_USER" -F "message=puppet failed to apply on $host" \
             https://api.pushover.net/1/messages.json
       done
+  artifacts:
+    paths:
+      - logs/debug.log
+    expire_in: 1 week
+    when: always

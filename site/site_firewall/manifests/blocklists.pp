@@ -12,12 +12,16 @@ class site_firewall::blocklists (
   Array[String[2,2]] $countries_allow,
 ) {
 
-  file { '/etc/cron.hourly/update-ipsets-blocklist.de':
+  file { '/etc/cron.hourly/update-ipsets-blocklists':
     ensure => present,
     mode   => '0755',
     owner  => 'root',
     group  => 'root',
-    source => "puppet:///modules/${module_name}/update-ipsets-blocklist.de",
+    source => "puppet:///modules/${module_name}/update-ipsets-blocklists",
+  }
+
+  file { '/etc/cron.hourly/update-ipsets-blocklist.de':
+    ensure => absent,
   }
 
   file { '/etc/cron.daily/update-countries-ipset':

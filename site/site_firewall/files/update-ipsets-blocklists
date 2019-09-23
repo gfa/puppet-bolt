@@ -1,0 +1,55 @@
+#!/bin/bash
+set -fue
+
+# blocklist.de
+URL=https://lists.blocklist.de/lists/all.txt
+
+# https://www.spamhaus.org/drop/
+EDROP=https://www.spamhaus.org/drop/edrop.txt
+DROP6=https://www.spamhaus.org/drop/dropv6.txt
+
+TEMP=`mktemp -d`
+
+function cleanup {
+  rm -rf ${TEMP}
+  ipset destroy block6-temp || true
+  ipset destroy block-temp || true
+}
+trap cleanup ERR
+
+cd "$TEMP"
+
+wget -q ${URL}
+wget -q ${EDROP}
+wget -q ${DROP6}
+
+cat edrop.txt dropv6.txt | grep -v '^;' | awk '{print $1}' > spamhaus.txt
+
+ipset create block-temp hash:net family inet hashsize 2048 maxelem 65536
+ipset create block6-temp hash:net family inet6 hashsize 2048 maxelem 65536
+
+for ip in $(cat all.txt | grep -v : | sort | uniq)
+  do
+        ipset add block-temp $ip
+done
+
+for ip in $(cat spamhaus.txt | grep -v : | sort | uniq)
+  do
+        ipset add block-temp $ip
+done
+
+
+for ip in $(cat all.txt | grep : | sort | uniq)
+  do
+        ipset add block6-temp $ip
+done
+
+for ip in $(cat spamhaus.txt | grep : | sort | uniq)
+  do
+        ipset add block6-temp $ip
+done
+
+ipset swap block-temp block4
+ipset swap block6-temp block6
+
+cleanup

@@ -114,6 +114,8 @@ This repo contains a `Dockerfile` to build a container with this code including 
 AWS ECS 
 -------
 
+*Note*: this is outdated information, currently I'm using GitLab CI to run puppet.
+
 &lt;warning&gt; **proprietary software ahead.** &lt;/warning&gt;
 
 I want to routinely apply this code to my servers, there are ~~2~~ many ways to do that

@@ -17,8 +17,8 @@ mkdir -p /var/tmp/countries-ipset
 
 for country in $COUNTRIES
   do
-  wget --quiet http://ipdeny.com/ipblocks/data/aggregated/${country}-aggregated.zone -O /var/tmp/countries-ipset/${country}-aggregated.zone
-  wget --quiet http://ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone -O /var/tmp/countries-ipset/${country}-6-aggregated.zone
+  wget --timeout=60 --quiet http://ipdeny.com/ipblocks/data/aggregated/${country}-aggregated.zone -O /var/tmp/countries-ipset/${country}-aggregated.zone
+  wget --timeout=60 --quiet http://ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone -O /var/tmp/countries-ipset/${country}-6-aggregated.zone
 done
 
 ipset create countries-block4-temp hash:net family inet hashsize 1024 maxelem 65536

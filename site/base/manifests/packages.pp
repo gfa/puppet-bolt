@@ -18,6 +18,8 @@ class base::packages (
       'facter',
       'prosody',
       'prosody-modules',
+      # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=941414
+      'dehydrated',
     ],
     priority => 990,
     release  => "${facts['os']['distro']['codename']}-backports",

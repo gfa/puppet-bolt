@@ -24,6 +24,7 @@ class base {
   include site_root
   include site_files
   include site_alternatives
+  include base::facts::installed_packages
 
   class { 'ssh':
     validate_sshd_file => true,

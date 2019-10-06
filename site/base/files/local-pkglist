@@ -1,0 +1,1 @@
+DPkg::Post-Invoke { "cd /var/lib/misc/thishost/ ; dpkg-query -W -f '${Package}\n' > pkglist.tmp ; mv pkglist.tmp pkglist"; };

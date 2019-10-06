@@ -19,9 +19,9 @@ trap cleanup ERR
 
 cd "$TEMP"
 
-wget --timeout=60 -q ${URL}
-wget --timeout=60 -q ${EDROP}
-wget --timeout=60 -q ${DROP6}
+wget --timeout=60 -q ${URL} || touch all.txt
+wget --timeout=60 -q ${EDROP} || touch edrop.txt
+wget --timeout=60 -q ${DROP6} || touch dropv6.txt
 
 cat edrop.txt dropv6.txt | grep -v '^;' | awk '{print $1}' > spamhaus.txt
 

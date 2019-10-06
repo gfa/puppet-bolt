@@ -8,7 +8,7 @@ class site_dehydrated (
 ) {
 
   package { 'dehydrated':
-    ensure => present,
+    ensure => latest,
   }
 
   file { '/etc/dehydrated/hooks':

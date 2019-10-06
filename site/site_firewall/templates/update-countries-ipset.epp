@@ -6,10 +6,10 @@ COUNTRIES_BLOCK="<%= $countries_block %>"
 COUNTRIES="$COUNTRIES_BLOCK $COUNTRIES_ALLOW"
 
 function cleanup {
-  ipset destroy countries-allow4-temp || true
-  ipset destroy countries-allow6-temp || true
-  ipset destroy countries-block4-temp || true
-  ipset destroy countries-block6-temp || true
+  ipset destroy countries-allow4-temp &>/dev/null || true
+  ipset destroy countries-allow6-temp &>/dev/null || true
+  ipset destroy countries-block4-temp &>/dev/null || true
+  ipset destroy countries-block6-temp &>/dev/null || true
 }
 trap cleanup ERR
 

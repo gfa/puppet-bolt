@@ -12,8 +12,8 @@ TEMP=`mktemp -d`
 
 function cleanup {
   rm -rf ${TEMP}
-  ipset destroy block6-temp || true
-  ipset destroy block-temp || true
+  ipset destroy block6-temp &>/dev/null || true
+  ipset destroy block-temp &>/dev/null || true
 }
 trap cleanup ERR
 

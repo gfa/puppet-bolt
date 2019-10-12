@@ -11,4 +11,12 @@ class base::dnsmasq (
     configs_hash     => $configs_hash,
   }
 
+  file { '/etc/cron.hourly/update-ipsets':
+    ensure => present,
+    mode   => '0755',
+    owner  => 'root',
+    group  => 'root',
+    source => "puppet:///modules/${module_name}/update-ipsets",
+  }
+
 }

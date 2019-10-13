@@ -1,6 +1,0 @@
-#!/bin/sh
-aws kms decrypt  --ciphertext-blob fileb:///home/bolt/hieradata/keys/puppet-bolt-ed25519.kms --output text --query Plaintext | base64 --decode > /home/bolt/id_ed25519
-aws kms decrypt  --ciphertext-blob fileb:///home/bolt/hieradata/keys/private_key.pkcs7.pem.kms --output text --query Plaintext | base64 --decode > /home/bolt/keys/private_key.pkcs7.pem
-chmod 644 /home/bolt/id_ed25519
-chmod 644 /home/bolt/keys/private_key.pkcs7.pem
-chmod 644 /home/bolt/keys/public_key.pkcs7.pem

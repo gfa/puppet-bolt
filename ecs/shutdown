@@ -1,3 +1,0 @@
-#!/bin/sh
-echo 'bye bye'
-telinit 1

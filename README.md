@@ -105,46 +105,9 @@ This invocation will run site.pp on all servers
 $ bolt plan run base -n all
 ```
 
-Docker
-------
+Scheduled runs of this repo
+---------------------------
 
-This repo contains a `Dockerfile` to build a container with this code including hiera.
+Currently I'm using GitLab CI to run Puppet.
 
-
-AWS ECS 
--------
-
-*Note*: this is outdated information, currently I'm using GitLab CI to run puppet.
-
-&lt;warning&gt; **proprietary software ahead.** &lt;/warning&gt;
-
-I want to routinely apply this code to my servers, there are ~~2~~ many ways to do that
-
-
-- Puppet master  
-  One more service to maintain :(
-
-- Run `bolt` with a cronjob on a machine  
-  It could have a SSH Key (~/.ssh/id_rsa) or a [security](https://www.nitrokey.com/) [token](https://www.yubico.com/)
-  but both cases open a window to someone to break into that machine and get the kingdom's keys.
-
-- Run `bolt` from a container  
-  This is similar than the previous idea with the improvement that containers are short-lived, so
-  "harder" to break in.
-
-- Run https://github.com/jethrocarr/pupistry  
-  This option actually looks pretty good. I'd use it if I wouldn't want to play with KMS.
-
-- Run `bolt` using an ephemeral ssh key  
-  Using a CA that generates short-lived SSH keys, an idea stolen from [bless](https://github.com/Netflix/bless).
-
-  [cashier](https://github.com/nsheridan/cashier) looks simpler to deploy, but both options are just too much
-  for single user infrastructure.
-
-
-- Run `bolt` from a container, retrieve the SSH key within the container  
-  I could do this, storing the key in KMS/Barbican. It requires total trust on your provider.
-
-- Run `bolt` from a container, retrieve the ssh key *password* in the container  
-  Similar to the previous case but instead of storing the key in KMS/Barbican, I keep the ssh key encrypted with hiera and decrypt it
-  in the container using KMS/Barbican.
+Check the git history of the README.md to check how I did before.

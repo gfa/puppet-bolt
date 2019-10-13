@@ -54,3 +54,25 @@ deploy:
   only:
     refs:
       - master
+
+deploy:
+  script:
+    - curl -s icanhazip.com
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git hieradata
+    - ln -s hieradata/keys .
+    - HOSTS=$(cat hieradata/inventory.yaml | yq '.nodes[][]' | sed 's/"//g')
+    - |
+      for host in ${TEST_HOSTS}
+        do
+          bolt plan run base -n $host || curl -s -F "token=$PUSHOVER_KEY" \
+            -F "user=$PUSHOVER_USER" -F "message=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
+            https://api.pushover.net/1/messages.json
+      done
+  artifacts:
+    paths:
+      - logs/debug.log
+    expire_in: 1 week
+    when: always
+  except:
+    refs:
+      - master

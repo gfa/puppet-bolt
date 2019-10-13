@@ -1,0 +1,9 @@
+#!/bin/sh
+DOMAINS=$(grep ^ipset /etc/dnsmasq.d/*   | awk -F / '{print $5}')
+
+for DOMAIN in ${DOMAINS}
+do
+        dig ${DOMAIN} >/dev/null 2>/dev/null
+        dig AAAA ${DOMAIN} >/dev/null 2>/dev/null
+done
+exit 0

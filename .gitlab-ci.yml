@@ -33,7 +33,7 @@ before_script:
   - sleep 2
   - echo -e "Host $NO_IPV4_MACHINE\n\t Hostname 127.0.0.1\n\tPort 2222\n" >> ~/.ssh/config
 
-deploy:
+production:
   script:
     - curl -s icanhazip.com
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git hieradata
@@ -54,8 +54,9 @@ deploy:
   only:
     refs:
       - master
+      - scheduled
 
-deploy:
+testing:
   script:
     - curl -s icanhazip.com
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git hieradata
@@ -76,3 +77,4 @@ deploy:
   except:
     refs:
       - master
+      - scheduled

@@ -9,4 +9,10 @@ class site_munin::node::plugins {
     require => Package['vnstat'],
   }
 
+  munin::plugin { 'ipset':
+    ensure  => present,
+    source  => "puppet:///modules/${module_name}/plugins/ipset",
+    require => Package['ipset'],
+  }
+
 }

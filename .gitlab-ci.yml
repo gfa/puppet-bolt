@@ -4,6 +4,25 @@ image: debian
 before_script:
   - 'which ssh-agent || ( apt-get -y update && apt-get -y install openssh-client )'
   - apt-get -y install ruby-dev gems build-essential python3-pip curl git jq
+
+  # I don't want more than one copy of the pipeline running
+  # https://gitlab.com/gitlab-org/gitlab-foss/issues/41560
+  # https://gitlab.com/gitlab-org/gitlab-foss/issues/20481
+
+  - |
+    printf 'Waiting...'
+    while true; do
+      READY=$(curl -sS --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}" "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/pipelines?order_by=id&sort=asc&scope=running" | jq '.[0].id=='"${CI_PIPELINE_ID}")
+      if [ "${READY}" = "true" ]; then
+        printf '\nReady!'
+        break
+      else
+        printf '.'
+        sleep 10
+      fi
+    done
+
+  # resuming normal flow
   - pip3 install yq
   - gem install bundler
   - bundler install

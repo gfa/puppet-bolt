@@ -1,3 +1,15 @@
-clamav
-postfix
-nginx
+Things to manage using puppet
+=============================
+
+- clamav
+- postfix
+- nginx
+- dovecot
+- locales
+- root's .bashrc (DEBIAN_FRONTEND, unset HISTFILE)
+- mariadb
+- spamassassin
+- do profiles and roles
+- docker, service and either of this containers running:
+  - https://github.com/containrrr/watchtower
+  - https://github.com/pyouroboros/ouroboros

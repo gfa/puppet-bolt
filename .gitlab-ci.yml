@@ -2,7 +2,7 @@
 image: debian
 
 before_script:
-  - 'which ssh-agent || ( apt-get -y update && apt-get -y install openssh-client )'
+  - "which ssh-agent || ( apt-get -y update && apt-get -y install openssh-client )"
   - apt-get -y install ruby-dev gems build-essential python3-pip curl git jq
 
   # I don't want more than one copy of the pipeline running
@@ -10,11 +10,11 @@ before_script:
   # https://gitlab.com/gitlab-org/gitlab-foss/issues/20481
 
   - |
-    printf 'Waiting...'
+    printf '\nWaiting...\n'
     while true; do
-      READY=$(curl -sS --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}" "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/pipelines?order_by=id&sort=asc&scope=running" | jq '.[0].id=='"${CI_PIPELINE_ID}")
-      if [ "${READY}" = "true" ]; then
-        printf '\nReady!'
+      OLDEST_JOB=$(curl -sS --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}" "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/jobs?scope=running" | jq '.[].id' | sort -n -r | tail -1)
+      if [ "${OLDEST_JOB}x" = "${CI_JOB_ID}x" ]; then
+        printf '\nReady!\n'
         break
       else
         printf '.'

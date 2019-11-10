@@ -10,8 +10,8 @@ class site_munin::node::plugins {
   }
 
   munin::plugin { 'ipset':
-    ensure  => present,
-    source  => "puppet:///modules/${module_name}/plugins/ipset",
+    ensure => present,
+    source => "puppet:///modules/${module_name}/plugins/ipset",
   }
 
 }

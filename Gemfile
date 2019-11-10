@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
+# rubocop:disable BlockLength
 source ENV['GEM_SOURCE'] || 'https://rubygems.org' do
+  # rubocop:enable BlockLength
   gem 'bcrypt_pbkdf', '~> 1'
   gem 'bolt', '~> 1'
   gem 'ed25519', '~> 1.2'

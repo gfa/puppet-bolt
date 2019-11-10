@@ -8,7 +8,11 @@ hierarchy:
     lookup_key: eyaml_lookup_key
     paths:
       - "hosts/%{::hostname}.eyaml"
+      - "hosts/%{::hostname}/*.eyaml"
+      - "hosts/%{::hostname}/*.yaml"
       - "hosts/%{::fqdn}.eyaml"
+      - "hosts/%{::fqdn}/*.eyaml"
+      - "hosts/%{::fqdn}/*.yaml"
     options:
       encrypt_method: gpg
       gpg_always_trust: true

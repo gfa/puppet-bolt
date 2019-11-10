@@ -7,7 +7,6 @@ class site_mail::fail2ban {
 
   $dovecot_params = lookup('fail2ban::jail::dovecot')
   fail2ban::jail { 'dovecot':
-    filter => 'sshd[mode=aggressive]',
     *      => $dovecot_params,
   }
 

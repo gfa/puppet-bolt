@@ -12,6 +12,7 @@ class site_prosody (
 ) {
 
   include site_dehydrated
+  include site_munin::node
 
   package { 'prosody-modules':
     ensure => present,
@@ -108,6 +109,39 @@ class site_prosody (
     owner   => 'root',
     group   => 'root',
     mode    => '0744',
+  }
+
+  site_munin::node::conf { 'prosody':
+    source => "puppet:///modules/${module_name}/prosody_munin.conf"
+  }
+
+  site_munin::node::check { 'ps_prosody':
+    script => 'ps_'
+  }
+
+  $plugins_to_install = ['prosody_users', 'prosody_c2s']
+
+  $plugins_to_install.each |$index, $plugin| {
+    file { "/usr/share/munin/plugins/${plugin}":
+      ensure => file,
+      mode   => '0755',
+      owner  => 'root',
+      group  => 'root',
+      source => "puppet:///modules/${module_name}/${plugin}"
+    }
+
+    site_munin::node::check { $plugin:
+      script => $plugin
+    }
+
+  }
+
+  $prosody_c2s_plugins = [ 'prosody_uptime', 'prosody_presence', 'prosody_s2s']
+
+  $prosody_c2s_plugins.each |$index2, $plugin2| {
+    site_munin::node::check { $plugin2:
+      script => 'prosody_c2s'
+    }
   }
 
 }

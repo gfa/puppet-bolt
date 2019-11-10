@@ -6,13 +6,13 @@ defaults:
 hierarchy:
   - name: 'Per host data'
     lookup_key: eyaml_lookup_key
-    paths:
+    globs:
       - "hosts/%{::hostname}.eyaml"
-      - "hosts/%{::hostname}/*.eyaml"
       - "hosts/%{::hostname}/*.yaml"
+      - "hosts/%{::hostname}/*.eyaml"
       - "hosts/%{::fqdn}.eyaml"
-      - "hosts/%{::fqdn}/*.eyaml"
       - "hosts/%{::fqdn}/*.yaml"
+      - "hosts/%{::fqdn}/*.eyaml"
     options:
       encrypt_method: gpg
       gpg_always_trust: true

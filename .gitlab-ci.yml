@@ -45,13 +45,6 @@ before_script:
 
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
-  ## This hack is to connect to a machine that has IPV6 only connectivity
-  - echo "$SSH_KEY_TUNNEL" > ~/ssh-tunnel
-  - chmod 0400 ~/ssh-tunnel
-  - ssh -i ~/ssh-tunnel $TUNNEL_USER@$TUNNEL_HOST -L 2222:127.0.0.1:5022 -Nf
-  - sleep 2
-  - echo -e "Host $NO_IPV4_MACHINE\n\t Hostname 127.0.0.1\n\tPort 2222\n" >> ~/.ssh/config
-
 production:
   script:
     - curl -s icanhazip.com

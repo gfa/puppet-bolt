@@ -41,6 +41,14 @@ run-parts /etc/dehydrated/hooks\n"
     group   => 'root',
     mode    => '0644',
     content => template("${module_name}/domains.txt.erb"),
+    notify  => Exec['run_dehydrated'],
+  }
+
+  exec { 'run_dehydrated':
+    cwd         => '/',
+    command     => '/usr/bin/dehydrated -c',
+    refreshonly => true,
+    user        => 'root',
   }
 
   $cron_contents = "#!/bin/sh

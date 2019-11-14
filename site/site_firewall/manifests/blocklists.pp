@@ -35,6 +35,19 @@ class site_firewall::blocklists (
     }),
   }
 
+  $update_ipsets_content = "
+    @reboot root /etc/cron.daily/update-countries-ipset
+    @reboot root /etc/cron.daily/update-ipsets-blocklists
+    "
+
+  file { '/etc/cron.d/update-ipsets':
+    ensure  => present,
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    content => $update_ipsets_content,
+  }
+
   firewall { '002 block botnets input ip4':
     chain    => 'INPUT',
     proto    => 'all',

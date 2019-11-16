@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 forge 'http://forge.puppetlabs.com'
 
 mod 'puppetlabs/stdlib', '5.2.0'
 mod 'thias/sysctl', '1.0.6'
-#mod 'puppet-unattended_upgrades', '4.0.0'
 mod 'puppet-unattended_upgrades',
     git: 'https://github.com/deubert-it/puppet-unattended_upgrades.git',
     ref: 'master'

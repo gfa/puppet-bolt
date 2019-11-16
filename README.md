@@ -1,11 +1,8 @@
 Puppet Bolt repo to manage my servers
 =====================================
 
-~~This repo does not follow the [role and profile method](https://puppet.com/docs/pe/2018.1/the_roles_and_profiles_method.html).~~
-I'm refactoring this repo to follow roles and profiles method.
-
-It only manages the base configuration common to
-all my servers, which is
+At the moment it only manages the base configuration common to
+all my servers, which is:
 
 - apt repos
 - unattended upgrades
@@ -13,7 +10,7 @@ all my servers, which is
 - fail2ban
 - logcheck
 - ntp
-- some basic packages
+- common packages
 - nullmailer
 - sshd
 - root user account
@@ -22,10 +19,14 @@ all my servers, which is
 Higher level applications (postfix, nginx, etc) are not managed by puppet ATM.
 I don't have that many servers.
 
-I try to have as little as possible code outside modules and as much as possible configured by hiera.
+Roles
+-----
 
-Modules
--------
+I don't have roles yet, I just include `profiles` from hiera.
+
+
+3rd party Modules
+-----------------
 
 Modules are managed by bolt itself, they are declared on the `Puppetfile`.
 The extra modules are required to run bolt.
@@ -37,7 +38,7 @@ bolt puppetfile install
 Hiera
 -----
 
-Hiera is kept in a private repo. Hiera is data not code, so I won't share it.
+Hiera is kept in a private repo. Hiera is data not code, so I keep it private.
 
 hiera-eyaml-gpg doesn't work with multiple [subkeys](https://github.com/voxpupuli/hiera-eyaml-gpg/issues/6) :(
 
@@ -110,5 +111,3 @@ Scheduled runs of this repo
 ---------------------------
 
 Currently I'm using GitLab CI to run Puppet.
-
-Check the git history of the README.md to check how I did before.

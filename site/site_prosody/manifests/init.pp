@@ -72,34 +72,6 @@ class site_prosody (
       }
   }
 
-  ~> posix_acl { '/etc/prosody/prosody.cfg.lua':
-    action     => exact,
-    recursive  => false,
-    provider   => posixacl,
-    permission => [
-      'user::rw',
-      'group::r',
-      'group:rssfeeds:rwx',
-      'group:prosody:r',
-      'mask::r',
-      'other::',
-    ],
-  }
-
-  ~> posix_acl { "/etc/prosody/conf.avail/${prosody_domain}.cfg.lua":
-    action     => exact,
-    recursive  => false,
-    provider   => posixacl,
-    permission => [
-      'user::rw',
-      'group::r',
-      'group:rssfeeds:rwx',
-      'group:prosody:r',
-      'mask::r',
-      'other::',
-    ],
-  }
-
   file { '/etc/dehydrated/hooks/prosody.sh':
     ensure  => present,
     content => epp("${module_name}/prosody-hook.sh.epp",{

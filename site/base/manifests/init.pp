@@ -13,34 +13,37 @@ class base {
   include profile::hardware::gce
 
   # networking
-  include profile::networking::services::dnsmasq
-  include profile::networking::services::ntp::client
-  include profile::networking::services::resolvconf
+  include profile::networking::service::dnsmasq
+  include profile::networking::service::ntp::client
+  include profile::networking::service::resolvconf
+  include profile::networking::firewall
+  include profile::networking::firewall::ipset
+  include profile::networking::firewall::blocklists
 
   # package management
   include profile::package::base_packages
   include profile::package::pinning
   include profile::package::unattended_upgrades
+  include profile::package::alternatives
 
   # services
-  include profile::services::disable_puppet
-  include profile::services::openssh::server
+  include profile::service::disable_puppet
+  include profile::service::openssh::server
 
   # logging
   include profile::logging::logcheck
 
-  # old stuff to be refactored
-  include site_firewall
-  include site_firewall::ipset
-  include site_firewall::blocklists
-  include site_munin::node
-  include site_root
-  # include site_files
-  include site_alternatives
+  # monitoring
+  include profile::monitoring::munin::node
+
+  # security
+  include profile::security::account::root
+  include profile::security::ssl
+
+  #include site_files
+
+  # local facts
   include site_facts
-
-
-  include site_ssl
 
   # include roles from hiera
   # use a default emtpy class as default result

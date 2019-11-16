@@ -15,7 +15,7 @@
 #      if perms and ownership are not defined
 #      defaults will be used
 
-class site_files (
+define site_files (
   Variant[Hash, Type[Undef]] $files = lookup({
       name          => 'site_files::files',
       merge         => 'deep',

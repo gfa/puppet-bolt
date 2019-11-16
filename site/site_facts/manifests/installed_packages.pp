@@ -3,7 +3,7 @@
 # cead6de02810f62af1f679363843bb3444f11425
 # bugs are mine
 
-class base::facts::installed_packages {
+class site_facts::installed_packages {
 
   file { '/var/lib/misc/thishost':
     ensure => directory,

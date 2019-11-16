@@ -2,7 +2,7 @@
 #
 # @param configs_hash contains dnsmasq's config
 
-class base::dnsmasq (
+class profile::networking::services::dnsmasq (
   Hash $configs_hash,
 ) {
 

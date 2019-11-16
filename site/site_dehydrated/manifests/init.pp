@@ -7,6 +7,8 @@ class site_dehydrated (
   Hash[String, Variant[Array, Undef]] $domains,
 ) {
 
+  include profile::nginx::dehydrated
+
   package { 'dehydrated':
     ensure => latest,
   }

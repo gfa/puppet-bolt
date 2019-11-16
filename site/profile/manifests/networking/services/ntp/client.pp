@@ -1,7 +1,7 @@
 # this class manages ntp
 # just remove ntp and enable systemd-timesyncd
 
-class base::ntp {
+class profile::networking::services::ntp::client {
 
   package { 'ntp':
     ensure => purged,

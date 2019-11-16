@@ -3,7 +3,7 @@
 # @param configuration contains unattended upgrades configuration as a hash
 #
 
-class base::unattended_upgrades (
+class profile::package::unattended_upgrades (
   Hash $configuration
 ) {
 

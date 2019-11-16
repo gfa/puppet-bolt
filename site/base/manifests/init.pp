@@ -3,36 +3,46 @@
 
 class base {
 
-  # IPv6 is broken in GCE
-  if $facts['dmi']['bios']['vendor'] == 'Google' {
-    class { 'gai::preferipv4': }
-  }
-
+  # modules that take their configuration fully from hiera
   include apt
-  include base::disable_puppet
-  include base::packages
+  include needrestart
+
+  # profiles included in all servers
+
+  # hw
+  include profile::hardware::gce
+
+  # networking
+  include profile::networking::services::dnsmasq
+  include profile::networking::services::ntp::client
+  include profile::networking::services::resolvconf
+
+  # package management
+  include profile::package::base_packages
+  include profile::package::pinning
+  include profile::package::unattended_upgrades
+
+  # services
+  include profile::services::disable_puppet
+  include profile::services::openssh::server
+
+  # logging
+  include profile::logging::logcheck
+
+  # old stuff to be refactored
   include site_firewall
   include site_firewall::ipset
   include site_firewall::blocklists
-  include base::dnsmasq
-  include base::resolvconf
-  include base::unattended_upgrades
-  include base::ntp
-  include needrestart
   include site_munin::node
-  include base::logcheck
   include site_root
-  include site_files
+  # include site_files
   include site_alternatives
-  include base::facts::installed_packages
+  include site_facts
 
-  class { 'ssh':
-    validate_sshd_file => true,
-  }
 
   include site_ssl
 
-  # include classes from hiera
+  # include roles from hiera
   # use a default emtpy class as default result
   # so the include never fails
   lookup({

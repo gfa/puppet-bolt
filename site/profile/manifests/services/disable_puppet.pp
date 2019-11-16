@@ -1,7 +1,7 @@
 # This class disables the puppet agent
 #
 
-class base::disable_puppet {
+class profile::services::disable_puppet {
 
   service { 'puppet-agent':
     ensure => stopped,

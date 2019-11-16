@@ -1,7 +1,8 @@
 Puppet Bolt repo to manage my servers
 =====================================
 
-This repo does not follow the [role and profile method](https://puppet.com/docs/pe/2018.1/the_roles_and_profiles_method.html).
+~~This repo does not follow the [role and profile method](https://puppet.com/docs/pe/2018.1/the_roles_and_profiles_method.html).~~
+I'm refactoring this repo to follow roles and profiles method.
 
 It only manages the base configuration common to
 all my servers, which is

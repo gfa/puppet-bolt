@@ -1,7 +1,7 @@
 # this class manages resolv.conf
 #
 
-class base::resolvconf {
+class profile::networking::services::resolvconf {
 
   package { 'resolvconf':
     ensure => present,

@@ -36,7 +36,8 @@ before_script:
   echo "$SSH_KEY_PUPPET" | tr -d '\r' | ssh-add - > /dev/null
   install -m 0700 -d ~/.ssh
   echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-  git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git hieradata
+  git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b ${CI_COMMIT_REF_NAME} hieradata \
+  || git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b master hieradata
   ln -s hieradata/keys .
 
 production:

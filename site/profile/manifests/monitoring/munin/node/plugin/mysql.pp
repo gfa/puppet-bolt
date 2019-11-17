@@ -2,7 +2,7 @@
 #
 # @param links symlinks to create to the mysql_ plugin
 
-class profile::monitoring::munin::node::mysql (
+class profile::monitoring::munin::node::plugin::mysql (
   Array $links
 ) {
 

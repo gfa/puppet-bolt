@@ -1,7 +1,7 @@
 # this class manages munin plugins for prosody
 #
 
-class profile::monitoring::munin::node::prosody {
+class profile::monitoring::munin::node::plugin::prosody {
 
   include profile::monitoring::munin::node
 

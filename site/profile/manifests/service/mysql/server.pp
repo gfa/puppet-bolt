@@ -11,7 +11,7 @@ class profile::service::mysql::server (
   String $restart,
 ) {
 
-  include profile::monitoring::munin::node::mysql
+  include profile::monitoring::munin::node::plugin::mysql
 
   class { 'mysql::server':
     root_password           => $mysql_root_password,

@@ -12,7 +12,7 @@ class profile::service::prosody (
 ) {
 
   include profile::security::ssl::dehydrated
-  include profile::monitoring::munin::node::prosody
+  include profile::monitoring::munin::node::plugin::prosody
 
   package { 'prosody-modules':
     ensure => present,

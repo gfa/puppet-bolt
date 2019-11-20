@@ -9,32 +9,27 @@ class profile::monitoring::munin::node::plugin::prosody {
     source => "puppet:///modules/${module_name}/monitoring/munin/node/prosody_munin.conf"
   }
 
-  profile::monitoring::munin::node::check { 'ps_prosody':
-    script => 'ps_'
+  file { '/etc/munin/plugins/ps_prosody':
+    ensure => absent,
   }
 
-  $plugins_to_install = ['prosody_users', 'prosody_c2s']
+  file { '/etc/munin/plugins/prosody_presence':
+    ensure => absent,
+  }
 
-  $plugins_to_install.each |$index, $plugin| {
-    file { "/usr/share/munin/plugins/${plugin}":
-      ensure => file,
-      mode   => '0755',
-      owner  => 'root',
-      group  => 'root',
-      source => "puppet:///modules/${module_name}/monitoring/munin/node/plugins/${plugin}"
-    }
+  file { '/usr/share/munin/plugins/prosody_':
+    ensure => file,
+    mode   => '0755',
+    owner  => 'root',
+    group  => 'root',
+    source => "puppet:///modules/${module_name}/monitoring/munin/node/plugins/prosody_"
+  }
 
+  $prosody_plugins = ['prosody_users', 'prosody_c2s', 'prosody_uptime', 'prosody_s2s' ]
+
+  $prosody_plugins.each |$index, $plugin| {
     profile::monitoring::munin::node::check { $plugin:
-      script => $plugin
-    }
-
-  }
-
-  $prosody_c2s_plugins = [ 'prosody_uptime', 'prosody_presence', 'prosody_s2s']
-
-  $prosody_c2s_plugins.each |$index2, $plugin2| {
-    profile::monitoring::munin::node::check { $plugin2:
-      script => 'prosody_c2s'
+      script => 'prosody_'
     }
   }
 

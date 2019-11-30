@@ -19,6 +19,7 @@ class profile::service::prosody (
   }
 
   class { 'prosody':
+    require           => File['/srv/prosody/compiled'],
     authentication    => 'internal_plain',
     use_libevent      => false,
     daemonize         => true,
@@ -30,6 +31,7 @@ class profile::service::prosody (
     },
     custom_options    => {
       'proxy65_ports'     => 5282,
+      'firewall_scripts'  => '/srv/prosody/compiled/spammer.pfw',
       'https_ssl'         => {
         'key'         => "/etc/prosody/certs/${prosody_fqdn}/privkey.pem",
         'certificate' => "/etc/prosody/certs/${prosody_fqdn}/fullchain.pem",
@@ -45,7 +47,7 @@ class profile::service::prosody (
       'http_upload', 'carbons', 'csi',
       'throttle_presence', 'filter_chatstates',
       'smacks',  'blocking', 'cloud_notify',
-      'http', 'mam', 'admin_telnet',
+      'http', 'mam', 'admin_telnet', 'firewall',
     ],
 
   }
@@ -81,6 +83,20 @@ class profile::service::prosody (
     owner   => 'root',
     group   => 'root',
     mode    => '0744',
+  }
+
+  file { '/srv/prosody':
+    ensure => directory,
+    mode   => '0750',
+    owner  => 'root',
+    group  => 'prosody',
+  }
+
+  file { '/srv/prosody/compiled':
+    ensure => directory,
+    mode   => '0750',
+    owner  => 'root',
+    group  => 'prosody',
   }
 
 }

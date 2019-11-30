@@ -2,6 +2,7 @@
 #
 # @param prosody_fqdn the fqdn behind the prosody server
 # @param prosody_domain the domain this prosody server serves
+# @param prosody_admins the administrators of this server
 #
 # TODO: make this a define and support multiple domains
 #
@@ -9,6 +10,7 @@
 class profile::service::prosody (
   Stdlib::Fqdn $prosody_fqdn,
   Stdlib::Fqdn $prosody_domain,
+  Array[String] $prosody_admins,
 ) {
 
   include profile::security::ssl::dehydrated
@@ -25,6 +27,7 @@ class profile::service::prosody (
     daemonize         => true,
     s2s_secure_auth   => false,
     ssl_custom_config => false,
+    admins            => $prosody_admins,
     log_sinks         => [],
     log_advanced      => {
       'info' => 'syslog',

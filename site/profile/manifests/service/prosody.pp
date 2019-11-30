@@ -26,7 +26,7 @@ class profile::service::prosody (
     ssl_custom_config => false,
     log_sinks         => [],
     log_advanced      => {
-      'error' => 'syslog',
+      'info' => 'syslog',
     },
     custom_options    => {
       'proxy65_ports'     => 5282,

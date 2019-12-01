@@ -33,6 +33,11 @@ mod 'puppet-alternatives', '3.0.0'
 mod 'puppet-nginx',
     git: 'https://github.com/voxpupuli/puppet-nginx.git',
     ref: 'v1.0.0'
+mod 'mayflower-prosody',
+    git: 'https://github.com/gfa/puppet-prosody.git',
+    ref: 'fixes'
+mod 'puppet-posix_acl', '0.1.1'
+mod 'camptocamp-postfix', '1.9.0'
 
 # Core modules used by 'apply'
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile
@@ -41,11 +46,6 @@ mod 'puppetlabs-facts', '0.5.0'
 mod 'puppet_agent',
     git: 'https://github.com/puppetlabs/puppetlabs-puppet_agent',
     ref: '8b56966233536a4829d1ff533b720fe1bc1145b8'
-
-mod 'mayflower-prosody',
-    git: 'https://github.com/gfa/puppet-prosody.git',
-    ref: 'fixes'
-mod 'puppet-posix_acl', '0.1.1'
 
 # Core types and providers for Puppet 6
 mod 'puppetlabs-augeas_core', '1.0.3'

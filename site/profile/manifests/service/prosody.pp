@@ -30,7 +30,7 @@ class profile::service::prosody (
     admins            => $prosody_admins,
     log_sinks         => [],
     log_advanced      => {
-      'info' => 'syslog',
+      'warn' => 'syslog',
     },
     custom_options    => {
       'proxy65_ports'     => 5282,

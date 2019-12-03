@@ -33,6 +33,9 @@ mod 'puppet-alternatives', '3.0.0'
 mod 'puppet-nginx',
     git: 'https://github.com/voxpupuli/puppet-nginx.git',
     ref: 'v1.0.0'
+mod 'puppet-systemd',
+    git: 'https://github.com/camptocamp/puppet-systemd.git',
+    ref: 'master'
 
 # Core modules used by 'apply'
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile

@@ -47,7 +47,7 @@ production:
     - |
       for host in ${HOSTS}
         do
-          bolt plan run base -n $host || curl -s -F "token=$PUSHOVER_KEY" \
+          bolt plan run base --targets $host || curl -s -F "token=$PUSHOVER_KEY" \
             -F "user=$PUSHOVER_USER" -F "message=puppet failed to apply on $host" \
             https://api.pushover.net/1/messages.json
       done
@@ -68,7 +68,7 @@ testing:
     - |
       for host in ${TEST_HOSTS}
         do
-          bolt plan run base -n $host || curl -s -F "token=$PUSHOVER_KEY" \
+          bolt plan run base --targets $host || curl -s -F "token=$PUSHOVER_KEY" \
             -F "user=$PUSHOVER_USER" -F "message=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             https://api.pushover.net/1/messages.json
       done

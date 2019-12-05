@@ -31,7 +31,7 @@ class profile::service::prosody (
     log_level         => 'warn',
     log_sinks         => [],
     log_advanced      => {
-      'warn' => 'syslog',
+      'debug' => 'syslog',
     },
     custom_options    => {
       'proxy65_ports'     => 5282,

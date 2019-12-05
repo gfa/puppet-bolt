@@ -13,3 +13,4 @@ keys
 /hieradata/
 inventory.yaml
 .rerun.json
+.resource_types/

@@ -28,6 +28,7 @@ class profile::service::prosody (
     s2s_secure_auth   => false,
     ssl_custom_config => false,
     admins            => $prosody_admins,
+    log_level         => 'warn',
     log_sinks         => [],
     log_advanced      => {
       'warn' => 'syslog',

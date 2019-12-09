@@ -36,6 +36,8 @@ class profile::service::nginx (
     # XXX: hardcoded, should just let nginx figure it out
     proxy_cache_max_size  => '15g',
     proxy_cache_inactive  => '24h',
+    ssl_dhparam           => '/etc/nginx/dhparam.pem',
+    require               => Exec['/etc/nginx/dhparam.pem'],
   }
   # recreate the default vhost
   nginx::resource::server { 'default':
@@ -59,7 +61,8 @@ class profile::service::nginx (
   }
 
   exec { '/etc/nginx/dhparam.pem':
-    command => '/usr/bin/openssl dhparam -out /etc/nginx/dhparam.pem 2048',
+    # proper dependencies create a cycle :(
+    command => '/bin/mkdir -p /etc/nginx ; /usr/bin/openssl dhparam -out /etc/nginx/dhparam.pem 2048',
     creates => '/etc/nginx/dhparam.pem',
   }
 

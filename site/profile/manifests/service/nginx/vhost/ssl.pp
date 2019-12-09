@@ -71,10 +71,8 @@ define profile::service::nginx::vhost::ssl (
     ssl_session_timeout       => '10m',
     ssl_protocols             => 'TLSv1.2',
     ssl_prefer_server_ciphers => 'on',
-    ssl_dhparam               => '/etc/nginx/dhparam.pem',
     ssl                       => true,
     add_header                => $headers_to_add,
-    require                   => Exec['/etc/nginx/dhparam.pem'],
   }
 
 }

@@ -9,7 +9,7 @@
 #
 
 class profile::service::nginx::vhost::ssl::static (
-    Hash[String, Stdlib::UnixPath] $vhost_config,
+  Hash[String, Stdlib::UnixPath] $vhost_config,
 ) {
 
   $vhost_config.each |$vhost| {

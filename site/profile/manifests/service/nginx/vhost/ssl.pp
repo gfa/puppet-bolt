@@ -1,6 +1,11 @@
 # this class manages a https vhost on a machine
 #
-# @param vhosts contains all the vhost configuration
+# @param vhost_name contains the name of the vhost
+# @param vhosts contains all the vhosts that will be served
+# @param www_root contains the document root of the vhost
+# @param headers override the default headers
+# @param locations override the default locations
+# @param index_files override the default index_files
 #
 
 define profile::service::nginx::vhost::ssl (
@@ -43,10 +48,10 @@ define profile::service::nginx::vhost::ssl (
   }
 
   nginx::resource::server { $vhost_name:
-    server_name               => $vhosts,
-    access_log                => "${nginx_logs_path}/${vhost_name}.access.log",
-    error_log                 => "${nginx_logs_path}/${vhost_name}.error.log",
-    ssl_redirect              => true,
+    server_name  => $vhosts,
+    access_log   => "${nginx_logs_path}/${vhost_name}.access.log",
+    error_log    => "${nginx_logs_path}/${vhost_name}.error.log",
+    ssl_redirect => true,
   }
 
   nginx::resource::server { "${vhost_name}_ssl":

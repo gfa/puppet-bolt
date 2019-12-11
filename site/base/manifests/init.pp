@@ -17,7 +17,6 @@ class base {
   include profile::networking::service::ntp::client
   include profile::networking::service::resolvconf
   include profile::networking::firewall
-  include profile::networking::firewall::ipset
   include profile::networking::firewall::blocklists
 
   # package management

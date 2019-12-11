@@ -1,3 +1,3 @@
-<% @hash['hosts'].each do |host| -%>
-ipset=/<%= host %>/<%= @name %>4,<%= @name %>6
+<% @ipset_hosts.each do |host| -%>
+ipset=/<%= host %>/<%= @ipset_name %>4,<%= @ipset_name %>6
 <% end -%>

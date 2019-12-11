@@ -1,47 +1,27 @@
-# This class manages ipsets
-# i'd love to use any of the 3 puppet modules that manage ipsets
-# but they don't support Debian, neither iptables-persistent :(
+# this class manages 'static' ipsets, they are added in /etc/iptables/ipset
+# if they need updating something else takes care of that
 #
-# @param ipsets contains a hash with ipsets and their parameters
+# for ipsets which are dns based and updated by dnsmasq see
+# profile::networking::services::dnsmasq::ipset
 #
+# @param ipset_name contains the name and the type of the ipset.
+# Two sets will be created, one for ipv4 and other for ipv6
+# @param ipset_type type of ipset to create, by default 'hash:net'
 
-class profile::networking::firewall::ipset (
-  Hash $ipsets,
+define profile::networking::firewall::ipset (
+  String[1, 35] $ipset_name = $title,
+  Enum['hash:ip', 'hash:net'] $ipset_type = 'hash:net'
 ) {
 
-  package { 'ipset-persistent':
-    ensure => present,
-  }
 
-  file { '/etc/default/netfilter-persistent':
-    ensure  => present,
-    mode    => '0644',
-    owner   => 'root',
-    group   => 'root',
-    content => template("${module_name}/networking/firewall/netfilter-persistent.erb"),
-  }
+  $content4 = "create ${ipset_name}4 ${ipset_type} family inet hashsize 1024 maxelem 65536"
+  $content6 = "create ${ipset_name}6 ${ipset_type} family inet6 hashsize 1024 maxelem 65536"
 
-  file { '/etc/iptables/ipsets':
-    ensure  => present,
-    mode    => '0644',
-    owner   => 'root',
-    group   => 'root',
-    content => template("${module_name}/networking/firewall/ipsets.erb"),
+  concat::fragment { $ipset_name:
+    target  => '/etc/iptables/ipset',
+    content => "${content4}\n${content6}\n",
+    require => Package['ipset-persistent'],
     notify  => Service['netfilter-persistent'],
-  }
-
-  $ipsets.each |$name, $hash| {
-    if $hash['hosts'] {
-      file { "/etc/dnsmasq.d/20-${name}-ipset":
-        ensure  => present,
-        mode    => '0644',
-        owner   => 'root',
-        group   => 'root',
-        content => template("${module_name}/networking/firewall/dnsmasq-ipset.erb"),
-        notify  => Service['dnsmasq'],
-        require => Package['dnsmasq'],
-      }
-    }
   }
 
 }

@@ -57,6 +57,7 @@ class profile::networking::firewall {
   class { ['profile::networking::firewall::pre', 'profile::networking::firewall::post' ]: }
 
   contain profile::networking::firewall::common
+  contain profile::networking::firewall::base
   contain profile::networking::firewall::fail2ban
 
 }

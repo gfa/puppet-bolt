@@ -2,7 +2,6 @@ Things to manage using puppet
 =============================
 
 - postfix
-- dovecot
 - locales
 - root's .bashrc (DEBIAN_FRONTEND, unset HISTFILE)
 - mariadb

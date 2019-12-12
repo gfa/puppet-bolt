@@ -37,6 +37,7 @@ mod 'puppet-systemd',
     git: 'https://github.com/camptocamp/puppet-systemd.git',
     ref: 'master'
 mod 'edestecd-clamav', '1.0.0'
+mod 'oxc-dovecot', '2.1.0'
 
 # Core modules used by 'apply'
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile

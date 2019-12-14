@@ -167,9 +167,6 @@ class profile::service::dovecot (
           imapsieve_mailbox2_from   => 'Junk',
           imapsieve_mailbox2_causes => 'COPY',
           imapsieve_mailbox2_before => "file:${store_home}/report-ham.sieve",
-
-          zlib_save_level           => 6,
-          zlib_save                 => 'xz',
         }
       },
       '90-sieve'                   => {

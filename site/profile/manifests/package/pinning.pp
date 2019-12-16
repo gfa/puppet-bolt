@@ -10,6 +10,7 @@ class profile::package::pinning (
     packages => $backports,
     priority => 990,
     release  => "${facts['os']['distro']['codename']}-backports",
+    require  => Class['apt'],
   }
 
 }

@@ -18,6 +18,12 @@ class profile::networking::firewall::blocklists (
     owner  => 'root',
     group  => 'root',
     source => "puppet:///modules/${module_name}/networking/firewall/update-ipsets-blocklists",
+    notify => Exec['update_ipsets_blocklists'],
+  }
+
+  exec { 'update_ipsets_blocklists':
+    command     => '/etc/cron.hourly/update-ipsets',
+    refreshonly => true
   }
 
   file { '/etc/cron.hourly/update-ipsets-blocklist.de':
@@ -54,6 +60,7 @@ class profile::networking::firewall::blocklists (
     action   => 'drop',
     provider => 'iptables',
     ipset    => 'block4 src',
+    require  => File['/etc/cron.hourly/update-ipsets-blocklists'],
   }
 
   firewall { '002 block botnets input ip6':
@@ -62,6 +69,7 @@ class profile::networking::firewall::blocklists (
     action   => 'drop',
     provider => 'ip6tables',
     ipset    => 'block6 src',
+    require  => File['/etc/cron.hourly/update-ipsets-blocklists'],
   }
 
   firewall { '002 block botnets output ip4':
@@ -70,6 +78,7 @@ class profile::networking::firewall::blocklists (
     action   => 'drop',
     provider => 'iptables',
     ipset    => 'block4 dst',
+    require  => File['/etc/cron.hourly/update-ipsets-blocklists'],
   }
 
   firewall { '002 block botnets output ip6':
@@ -78,6 +87,7 @@ class profile::networking::firewall::blocklists (
     action   => 'drop',
     provider => 'ip6tables',
     ipset    => 'block6 dst',
+    require  => File['/etc/cron.hourly/update-ipsets-blocklists'],
   }
 
 }

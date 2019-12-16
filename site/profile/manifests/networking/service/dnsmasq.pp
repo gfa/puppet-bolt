@@ -17,6 +17,12 @@ class profile::networking::service::dnsmasq (
     owner  => 'root',
     group  => 'root',
     source => "puppet:///modules/${module_name}/networking/service/update-ipsets",
+    notify => Exec['update_ipsets'],
+  }
+
+  exec { 'update_ipsets':
+    command     => '/etc/cron.hourly/update-ipsets',
+    refreshonly => true
   }
 
 }

@@ -107,6 +107,12 @@ This invocation will run site.pp on all servers
 $ bolt plan run base -n all
 ```
 
+Install puppet (requires libwww-perl to be installed)
+
+```shell
+$ bolt task run puppet_agent::install -n  all
+```
+
 Scheduled runs of this repo
 ---------------------------
 

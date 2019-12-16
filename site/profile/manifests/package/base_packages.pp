@@ -7,6 +7,9 @@ class profile::package::base_packages (
   Hash[String, Hash] $base,
 ) {
 
-  create_resources(package, $base, {'ensure' => 'present'})
+  create_resources(package, $base, {
+    'ensure' => 'present',
+    require  => Class['profile::package::pinning'],
+    })
 
 }

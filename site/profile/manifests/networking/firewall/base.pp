@@ -13,7 +13,7 @@ class profile::networking::firewall::base (
     ensure => present,
   }
 
-  concat { '/etc/iptables/ipset':
+  concat { '/etc/iptables/ipsets':
     ensure  => present,
     require => Package['ipset-persistent'],
   }

@@ -1,4 +1,4 @@
-# this class manages 'static' ipsets, they are added in /etc/iptables/ipset
+# this class manages 'static' ipsets, they are added in /etc/iptables/ipsets
 # if they need updating something else takes care of that
 #
 # for ipsets which are dns based and updated by dnsmasq see
@@ -18,7 +18,7 @@ define profile::networking::firewall::ipset (
   $content6 = "create ${ipset_name}6 ${ipset_type} family inet6 hashsize 1024 maxelem 65536"
 
   concat::fragment { $ipset_name:
-    target  => '/etc/iptables/ipset',
+    target  => '/etc/iptables/ipsets',
     content => "${content4}\n${content6}\n",
     require => Package['ipset-persistent'],
     notify  => Service['netfilter-persistent'],

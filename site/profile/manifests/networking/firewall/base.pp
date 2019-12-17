@@ -32,4 +32,12 @@ class profile::networking::firewall::base (
     }
   }
 
+  file { '/etc/default/netfilter-persistent':
+    ensure  => present,
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    content => template('profile/networking/firewall/netfilter-persistent.erb'),
+  }
+
 }

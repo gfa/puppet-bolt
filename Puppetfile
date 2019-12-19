@@ -46,6 +46,7 @@ mod 'transmission',
     git: 'https://github.com/craigwatson/puppet-transmission.git',
     ref: 'master'
 mod 'thrnio-ip', '1.0.1'
+mod 'pltraining-dirtree', '0.3.0'
 
 # end of local modules
 

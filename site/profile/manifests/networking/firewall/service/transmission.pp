@@ -62,8 +62,8 @@ class profile::networking::firewall::service::transmission (
     uid      => 'debian-transmission',
   }
 
-  firewall { '300 accept transmission rpc4':
-    chain    => 'OUTPUT',
+  firewall { '301 accept transmission rpc4':
+    chain    => 'INPUT',
     proto    => 'tcp',
     dport    => $rpc_port,
     action   => 'accept',
@@ -72,14 +72,14 @@ class profile::networking::firewall::service::transmission (
     require  => Class['profile::networking::firewall::base'],
   }
 
-  firewall { '300 accept transmission rpc6':
-   chain    => 'OUTPUT',
-   dport    => $rpc_port,
-   proto    => 'tcp',
-   action   => 'accept',
-   provider => 'ip6tables',
-   ipset    => 'myhosts6 src',
-   require  => Class['profile::networking::firewall::base'],
+  firewall { '301 accept transmission rpc6':
+    chain    => 'INPUT',
+    dport    => $rpc_port,
+    proto    => 'tcp',
+    action   => 'accept',
+    provider => 'ip6tables',
+    ipset    => 'myhosts6 src',
+    require  => Class['profile::networking::firewall::base'],
   }
 
 }

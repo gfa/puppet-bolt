@@ -45,7 +45,7 @@ mod 'puppet-posix_acl', '0.1.1'
 mod 'transmission',
     git: 'https://github.com/craigwatson/puppet-transmission.git',
     ref: 'master'
-
+mod 'thrnio-ip', '1.0.1'
 
 # end of local modules
 

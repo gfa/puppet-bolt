@@ -8,6 +8,9 @@ URL=https://lists.blocklist.de/lists/all.txt
 EDROP=https://www.spamhaus.org/drop/edrop.txt
 DROP6=https://www.spamhaus.org/drop/dropv6.txt
 
+CF4=https://www.cloudflare.com/ips-v4
+CF6=https://www.cloudflare.com/ips-v6
+
 TEMP=`mktemp -d`
 
 function cleanup {
@@ -22,6 +25,8 @@ cd "$TEMP"
 wget --timeout=60 -q ${URL} || touch all.txt
 wget --timeout=60 -q ${EDROP} || touch edrop.txt
 wget --timeout=60 -q ${DROP6} || touch dropv6.txt
+wget --timeout=60 -q ${CF4} || touch ips-v4
+wget --timeout=60 -q ${CF6} || touch ips-v6
 
 cat edrop.txt dropv6.txt | grep -v '^;' | awk '{print $1}' > spamhaus.txt
 
@@ -51,5 +56,21 @@ done
 
 ipset swap block-temp block4
 ipset swap block6-temp block6
+
+ipset flush block-temp
+ipset flush block6-temp
+
+for ip in $(cat ips-v4)
+  do
+        ipset add block-temp $ip
+done
+
+for ip in $(cat ips-v6)
+  do
+        ipset add block6-temp $ip
+done
+
+ipset swap block-temp cf4
+ipset swap block6-temp cf6
 
 cleanup

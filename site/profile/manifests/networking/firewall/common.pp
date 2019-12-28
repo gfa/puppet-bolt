@@ -9,7 +9,8 @@ class profile::networking::firewall::common (
 
   $firewall_multis.each |$name, $firewall_multi| {
     firewall_multi { $name:
-      * => $firewall_multi,
+      *       => $firewall_multi,
+      require => Class['profile::networking::firewall::base'],
     }
   }
 }

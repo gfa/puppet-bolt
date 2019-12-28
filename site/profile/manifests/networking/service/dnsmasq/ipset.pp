@@ -22,4 +22,9 @@ define profile::networking::service::dnsmasq::ipset (
     require => Package['dnsmasq'],
   }
 
+  # dnsmasq won't create the ipsets by itself
+  profile::networking::firewall::ipset { $ipset_name:
+    ipset_type => $ipset_type,
+  }
+
 }

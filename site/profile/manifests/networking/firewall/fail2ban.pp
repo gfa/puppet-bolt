@@ -7,6 +7,8 @@ class profile::networking::firewall::fail2ban (
   Hash $blocklist_de_params = lookup('site_firewall::fail2ban::blocklist_de_params'),
 ) {
 
+  include profile::networking::firewall::fail2ban::openssh
+
   package { 'sshguard':
     ensure => purged,
   }

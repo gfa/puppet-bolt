@@ -34,6 +34,7 @@ class profile::service::prosody (
       'warn' => 'syslog',
     },
     custom_options    => {
+      'reload_modules'    => [ 'groups', 'firewall' ],
       'proxy65_ports'     => 5282,
       'firewall_scripts'  => '/srv/prosody/compiled/spammer.pfw',
       'https_ssl'         => {

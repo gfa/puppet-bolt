@@ -42,8 +42,8 @@ class profile::networking::firewall::blocklists (
   }
 
   $update_ipsets_content = "
-    @reboot root /etc/cron.daily/update-countries-ipset
-    @reboot root /etc/cron.daily/update-ipsets-blocklists
+    @reboot root /etc/cron.hourly/update-countries-ipset
+    @reboot root /etc/cron.hourly/update-ipsets-blocklists
     "
 
   file { '/etc/cron.d/update-ipsets':

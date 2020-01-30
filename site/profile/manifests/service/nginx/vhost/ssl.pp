@@ -35,18 +35,24 @@ define profile::service::nginx::vhost::ssl (
       'Content-Security-Policy'   => 'script-src, self',
       'Expect-CT'                 => 'enforce, max-age=300',
     }
+  } else {
+    $headers_to_add = $headers
   }
 
   if $locations == undef {
     $vhost_locations =  {
       'foo' => 'bar',
     }
+  } else {
+    $vhost_locations = $locations
   }
 
   # TODO: remove when the module has better defaults
   # https://github.com/voxpupuli/puppet-nginx/issues/1219
   if $index_files == undef {
     $entrypoints = ['index.html']
+  } else {
+    $entrypoints = $index_files
   }
 
   nginx::resource::server { $vhost_name:

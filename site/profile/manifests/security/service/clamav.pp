@@ -30,7 +30,7 @@ class profile::security::service::clamav (
     }
   }
 
-  -> profile::networking::service::dnsmasq::ipset { 'clamav-mirrors':
+  -> profile::networking::service::dnsmasq::ipset { 'clamav':
     ipset_hosts => $mirrors,
   }
 

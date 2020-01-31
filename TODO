@@ -10,3 +10,4 @@ Things to manage using puppet
 - docker, service and either of this containers running:
   - https://github.com/containrrr/watchtower
   - https://github.com/pyouroboros/ouroboros
+- extend puppet-clamav to manage clamav-milter on Debian

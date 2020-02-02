@@ -11,6 +11,9 @@ DROP6=https://www.spamhaus.org/drop/dropv6.txt
 CF4=https://www.cloudflare.com/ips-v4
 CF6=https://www.cloudflare.com/ips-v6
 
+# huge address spaces but still smaller than the wholes inet
+LE6="2600:1F00::/24 2600:1F14::/35 2600:3000::/29"
+
 TEMP=`mktemp -d`
 
 function cleanup {
@@ -65,7 +68,7 @@ for ip in $(cat ips-v4)
         ipset add block-temp $ip
 done
 
-for ip in $(cat ips-v6)
+for ip in $(cat ips-v6) ${LE6}
   do
         ipset add block6-temp $ip
 done

@@ -30,7 +30,6 @@ before_script:
   bundler install
   mkdir -p ~/.puppetlabs/bolt/ logs
   echo -e "disabled: true" > ~/.puppetlabs/bolt/analytics.yaml
-  mv -f .bolt.yaml.gitlab bolt.yaml
   bolt puppetfile install
   eval $(ssh-agent -s)
   echo "$SSH_KEY_PUPPET" | tr -d '\r' | ssh-add - > /dev/null

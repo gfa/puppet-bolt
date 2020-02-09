@@ -42,7 +42,7 @@ before_script:
 production:
   script:
     - *template1
-    - HOSTS=$(cat hieradata/inventory.yaml | yq '.nodes[][]' | sed 's/"//g')
+    - HOSTS=$(cat hieradata/inventory.yaml | yq '.targets[][]' | sed 's/"//g')
     - |
       for host in ${HOSTS}
         do

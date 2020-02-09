@@ -64,7 +64,6 @@ production:
 testing:
   script:
     - *template1
-    - HOSTS=$(cat hieradata/inventory.yaml | yq '.nodes[][]' | sed 's/"//g')
     - |
       for host in ${TEST_HOSTS}
         do

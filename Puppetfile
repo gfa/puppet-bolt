@@ -53,11 +53,10 @@ mod 'pltraining-dirtree', '0.3.0'
 # modules required by bolt
 
 # https://github.com/puppetlabs/bolt/blob/master/Puppetfile
-
 # Core modules used by 'apply'
 mod 'puppetlabs-service', '1.1.0'
-mod 'puppetlabs-facts', '0.6.0'
-mod 'puppetlabs-puppet_agent', '2.2.2'
+mod 'puppetlabs-puppet_agent', '3.0.1'
+mod 'puppetlabs-facts', '1.0.0'
 
 # Core types and providers for Puppet 6
 mod 'puppetlabs-augeas_core', '1.0.5'

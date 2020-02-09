@@ -45,6 +45,7 @@ production:
     - *template1
     - HOSTS=$(cat hieradata/inventory.yaml | yq '.nodes[][]' | sed 's/"//g')
     - |
+      set -x
       for host in ${HOSTS}
         do
           bolt plan run base --targets $host || curl -s -F "token=$PUSHOVER_KEY" \

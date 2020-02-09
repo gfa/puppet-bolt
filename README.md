@@ -15,9 +15,10 @@ all my servers, which is:
 - sshd
 - root user account
 - a hidden sshd service (tor)
+- firewall
 
-Higher level applications (postfix, nginx, etc) are not managed by puppet ATM.
-I don't have that many servers.
+Higher level applications (postfix) are not managed by puppet ATM.
+I don't have that many servers ¯\_(ツ)_/¯.
 
 Roles
 -----

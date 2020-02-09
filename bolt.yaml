@@ -4,7 +4,7 @@ format: human
 
 log:
   console:
-    level: notice
+    level: debug
   logs/debug.log:
     level: debug
     append: true

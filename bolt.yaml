@@ -4,10 +4,10 @@ format: human
 
 log:
   console:
-    level: debug
+    level: info
   logs/debug.log:
     level: debug
-    append: true
+    append: false
 
 ssh:
   user: root

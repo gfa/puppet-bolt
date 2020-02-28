@@ -44,6 +44,9 @@ class profile::service::prosody (
       'https_certificate' => {
         '[5281]' => "/etc/prosody/certs/${prosody_fqdn}/privkey.pem",
       },
+      'contact_info'      => {
+        abuse    => ["mailto:abuse@${prosody_domain}"],
+      }
     },
     modules_base      => [ 'roster', 'saslauth', 'tls', 'dialback', 'disco',
       'posix', 'private', 'vcard', 'version', 'uptime', 'time', 'ping', 'pep',
@@ -53,6 +56,7 @@ class profile::service::prosody (
       'throttle_presence', 'filter_chatstates',
       'smacks',  'blocking', 'cloud_notify',
       'http', 'mam', 'admin_telnet', 'firewall',
+      'server_contact_info',
     ],
 
   }

@@ -8,7 +8,7 @@ plan base::noop(
   $nodes.apply_prep
 
   # collect facts on nodes
-  run_plan(facts, nodes => $nodes)
+  run_plan(facts, targets => $nodes)
 
   # Compile the manifest block into a catalog
   apply($nodes, _noop   => true) {

@@ -3,8 +3,11 @@ image: debian
 
 before_script:
   - apt update
-  - apt install -y curl jq
-  - apt install -y openssh-client ruby-dev gems build-essential python3-pip git
+  - apt install -y curl jq openssh-client python3-pip git
+  - curl https://apt.puppet.com/puppet-tools-release-buster.deb > /tmp/puppet-tools-release-buster.deb
+  - dpkg -i /tmp/puppet-tools-release-buster.deb
+  - apt update
+  - apt install -y puppet-bolt
   - pip3 install yq
   # I don't want more than one copy of the pipeline running
   # https://gitlab.com/gitlab-org/gitlab-foss/issues/41560
@@ -33,8 +36,6 @@ before_script:
   git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b ${CI_COMMIT_REF_NAME} hieradata \
   || git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b master hieradata
   ln -s hieradata/keys .
-  gem install bundler
-  bundler install
   mkdir -p ~/.puppetlabs/bolt/ logs
   echo -e "disabled: true" > ~/.puppetlabs/bolt/analytics.yaml
   bolt puppetfile install

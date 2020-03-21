@@ -45,7 +45,7 @@ production:
     - kubernetes
   script:
     - *template1
-    - HOSTS=$(cat hieradata/inventory.yaml | yq '.targets[][]' | sed 's/"//g')
+    - HOSTS=$(cat hieradata/inventory.yaml| yq '.groups[].targets[]' | sed 's/"//g')
     - |
       for host in ${HOSTS}
         do

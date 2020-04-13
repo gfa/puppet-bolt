@@ -41,8 +41,6 @@ before_script:
   bolt puppetfile install
 
 production:
-  tags:
-    - kubernetes
   script:
     - *template1
     - HOSTS=$(cat hieradata/inventory.yaml| yq '.groups[].targets[]' | sed 's/"//g')
@@ -64,8 +62,6 @@ production:
       - scheduled
 
 testing:
-  tags:
-    - kubernetes
   script:
     - *template1
     - |

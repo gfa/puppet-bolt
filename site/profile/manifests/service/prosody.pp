@@ -77,9 +77,9 @@ class profile::service::prosody (
         }
       },
       custom_options => {
-        'http_upload_quota'           => 4096,
-        'http_upload_expire_after'    => 14400,
-        'http_upload_file_size_limit' => 2097152,
+        'http_upload_quota'           => 100*1024*1024,  # 100M
+        'http_upload_expire_after'    => 60*60*24*30,  # 30 days
+        'http_upload_file_size_limit' => 16*1024*1024,  # 16M
       }
   }
 

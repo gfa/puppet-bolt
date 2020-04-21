@@ -82,8 +82,8 @@ class profile::service::prosody (
       custom_options => {
         'http_upload_quota'           => 100*1024*1024,  # 100M
         'http_upload_expire_after'    => 60*60*24*30,  # 30 days
-        'http_upload_file_size_limit' => 16*1024*1024,  # 16M
-      }
+        'http_upload_file_size_limit' => 10*1024*1024,  # 10M
+      },
   }
 
   file { '/etc/dehydrated/hooks/prosody.sh':

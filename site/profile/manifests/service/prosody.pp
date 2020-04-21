@@ -68,12 +68,15 @@ class profile::service::prosody (
       ssl_cert       => "/etc/prosody/certs/${prosody_fqdn}/fullchain.pem",
       ssl_copy       => false,
       components     => {
-        $prosody_fqdn => {
+        $prosody_fqdn       => {
           'type'    => 'proxy65',
           'options' => {
             'proxy65_address' => "'${prosody_fqdn}'",
             'proxy65_acl'     => "'${prosody_domain}'",
           }
+        },
+        "${prosody_domain}" => {
+          'type' => 'http_upload'
         }
       },
       custom_options => {

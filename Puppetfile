@@ -40,7 +40,7 @@ mod 'edestecd-clamav', '1.0.0'
 mod 'oxc-dovecot', '2.1.0'
 mod 'voxpupuli-prosody',
     git: 'https://github.com/voxpupuli/puppet-prosody.git',
-    ref: '0.4.0'
+    ref: 'master'
 mod 'puppet-posix_acl', '0.1.1'
 mod 'transmission',
     git: 'https://github.com/craigwatson/puppet-transmission.git',

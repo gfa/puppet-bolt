@@ -1,7 +1,7 @@
 Things to manage using puppet
 =============================
 
-- postfix
+- split out the postfix module into an independent module
 - locales
 - root's .bashrc (DEBIAN_FRONTEND, unset HISTFILE)
 - mariadb

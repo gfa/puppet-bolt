@@ -47,6 +47,7 @@ mod 'transmission',
     ref: 'master'
 mod 'thrnio-ip', '1.0.1'
 mod 'pltraining-dirtree', '0.3.0'
+mod 'camptocamp-openssl', '1.14.0'
 
 # end of local modules
 

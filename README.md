@@ -30,7 +30,6 @@ I don't have roles yet, I just include `profiles` from hiera.
 -----------------
 
 Modules are managed by bolt itself, they are declared on the `Puppetfile`.
-The extra modules are required to run bolt.
 
 ```shell
 bolt puppetfile install
@@ -59,10 +58,6 @@ git clone $HIERA_REPO hieradata
 ln -s hieradata/inventory.yaml .
 ln -s hieradata/keys .
 mkdir logs
-mkdir .gem
-export GEM_HOME=$PWD/.gem
-export GEM_PATH=$PWD/.gem
-export PATH=“$GEM_HOME/bin:$PATH”
 gem install bundler
 bundler install
 bolt puppetfile install

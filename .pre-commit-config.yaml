@@ -8,6 +8,11 @@
       args:
         - --fail-on-warnings
     - id: puppet-validate
+      exclude: >
+        (?x)^(
+          site/base/plans/init.pp|
+          site/base/plans/noop.pp
+        )$
     - id: r10k-validate
     - id: ruby-validate
 

@@ -15,6 +15,8 @@
 #      if perms and ownership are not defined
 #      defaults will be used
 
+# @param files a hash containing files, their permissions, ownership and contents
+
 define site_files (
   Variant[Hash, Type[Undef]] $files = lookup({
       name          => 'site_files::files',

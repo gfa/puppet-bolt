@@ -12,7 +12,6 @@ class profile::networking::service::dnsmasq (
   }
 
   file { '/etc/cron.hourly/update-ipsets':
-    ensure => present,
     mode   => '0755',
     owner  => 'root',
     group  => 'root',
@@ -22,7 +21,7 @@ class profile::networking::service::dnsmasq (
 
   exec { 'update_ipsets':
     command     => '/etc/cron.hourly/update-ipsets',
-    refreshonly => true
+    refreshonly => true,
   }
 
 }

@@ -27,7 +27,7 @@ class profile::security::service::clamav (
     freshclam_options        => {
       'LogSyslog'   => true,
       'LogFacility' => 'LOG_LOCAL6',
-    }
+    },
   }
 
   -> profile::networking::service::dnsmasq::ipset { 'clamav':

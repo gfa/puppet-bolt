@@ -12,7 +12,7 @@ class profile::security::service::clamav::milter (
   Array[IP::Address::V4] $allow_connections_from = ['127.0.0.1'],
   IP::Address::V4 $listen_on = '127.0.0.1',
   Integer $port = 3310,
-  String $whitelist_addresses = '',
+  String $whitelist_addresses = undef,
 ) {
 
   package { 'clamav-milter':

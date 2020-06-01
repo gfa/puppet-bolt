@@ -44,7 +44,7 @@ class profile::networking::firewall {
       'PREROUTING:raw:IPv6',
       'OUTPUT:raw:IPv6',
       'FILTERS:filter:IPv6',
-      'FILTERS:filter:IPv4'
+      'FILTERS:filter:IPv4',
     ]:
       purge =>  true,
   }

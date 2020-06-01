@@ -7,7 +7,7 @@ class profile::networking::firewall::fail2ban::postfix {
 
   fail2ban::filter { 'postfix-sasl':
     failregexes   => [
-      '^postfix(-\w+)?/(?:submission/|smtps/)?smtp[ds] warning: [-._\w]+\[<HOST>\]: SASL ((?i)LOGIN|PLAIN|(?:CRAM|DIGEST)-MD5) authentication failed(:[ A-Za-z0-9+/:]*={0,2})?\s*$',
+      '^postfix(-\w+)?/(?:submission/|smtps/)?smtp[ds] warning: [-._\w]+\[<HOST>\]: SASL ((?i)LOGIN|PLAIN|(?:CRAM|DIGEST)-MD5) authentication failed(:[ A-Za-z0-9+/:]*={0,2})?\s*$',  # lint:ignore:140chars
     ],
     ignoreregexes => [
       'authentication failed: Connection lost to authentication server$',

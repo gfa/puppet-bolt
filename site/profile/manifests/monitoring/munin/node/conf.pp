@@ -15,6 +15,9 @@ define profile::monitoring::munin::node::conf (
   file { "/etc/munin/plugin-conf.d/${name}":
     ensure  => $ensure,
     source  => $source,
+    group   => 'root',
+    owner   => 'root',
+    mode    => '0755',
     content => $content,
     require => Package['munin-node'],
     notify  => Service['munin-node', 'munin-async'],

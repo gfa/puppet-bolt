@@ -23,16 +23,19 @@ define profile::networking::firewall::ipset (
     require => Package['ipset-persistent'],
   }
 
+  $command_first_half = "ipset create ${ipset_name}"
+  $command_second_half = "${ipset_type} family inet hashsize 1024 maxelem 65536 -exist"
+
   exec { "create ${title}4":
     path        => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
-    command     => "ipset create ${ipset_name}4 ${ipset_type} family inet hashsize 1024 maxelem 65536 -exist",
+    command     => "${command_first_half}4${command_second_half}", # lint:ignore:security_class_or_define_parameter_in_exec
     refreshonly => true,
     subscribe   => Concat['/etc/iptables/ipsets'],
   }
 
   exec { "create ${title}6":
     path        => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
-    command     => "ipset create ${ipset_name}6 ${ipset_type} family inet6 hashsize 1024 maxelem 65536 -exist",
+    command     => "${command_first_half}6${command_second_half}", # lint:ignore:security_class_or_define_parameter_in_exec
     refreshonly => true,
     subscribe   => Concat['/etc/iptables/ipsets'],
   }

@@ -16,7 +16,7 @@ class profile::service::tor::sshd {
       'HiddenServiceDir'  => '/var/lib/tor-instances/sshd/hidden_service/',
       'HiddenServicePort' => "22 ${facts['networking']['ip']}:22",
       'SocksPort'         => '0',
-    }
+    },
   }
 
   -> firewall { '300 allow outgoing connections for tor-sshd':

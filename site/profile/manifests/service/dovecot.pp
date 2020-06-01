@@ -50,8 +50,8 @@ class profile::service::dovecot (
         userdb          => {
           driver         => 'passwd-file',
           args           => "username_format=%u ${users_file}",
-          default_fields => "uid=${store_username} gid=${store_group} home=${store_home}/%d/%u mail_location=maildir:${store_home}/%d/%u/mail:INDEX=${store_home}/%d/%u/index:LAYOUT=fs",
-        }
+          default_fields => "uid=${store_username} gid=${store_group} home=${store_home}/%d/%u mail_location=maildir:${store_home}/%d/%u/mail:INDEX=${store_home}/%d/%u/index:LAYOUT=fs", # lint:ignore:140chars
+        },
       },
       '10-logging'                 => {
         log_path => 'syslog',
@@ -65,14 +65,14 @@ class profile::service::dovecot (
           'inet_listener imaps' => {
             port => 993,
             ssl  => 'yes',
-          }
+          },
         },
         'service lmtp'        => {
           'unix_listener /var/spool/postfix/private/dovecot-lmtp' => {
             user  => 'postfix',
             group => 'postfix',
             mode  => '0600',
-          }
+          },
         },
         'service imap'        => {
           vsz_limit => '$default_vsz_limit',
@@ -84,14 +84,14 @@ class profile::service::dovecot (
           },
           'unix_listener auth-userdb'                     => {
             mode          => '0666',
-          }
+          },
         },
         'service auth-worker' => {
           user => '$default_internal_user',
         },
         'service dict'        => {
-          unix_listener => 'dict'
-        }
+          unix_listener => 'dict',
+        },
       },
       '10-mail'                    => {
         mail_location            => "mbox:~/mail:INBOX=${store_home}/%u",
@@ -100,7 +100,7 @@ class profile::service::dovecot (
         maildir_very_dirty_syncs => 'yes',
         'namespace inbox'        => {
           inbox => 'yes',
-        }
+        },
       },
       '10-ssl'                     => {
         ssl               => 'required',
@@ -136,25 +136,25 @@ class profile::service::dovecot (
           },
           'mailbox "Sent Messages"' => {
             special_use => '\Drafts',
-          }
-        }
+          },
+        },
       },
       '20-imap'                    => {
         'protocol imap' => {
           mail_plugins => '$mail_plugins imap_acl acl imap_sieve zlib imap_zlib',
-        }
+        },
       },
       '20-lmtp'                    => {
         lmtp_save_to_detail_mailbox => 'yes',
         'protocol lmtp'             => {
           mail_plugins => '$mail_plugins sieve zlib',
-        }
+        },
       },
       '20-managesieve'             => {
         'service managesieve-login' => {
           'inet_listener sieve' => {
             port => 4190,
-          }
+          },
         },
         'protocol sieve'            => {},
       },
@@ -162,7 +162,7 @@ class profile::service::dovecot (
         plugin => {
           acl             => "vfile:${store_home}global-acls:cache_secs=300",
           acl_shared_dict => "file:${store_home}/shared-mailboxes",
-        }
+        },
       },
       '90-plugin'                  => {
         plugin => {
@@ -178,7 +178,7 @@ class profile::service::dovecot (
           imapsieve_mailbox2_from   => 'Junk',
           imapsieve_mailbox2_causes => 'COPY',
           imapsieve_mailbox2_before => "file:${store_home}/report-ham.sieve",
-        }
+        },
       },
       '90-sieve'                   => {
         plugin                    => {
@@ -186,7 +186,7 @@ class profile::service::dovecot (
           sieve_after             => "${store_home}/default.sieve",
           sieve_global_extensions => '+vnd.dovecot.pipe +vnd.dovecot.execute',
           sieve_plugins           => 'sieve_imapsieve sieve_extprograms',
-        }
+        },
       },
       '90-sieve-sieve_extprograms' => {
         plugin => {
@@ -194,9 +194,9 @@ class profile::service::dovecot (
           sieve_filter_bin_dir    => $sieve_bin_dir,
           sieve_execute_bin_dir   => $sieve_bin_dir,
           sieve_global_extensions => '+vnd.dovecot.pipe +vnd.dovecot.execute',
-        }
-      }
-    }
+        },
+      },
+    },
   }
 
   package { 'mblaze':
@@ -226,7 +226,7 @@ class profile::service::dovecot (
   $cron_contents = "MAILTO=root \n16 20 * * * ${store_username} chronic bash ${sieve_bin_dir}/dovecot-zlib-cron-compressor.sh \n"
 
   file { '/etc/cron.d/mail-compress':
-    ensure  => present,
+    ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',

@@ -13,7 +13,6 @@ class profile::networking::firewall::blocklists (
 ) {
 
   file { '/etc/cron.hourly/update-ipsets-blocklists':
-    ensure => present,
     mode   => '0755',
     owner  => 'root',
     group  => 'root',
@@ -23,7 +22,7 @@ class profile::networking::firewall::blocklists (
 
   exec { 'update_ipsets_blocklists':
     command     => '/etc/cron.hourly/update-ipsets',
-    refreshonly => true
+    refreshonly => true,
   }
 
   file { '/etc/cron.hourly/update-ipsets-blocklist.de':
@@ -31,7 +30,6 @@ class profile::networking::firewall::blocklists (
   }
 
   file { '/etc/cron.daily/update-countries-ipset':
-    ensure  => present,
     mode    => '0755',
     owner   => 'root',
     group   => 'root',
@@ -47,13 +45,13 @@ class profile::networking::firewall::blocklists (
     "
 
   file { '/etc/cron.d/update-ipsets':
-    ensure  => present,
     mode    => '0644',
     owner   => 'root',
     group   => 'root',
     content => $update_ipsets_content,
   }
 
+  # lint:ignore:security_firewall_any_any_deny
   firewall { '002 block botnets input ip4':
     chain    => 'INPUT',
     proto    => 'all',
@@ -89,5 +87,6 @@ class profile::networking::firewall::blocklists (
     ipset    => 'block6 dst',
     require  => File['/etc/cron.hourly/update-ipsets-blocklists'],
   }
+  # lint:endignore
 
 }

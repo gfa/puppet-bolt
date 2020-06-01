@@ -13,7 +13,6 @@ define profile::networking::service::dnsmasq::ipset (
 ) {
 
   file { "/etc/dnsmasq.d/20-${ipset_name}-ipset":
-    ensure  => present,
     mode    => '0644',
     owner   => 'root',
     group   => 'root',

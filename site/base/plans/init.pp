@@ -12,6 +12,6 @@ plan base(
 
   # Compile the manifest block into a catalog
   apply($nodes) {
-    class { 'base': }
+    class { 'base': }  #lint:ignore:global_resource
   }
 }

@@ -12,7 +12,7 @@ plan base::noop(
 
   # Compile the manifest block into a catalog
   apply($nodes, _noop   => true) {
-    class { 'base': }
+    class { 'base': } #lint:ignore:global_resource
   }
 
 }

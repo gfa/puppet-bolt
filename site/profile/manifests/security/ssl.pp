@@ -17,7 +17,6 @@ class profile::security::ssl (
 
     # the puppet module takes care of creating the directory
     file { '/etc/nullmailer/client.pem':
-      ensure  => present,
       owner   => 'mail',
       group   => 'mail',
       mode    => '0440',

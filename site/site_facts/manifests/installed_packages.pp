@@ -20,8 +20,10 @@ class site_facts::installed_packages {
   }
 
   -> exec { 'dpkg list':
-    command => '/usr/bin/dpkg-query -W -f \'${Package}\n\' > /var/lib/misc/thishost/pkglist',  # lint:ignore:single_quote_string_with_variables
+    # lint:ignore:single_quote_string_with_variables
+    command => '/usr/bin/dpkg-query -W -f \'${Package}\n\' > /var/lib/misc/thishost/pkglist',
     creates => '/var/lib/misc/thishost/pkglist',
+    # lint:endignore
   }
 
 }

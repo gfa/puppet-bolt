@@ -9,7 +9,7 @@ class profile::package::base_packages (
 
   # this forces a dependency from any package to
   # apt::update https://redd.it/errr4u
-  Class['apt::update'] -> Package <| |>
+  Class['apt::update'] -> Package <| tag == 'apt' |>
 
   create_resources(package, $base, {
       'ensure' => 'present',

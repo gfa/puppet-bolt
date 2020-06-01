@@ -10,8 +10,10 @@ class profile::service::tor::exit (
   include tor
 
   file { '/etc/tor/how_tor_works_thumb.png':
-    ensure  => present,
     source  => "puppet:///modules/${module_name}/service/tor/how_tor_works_thumb.png",
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
     require => Package['tor'],
   }
 

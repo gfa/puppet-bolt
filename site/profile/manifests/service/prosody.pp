@@ -46,7 +46,7 @@ class profile::service::prosody (
       },
       'contact_info'      => {
         abuse    => ["mailto:abuse@${prosody_domain}"],
-      }
+      },
     },
     modules_base      => [ 'roster', 'saslauth', 'tls', 'dialback', 'disco',
       'posix', 'private', 'vcard', 'version', 'uptime', 'time', 'ping', 'pep',
@@ -73,8 +73,8 @@ class profile::service::prosody (
           'options' => {
             'proxy65_address' => "'${prosody_fqdn}'",
             'proxy65_acl'     => "'${prosody_domain}'",
-          }
-        }
+          },
+        },
       },
       custom_options => {
         'http_upload_quota'           => 100*1024*1024,  # 100M
@@ -84,7 +84,7 @@ class profile::service::prosody (
   }
 
   file { '/etc/dehydrated/hooks/prosody.sh':
-    ensure  => present,
+    ensure  => file,
     content => epp("${module_name}/service/prosody/prosody-hook.sh.epp",{
         'fqdn'   => $prosody_fqdn,
         'domain' => $prosody_domain,

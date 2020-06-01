@@ -8,7 +8,7 @@ class profile::security::ssl::dehydrated (
 ) {
 
   package { 'dehydrated':
-    ensure => latest,
+    ensure => latest, # lint:ignore:package_ensure
   }
 
   file { '/etc/dehydrated/hooks':
@@ -16,7 +16,7 @@ class profile::security::ssl::dehydrated (
   }
 
   file { '/etc/dehydrated/conf.d/hook.sh':
-    ensure  => present,
+    ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -28,7 +28,7 @@ class profile::security::ssl::dehydrated (
 run-parts /etc/dehydrated/hooks\n"
 
   file { '/etc/dehydrated/hook.sh':
-    ensure  => present,
+    ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0744',
@@ -36,7 +36,7 @@ run-parts /etc/dehydrated/hooks\n"
   }
 
   file { '/etc/dehydrated/domains.txt':
-    ensure  => present,
+    ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -56,7 +56,7 @@ set -e
 /usr/bin/chronic -e /usr/bin/dehydrated -c\n"
 
   file { '/etc/cron.weekly/dehydrated':
-    ensure  => present,
+    ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0744',

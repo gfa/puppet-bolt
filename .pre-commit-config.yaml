@@ -1,0 +1,23 @@
+---
+- repo: https://github.com/chriskuehl/puppet-pre-commit-hooks.git
+  rev: v2.1.0
+  hooks:
+    - id: epp-validate
+    - id: erb-validate
+    - id: puppet-lint
+      args:
+        - --fail-on-warnings
+    - id: puppet-validate
+    - id: r10k-validate
+    - id: ruby-validate
+
+- repo: https://github.com/adrienverge/yamllint
+  rev: v1.15.0
+  hooks:
+    - id: yamllint
+
+- repo: https://github.com/jumanjihouse/pre-commit-hooks
+  rev: 1.11.0
+  hooks:
+    - id: reek
+    - id: rubocop

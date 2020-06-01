@@ -28,9 +28,8 @@ class profile::service::dovecot (
   include profile::networking::firewall::service::dovecot
   include profile::networking::firewall::fail2ban::dovecot
 
-  exec { $ssl_dh_file:
-    command => "/usr/bin/openssl dhparam -out ${ssl_dh_file} 2048",
-    creates => $ssl_dh_file,
+  openssl::dhparam { $ssl_dh_file:
+    size =>  2048,
   }
 
   file { $users_file:

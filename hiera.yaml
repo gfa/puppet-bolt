@@ -39,6 +39,7 @@ hierarchy:
       - 'files.eyaml'
       - 'blocklist_de.eyaml'
       - 'nginx.eyaml'
+      - 'monitoring.eyaml'
     options:
       encrypt_method: gpg
       gpg_always_trust: true

@@ -11,6 +11,7 @@ class base {
 
   # hw
   include profile::hardware::gce
+  include profile::hardware::smartctl
 
   # networking
   include profile::networking::service::dnsmasq

@@ -1,12 +1,13 @@
-Things to manage using puppet
-=============================
+Things to improve and or complete
+=================================
 
 - split out the postfix module into an independent module
 - locales
 - root's .bashrc (DEBIAN_FRONTEND, unset HISTFILE)
 - mariadb
 - spamassassin
-- do profiles and roles
+- profiles and roles
+  - refactor profiles to move resources from them to modules
 - docker, service and either of this containers running:
   - https://github.com/containrrr/watchtower
   - https://github.com/pyouroboros/ouroboros

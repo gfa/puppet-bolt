@@ -68,6 +68,7 @@ class profile::service::dovecot (
           },
         },
         'service lmtp'        => {
+          vsz_limit                                               => '512 MB',
           'unix_listener /var/spool/postfix/private/dovecot-lmtp' => {
             user  => 'postfix',
             group => 'postfix',

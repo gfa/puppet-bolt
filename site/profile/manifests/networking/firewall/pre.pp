@@ -120,7 +120,7 @@ class profile::networking::firewall::pre {
   firewall_multi { '102 allow output icmp':
     chain    => 'OUTPUT',
     proto    => 'ipv6-icmp',
-    icmp     => [128, 135, 136, 137],
+    icmp     => [3, 128, 135, 136, 137],
     action   => 'accept',
     provider => ['ip6tables'],
   }

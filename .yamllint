@@ -1,0 +1,8 @@
+# vim: ft=yaml
+---
+
+yaml-files:
+  - '.gitlab-ci.yml'
+
+rules:
+  line-length: disable

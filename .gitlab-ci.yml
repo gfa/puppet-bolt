@@ -56,6 +56,8 @@ production:
       - logs/debug.log
     expire_in: 1 week
     when: always
+  variables:
+    BOLT_PROJECT: /builds/gfa/puppet-bolt
   only:
     refs:
       - master
@@ -76,6 +78,8 @@ testing:
       - logs/debug.log
     expire_in: 1 week
     when: always
+  variables:
+    BOLT_PROJECT: /builds/gfa/puppet-bolt
   except:
     refs:
       - master

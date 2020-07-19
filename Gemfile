@@ -39,5 +39,6 @@ source ENV['GEM_SOURCE'] || 'https://rubygems.org' do
   gem 'rspec-puppet'
   gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'solargraph'
   gem 'yaml-lint'
 end

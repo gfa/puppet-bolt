@@ -8,17 +8,23 @@ class profile::package::unattended_upgrades (
 ) {
 
   class { 'unattended_upgrades':
-    auto    => {
+    # this is ugly, find a way to pass whatever is in hiera.
+
+    auto                   => {
       'reboot'      => $configuration['auto']['reboot'],
       'reboot_time' => $configuration['auto']['reboot_time'],
     },
 
-    origins => $configuration['origins'],
+    origins                => $configuration['origins'],
 
-    mail    => {
+    mail                   => {
       only_on_error => true,
       to            => 'root',
     },
+
+    remove_new_unused_deps => $configuration['remove_new_unused_deps'],
+    remove_unused_kernel   => $configuration['remove_unused_kernel'],
+
   }
 
 }

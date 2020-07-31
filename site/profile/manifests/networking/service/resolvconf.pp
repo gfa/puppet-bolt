@@ -9,7 +9,7 @@ class profile::networking::service::resolvconf {
 
   file { '/etc/resolv.conf':
     ensure  => link,
-    target  => '/etc/resolvconf/run/resolv.conf',
+    target  => '/run/resolvconf/resolv.conf',
     require => Package['dnsmasq', 'resolvconf'],
   }
 

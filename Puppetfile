@@ -4,7 +4,9 @@ forge 'http://forge.puppetlabs.com'
 
 mod 'puppetlabs/stdlib', '5.2.0'
 mod 'thias/sysctl', '1.0.6'
-mod 'puppet-unattended_upgrades', '5.0.0'
+mod 'puppet-unattended_upgrades',
+    git: 'https://github.com/voxpupuli/puppet-unattended_upgrades.git',
+    ref: 'a68d0b8b8e86865564d5d5ddb0a6faf4fd1b9557'
 mod 'puppetlabs-apt', '7.1.0'
 mod 'puppetlabs-mysql', '6.2.0'
 mod 'puppet/archive', '3.2.1'

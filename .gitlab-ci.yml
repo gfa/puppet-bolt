@@ -9,24 +9,6 @@ before_script:
   - apt update
   - apt install -y puppet-bolt
   - pip3 install yq
-  # I don't want more than one copy of the pipeline running
-  # https://gitlab.com/gitlab-org/gitlab-foss/issues/41560
-  # https://gitlab.com/gitlab-org/gitlab-foss/issues/20481
-
-  - |
-    printf '\nWaiting...\n'
-    while true; do
-      OLDEST_JOB=$(curl -sS --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}" "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/jobs?scope=running" | jq '.[].id' | sort -n -r | tail -1)
-      if [ "${OLDEST_JOB}x" = "${CI_JOB_ID}x" ]; then
-        printf '\nReady!\n'
-        break
-      else
-        printf '.'
-        sleep 10
-      fi
-    done
-
-  # resuming normal flow
 
 .template1: &template1 |
   eval $(ssh-agent -s)
@@ -41,6 +23,7 @@ before_script:
   bolt puppetfile install
 
 production:
+  resource_group: $CI_COMMIT_REF_SLUG
   script:
     - *template1
     - HOSTS=$(cat hieradata/inventory.yaml| yq '.groups[].targets[]' | sed 's/"//g')
@@ -64,6 +47,7 @@ production:
       - scheduled
 
 testing:
+  resource_group: $CI_COMMIT_REF_SLUG
   script:
     - *template1
     - |

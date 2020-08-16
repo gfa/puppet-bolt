@@ -76,7 +76,7 @@ class profile::service::dovecot (
           },
         },
         'service imap'        => {
-          vsz_limit => '$default_vsz_limit',
+          vsz_limit => '512 MB',
         },
         'service auth'        => {
           user                                            => '$default_internal_user',

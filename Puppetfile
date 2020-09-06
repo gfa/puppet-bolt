@@ -6,7 +6,7 @@ mod 'puppetlabs/stdlib', '5.2.0'
 mod 'thias/sysctl', '1.0.6'
 mod 'puppet-unattended_upgrades',
     git: 'https://github.com/voxpupuli/puppet-unattended_upgrades.git',
-    ref: 'a68d0b8b8e86865564d5d5ddb0a6faf4fd1b9557'
+    ref: 'master'
 mod 'puppetlabs-apt', '7.1.0'
 mod 'puppetlabs-mysql', '6.2.0'
 mod 'puppet/archive', '3.2.1'
@@ -43,7 +43,7 @@ mod 'voxpupuli-prosody',
     ref: 'master'
 mod 'puppet-posix_acl', '0.1.1'
 mod 'transmission',
-    git: 'https://github.com/craigwatson/puppet-transmission.git',
+    git: 'https://github.com/gfa/puppet-transmission.git',
     ref: 'master'
 mod 'thrnio-ip', '1.0.1'
 mod 'pltraining-dirtree', '0.3.0'

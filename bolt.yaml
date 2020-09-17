@@ -12,5 +12,6 @@ log:
 ssh:
   user: root
   host-key-check: false
+  native-ssh: true
 
 inventoryfile: hieradata/inventory.yaml

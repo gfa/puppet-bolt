@@ -18,6 +18,7 @@ class profile::networking::firewall::fail2ban (
     findtime  => 600,
     logtarget => 'SYSLOG',
     chain     => 'FILTERS',
+    usedns    => 'yes',
   }
 
   $ini_defaults = { 'path' => '/etc/fail2ban/action.d/blocklist_de.local' }

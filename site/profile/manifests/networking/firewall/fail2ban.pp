@@ -13,6 +13,10 @@ class profile::networking::firewall::fail2ban (
     ensure => purged,
   }
 
+  package {'python3-systemd':
+    ensure => installed,
+  }
+
   -> class { 'fail2ban':
     bantime   => 3600,
     findtime  => 600,

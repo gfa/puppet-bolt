@@ -34,4 +34,8 @@ class profile::networking::firewall::fail2ban (
     source =>  "puppet:///modules/${module_name}/networking/firewall/fail2ban.override.conf",
   }
 
+  file { '/etc/tmpfiles.d/fail2ban-tmpfiles.conf':
+    source => "puppet:///modules/${module_name}/networking/firewall/fail2ban-tmpfiles.override.conf",
+  }
+
 }

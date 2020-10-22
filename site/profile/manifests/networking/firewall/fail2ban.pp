@@ -5,6 +5,7 @@
 
 class profile::networking::firewall::fail2ban (
   Hash $blocklist_de_params = lookup('site_firewall::fail2ban::blocklist_de_params'),
+  Hash $infrastructure = lookup('infrastructure'),
 ) {
 
   include profile::networking::firewall::fail2ban::openssh
@@ -17,7 +18,19 @@ class profile::networking::firewall::fail2ban (
     ensure => installed,
   }
 
-  -> class { 'fail2ban':
+  $ignoreip = []
+  $ignoreip6 = []
+  $all_hosts = $infrastructure['hosts']
+  notify { $all_hosts: }
+  $all_hosts.each |$host| {
+    #$ignoreip += host['ipv4']
+    #$ignoreip += host['ipv4']
+    #notify { "blah blah ${host['ipv4']}": }
+  }
+  #notify($ignoreip)
+  #notify($ignoreip6)
+
+  class { 'fail2ban':
     bantime   => 3600,
     findtime  => 600,
     logtarget => 'SYSLOG',

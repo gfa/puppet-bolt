@@ -1,0 +1,118 @@
+#!/bin/bash
+# vim: set ts=2 sw=2 et :
+set -e
+
+# Example input and output (from the bash prompt):
+#
+# ./getopt-parse.bash -a par1 'another arg' --c-long 'wow!*\?' -cmore -b " very long "
+# Option a
+# Option c, no argument
+# Option c, argument 'more'
+# Option b, argument ' very long '
+# Remaining arguments:
+# --> 'par1'
+# --> 'another arg'
+# --> 'wow!*\?'
+
+# Note that we use "$@" to let each command-line parameter expand to a
+# separate word. The quotes around "$@" are essential!
+# We need TEMP as the 'eval set --' would nuke the return value of getopt.
+# TEMP=$(getopt -o 'ab:c::' --long 'a-long,b-long:,c-long::' -n 'example.bash' -- "$@")
+
+TEMP=$(getopt -o 'vtdnh' --long 'trace,verbose,help,test,debug,noop,role:,show_diff,target::' -n 'puppet-apply' -- "$@")
+
+if [ $? -ne 0 ]; then
+        echo 'Terminating...' >&2
+        exit 1
+fi
+
+# Note the quotes around "$TEMP": they are essential!
+eval set -- "$TEMP"
+unset TEMP
+
+APPLY_OPTIONS="--onetime --modulepath=/etc/puppet/code/modules:/etc/puppet/code/site --hiera_config=/etc/puppet/hiera.yaml"
+TARGET="/etc/puppet/code/site/base/manifests/init.pp"
+TARGET=' -e "include base"'
+
+while true; do
+  case "$1" in
+    '-h'|'--help')
+      echo 'Usage: puppet-apply [-n|--noop] [-t|--test] [-d|--debug] [--show_dif] [--role foo] [--target [/etc/puppet/code/manifests/foo.pp]] host1 [hostN]'
+      APPLY_OPTIONS+=" --help"
+      shift
+      continue
+      exit 0
+      ;;
+    '-v'|'--verbose')
+      APPLY_OPTIONS+=" --verbose"
+      shift
+      continue
+      ;;
+    '-t'|'--test')
+      APPLY_OPTIONS+=" --test"
+      shift
+      continue
+      ;;
+    '-d'|'--debug')
+      APPLY_OPTIONS+=" --debug"
+      shift
+      continue
+      ;;
+    '-n'|'--noop')
+      APPLY_OPTIONS+=" --noop"
+      shift
+      continue
+      ;;
+    '--trace')
+      APPLY_OPTIONS+=" --trace"
+      shift
+      continue
+      ;;
+    '--show_diff')
+      APPLY_OPTIONS+=" --show_diff"
+      shift
+      continue
+      ;;
+    '-r'|'--role')
+      echo "unimplemented, argument '$2'"
+      shift 2
+      continue
+      ;;
+    '--target')
+      # c has an optional argument. As we are in quoted mode,
+      # an empty parameter will be generated if its optional
+      # argument is not found.
+      case "$2" in
+        '')
+          echo 'targeting default /etc/puppet/code/site/base/manifests/init.pp'
+          TARGET="/etc/puppet/code/site/base/manifests/init.pp"
+          ;;
+        *)
+          echo "targeting $2"
+          TARGET="$2"
+          ;;
+          esac
+          shift 2
+          continue
+          ;;
+        '--')
+          shift
+          break
+          ;;
+        *)
+          echo 'Internal error!' >&2
+          exit 1
+          ;;
+      esac
+    done
+
+for host; do
+  set -x
+  rsync -raq --delete --exclude='.git' --exclude='hieradata' hiera.yaml modules site root@${host}:/etc/puppet/code/
+  rsync -av --delete --exclude='.git' hieradata/* root@${host}:/etc/puppet/code/hieradata/
+  rsync -av --delete --exclude='.git' hieradata/hosts/${host}.yaml root@${host}:/etc/puppet/code/hieradata/
+  rsync -av --delete --exclude='.git' hieradata/hosts/${host}/* root@${host}:/etc/puppet/code/hieradata/${host}
+  rsync -raq hiera-apply.yaml root@${host}:/etc/puppet/hiera.yaml
+#  ssh "root@${host}" puppet apply "${APPLY_OPTIONS} ${TARGET}"
+#  ssh "root@${host}" "rm -rf /etc/puppet/code/hieradata"
+done

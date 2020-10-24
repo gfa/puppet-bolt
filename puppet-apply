@@ -108,7 +108,7 @@ while true; do
 
 for host; do
   rsync -raq --delete --exclude='.git' --exclude='hieradata' hiera.yaml modules site "root@${host}:/etc/puppet/code/"
-  rsync -av --no-r --exclude='.git' hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"
+  rsync -aq --no-r --exclude='.git' hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"
   rsync -aq --delete --exclude='.git' "hieradata/hosts/${host}.yaml" "root@${host}:/etc/puppet/code/hieradata/"
   rsync -aq --delete --exclude='.git' "hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/${host}/"
   rsync -raq hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"

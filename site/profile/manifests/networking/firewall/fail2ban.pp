@@ -39,8 +39,9 @@ class profile::networking::firewall::fail2ban (
     backend   => 'systemd',
   }
 
-  $ini_defaults = { 'path' => '/etc/fail2ban/action.d/blocklist_de.local' }
-  create_ini_settings($blocklist_de_params, $ini_defaults)
+  file { '/etc/fail2ban/action.d/blocklist_de.local':
+    ensure => absent,
+  }
 
   systemd::dropin_file { 'fail2ban.conf':
     unit   =>  'fail2ban.service',

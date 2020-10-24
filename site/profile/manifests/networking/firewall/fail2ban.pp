@@ -18,6 +18,24 @@ class profile::networking::firewall::fail2ban (
     ensure => installed,
   }
 
+  # data structure
+  #
+  # infrastructure:
+  #  hosts:
+  #  foo:
+  #    ipv4:
+  #      - 1.2.3.4
+  #    ipv6:
+  #     - 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+  #     - 2001:0db8:85a3:0000:0000:8a2e:0370:7331
+  #  bar:
+  #    ipv4:
+  #      - 4.5.6.7
+
+  $all_hosts = $infrastructure[hosts].keys
+  $ignoreipv4 =  $all_hosts.map | $host | { "${infrastructure[hosts][$host][ipv4]}" }
+  $ignoreipv6 =  $all_hosts.map | $host | { "${infrastructure[hosts][$host][ipv6]}" }
+
   class { 'fail2ban':
     bantime   => 3600,
     findtime  => 600,
@@ -25,6 +43,7 @@ class profile::networking::firewall::fail2ban (
     chain     => 'FILTERS',
     usedns    => 'yes',
     backend   => 'systemd',
+    ignoreip  => $ignoreipv4 + $ignoreipv6,
   }
 
   file { '/etc/fail2ban/action.d/blocklist_de.local':

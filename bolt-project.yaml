@@ -1,6 +1,9 @@
 ---
 concurrency: 1
-format: human
+format: json
+
+apply_settings:
+  show_diff: true
 
 log:
   console:
@@ -8,10 +11,6 @@ log:
   logs/debug.log:
     level: debug
     append: false
-
-ssh:
-  user: root
-  host-key-check: false
-  native-ssh: true
+  bolt-debug.log: disable
 
 inventoryfile: hieradata/inventory.yaml

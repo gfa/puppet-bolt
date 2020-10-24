@@ -1,26 +1,15 @@
 ---
 version: 5
 defaults:
-  datadir: hieradata
+  datadir: /etc/puppet/code/hieradata
   data_hash: yaml_data
 hierarchy:
   - name: 'Per host data'
-    lookup_key: eyaml_lookup_key
     globs:
-      - "hosts/%{::hostname}.eyaml"
+      - "hosts/%{::hostname}.yaml"
       - "hosts/%{::hostname}/*.yaml"
-      - "hosts/%{::hostname}/*.eyaml"
-      - "hosts/%{::fqdn}.eyaml"
       - "hosts/%{::fqdn}/*.yaml"
-      - "hosts/%{::fqdn}/*.eyaml"
-    options:
-      encrypt_method: gpg
-      gpg_always_trust: true
-      gpg_recipients_file: 'hiera-eyaml-gpg.recipients'
-      pkcs7_private_key: 'keys/private_key.pkcs7.pem'
-      pkcs7_public_key: 'keys/public_key.pkcs7.pem'
   - name: 'Global data'
-    lookup_key: eyaml_lookup_key
     paths:
       - 'infrastructure.yaml'
       - 'base.yaml'
@@ -36,13 +25,7 @@ hierarchy:
       - 'nullmailer.yaml'
       - 'tor.yaml'
       - 'logcheck.yaml'
-      - 'files.eyaml'
-      - 'blocklist_de.eyaml'
-      - 'nginx.eyaml'
-      - 'monitoring.eyaml'
-    options:
-      encrypt_method: gpg
-      gpg_always_trust: true
-      gpg_recipients_file: 'hiera-eyaml-gpg.recipients'
-      pkcs7_private_key: 'keys/private_key.pkcs7.pem'
-      pkcs7_public_key: 'keys/public_key.pkcs7.pem'
+      - 'files.yaml'
+      - 'blocklist_de.yaml'
+      - 'nginx.yaml'
+      - 'monitoring.yaml'

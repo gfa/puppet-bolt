@@ -13,8 +13,11 @@ before_script:
   echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b ${CI_COMMIT_REF_NAME} hieradata \
   || git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b master hieradata
-  # TODO: cache
-  g10k -verbose -puppetfile Puppetfile
+  g10k -cachedir g10k-cache -verbose -puppetfile Puppetfile
+
+cache:
+  paths:
+    - g10k-cache
 
 production:
   resource_group: $CI_COMMIT_REF_SLUG

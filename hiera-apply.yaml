@@ -1,0 +1,31 @@
+---
+version: 5
+defaults:
+  datadir: /etc/puppet/code/hieradata
+  data_hash: yaml_data
+hierarchy:
+  - name: 'Per host data'
+    globs:
+      - "hosts/%{::hostname}.yaml"
+      - "hosts/%{::hostname}/*.yaml"
+      - "hosts/%{::fqdn}/*.yaml"
+  - name: 'Global data'
+    paths:
+      - 'infrastructure.yaml'
+      - 'base.yaml'
+      - 'firewall.yaml'
+      - 'common.yaml'
+      - 'apt.yaml'
+      - 'unattended_upgrades.yaml'
+      - 'mysql.yaml'
+      - 'packages.yaml'
+      - 'needrestart.yaml'
+      - 'munin.yaml'
+      - 'ssh.yaml'
+      - 'nullmailer.yaml'
+      - 'tor.yaml'
+      - 'logcheck.yaml'
+      - 'files.yaml'
+      - 'blocklist_de.yaml'
+      - 'nginx.yaml'
+      - 'monitoring.yaml'

@@ -3,11 +3,7 @@ image: debian
 
 before_script:
   - apt update
-  - apt install -y curl jq openssh-client python3-pip git
-  - curl https://apt.puppet.com/puppet-tools-release-buster.deb > /tmp/puppet-tools-release-buster.deb
-  - dpkg -i /tmp/puppet-tools-release-buster.deb
-  - apt update
-  - apt install -y puppet-bolt
+  - apt install -y curl jq openssh-client python3-pip git rsync g10k
   - pip3 install yq
 
 .template1: &template1 |
@@ -17,10 +13,8 @@ before_script:
   echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b ${CI_COMMIT_REF_NAME} hieradata \
   || git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b master hieradata
-  ln -s hieradata/keys .
-  mkdir -p ~/.puppetlabs/bolt/ logs
-  echo -e "disabled: true" > ~/.puppetlabs/bolt/analytics.yaml
-  bolt puppetfile install
+  # TODO: cache
+  g10k -verbose -puppetfile Puppetfile
 
 production:
   resource_group: $CI_COMMIT_REF_SLUG
@@ -30,7 +24,7 @@ production:
     - |
       for host in ${HOSTS}
         do
-          bolt plan run base --targets $host || curl -s -X POST \
+          bash puppet-apply --show_diff $host || curl -s -X POST \
             -F "title=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             -F "message=(tail -10 logs/debug.log)" \
             -F "priority=$GOTIFY_PRIORITY" \
@@ -55,7 +49,7 @@ testing:
     - |
       for host in ${TEST_HOSTS}
         do
-          bolt plan run base --targets $host || curl -s -X POST \
+          bash puppet-apply --show_diff $host || curl -s -X POST \
             -F "title=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             -F "message=(tail -10 logs/debug.log)" \
             -F "priority=$GOTIFY_PRIORITY" \

@@ -111,8 +111,8 @@ for host; do
   ssh "root@${host}" 'test -x /usr/bin/puppet || apt -y autoremove --purge puppet-agent puppet+'
   rsync -raq --delete --exclude='.git' --exclude='hieradata' hiera.yaml modules site lib "root@${host}:/etc/puppet/code/"
   rsync -aq --no-r --exclude='.git' hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"
-  rsync -aq --delete --exclude='.git' "hieradata/hosts/${host}.yaml" "root@${host}:/etc/puppet/code/hieradata/"
-  rsync -aq --delete --exclude='.git' "hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/${host}/"
+  rsync -aq --delete --exclude='.git' "hieradata/hosts/${host}.yaml" "root@${host}:/etc/puppet/code/hieradata/hosts/"
+  rsync -aq --delete --exclude='.git' "hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/hosts/${host}/"
   rsync -raq hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"
   # shellcheck disable=SC2029
   ssh "root@${host}" puppet apply "${APPLY_OPTIONS} ${TARGET}"

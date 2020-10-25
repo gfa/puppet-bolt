@@ -30,7 +30,7 @@ fi
 eval set -- "$TEMP"
 unset TEMP
 
-APPLY_OPTIONS="--onetime --modulepath=/etc/puppet/code/modules:/etc/puppet/code/site --hiera_config=/etc/puppet/hiera.yaml --libdir=/etc/puppet/code/lib"
+APPLY_OPTIONS="--modulepath=/etc/puppet/code/modules:/etc/puppet/code/site --hiera_config=/etc/puppet/hiera.yaml --libdir=/etc/puppet/code/lib"
 TARGET="/etc/puppet/code/site/base/manifests/init.pp"
 TARGET=' -e "include base"'
 

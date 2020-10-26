@@ -6,6 +6,7 @@
 class profile::networking::firewall::fail2ban (
   Hash $blocklist_de_params = lookup('site_firewall::fail2ban::blocklist_de_params'),
   Hash $infrastructure = lookup('infrastructure'),
+  Array $ignore_ips = [],
 ) {
 
   include profile::networking::firewall::fail2ban::openssh
@@ -32,9 +33,14 @@ class profile::networking::firewall::fail2ban (
   #    ipv4:
   #      - 4.5.6.7
 
-  $all_hosts = $infrastructure[hosts].keys
-  $ignoreipv4 =  $all_hosts.map | $host | { "${infrastructure[hosts][$host][ipv4]}" }
-  $ignoreipv6 =  $all_hosts.map | $host | { "${infrastructure[hosts][$host][ipv6]}" }
+  if $ignore_ips.length > 0 {
+    $ignoreip = $ignore_ips
+  } else {
+    $all_hosts = $infrastructure[hosts].keys
+    $ignoreipv4 =  $all_hosts.map | $host | { "${infrastructure[hosts][$host][ipv4]}" }
+    $ignoreipv6 =  $all_hosts.map | $host | { "${infrastructure[hosts][$host][ipv6]}" }
+    $ignoreip = $ignoreip4 + $ignoreipv6
+  }
 
   class { 'fail2ban':
     bantime   => 3600,
@@ -43,7 +49,7 @@ class profile::networking::firewall::fail2ban (
     chain     => 'FILTERS',
     usedns    => 'yes',
     backend   => 'systemd',
-    ignoreip  => $ignoreipv4 + $ignoreipv6,
+    ignoreip  => $ignoreip,
   }
 
   file { '/etc/fail2ban/action.d/blocklist_de.local':

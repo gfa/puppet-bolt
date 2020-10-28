@@ -44,3 +44,4 @@ mod 'transmission',
 mod 'thrnio-ip', '1.0.1'
 mod 'pltraining-dirtree', '0.3.0'
 mod 'camptocamp-openssl', '1.14.0'
+mod 'icinga-icinga2', '3.0.0'

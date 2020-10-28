@@ -117,4 +117,5 @@ for host; do
   rsync -raq hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"
   # shellcheck disable=SC2029
   ssh "root@${host}" puppet apply "${APPLY_OPTIONS} ${TARGET}"
+  ssh "root@${host}" rm -rf /etc/puppet/code/hieradata
 done

@@ -43,13 +43,14 @@ class profile::networking::firewall::fail2ban (
   }
 
   class { 'fail2ban':
-    bantime   => 3600,
-    findtime  => 600,
-    logtarget => 'SYSLOG',
-    chain     => 'FILTERS',
-    usedns    => 'yes',
-    backend   => 'systemd',
-    ignoreip  => $ignoreip,
+    bantime        => 3600,
+    findtime       => 600,
+    logtarget      => 'SYSLOG',
+    chain          => 'FILTERS',
+    usedns         => 'yes',
+    backend        => 'systemd',
+    ignoreip       => $ignoreip,
+    manage_service => false,
   }
 
   file { '/etc/fail2ban/action.d/blocklist_de.local':

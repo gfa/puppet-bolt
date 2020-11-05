@@ -75,6 +75,7 @@ class profile::service::transmission (
     ratio_limit_enabled         => $ratio_limit_enabled,
     ratio_limit                 => $ratio_limit,
     utp_enabled                 => $utp_enabled,
+    watch_dir_enabled           => true,
   }
 
 }

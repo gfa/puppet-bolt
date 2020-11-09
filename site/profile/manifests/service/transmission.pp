@@ -32,7 +32,7 @@ class profile::service::transmission (
   Stdlib::Port $peer_port_random_high = 65535,
   Stdlib::Port $peer_port = 51413,
   Boolean $peer_port_random = false,
-  Boolean $watch_dir_enabled = false,
+  Boolean $watch_dir_enabled = true,
   Stdlib::HTTPUrl $blocklist_url = 'http://www.example.com/blocklist',
   Boolean $blocklist_enabled = false,
   Boolean $manage_ppa = false,
@@ -48,6 +48,8 @@ class profile::service::transmission (
   Boolean $ratio_limit_enabled = false,
   Integer $ratio_limit = 2,
   Boolean $utp_enabled = true,
+  Boolean $pex_enabled = true,
+  Boolean $dht_enabled = true,
 ) {
 
   include profile::networking::firewall::service::transmission
@@ -75,7 +77,9 @@ class profile::service::transmission (
     ratio_limit_enabled         => $ratio_limit_enabled,
     ratio_limit                 => $ratio_limit,
     utp_enabled                 => $utp_enabled,
-    watch_dir_enabled           => true,
+    watch_dir_enabled           => $watch_dir_enabled,
+    pex_enabled                 => $pex_enabled,
+    dht_enabled                 => $dht_enabled,
   }
 
 }

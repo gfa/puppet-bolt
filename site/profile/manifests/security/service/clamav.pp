@@ -19,10 +19,11 @@ class profile::security::service::clamav (
     clamd_service_ensure     => 'running',
     freshclam_service_ensure => 'running',
     clamd_options            => {
-      'LogSyslog'   => true,
-      'LogFacility' => 'LOG_LOCAL6',
-      'LogClean'    => false,
-      'LogVerbose'  => false,
+      'LogSyslog'          => true,
+      'LogFacility'        => 'LOG_LOCAL6',
+      'LogClean'           => false,
+      'LogVerbose'         => false,
+      'CommandReadTimeout' => 30,
     },
     freshclam_options        => {
       'LogSyslog'   => true,

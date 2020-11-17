@@ -38,7 +38,7 @@ class profile::security::service::clamav::milter (
     'MilterSocketGroup'         => 'clamav',
     'MilterSocketMode'          => '666',
     'OnClean'                   => 'Accept',
-    'OnFail'                    => 'Defer',
+    'OnFail'                    => 'Accept',
     'OnInfected'                => 'Reject',
     'PidFile'                   => '/var/run/clamav/clamav-milter.pid',
     'ReadTimeout'               => 120,

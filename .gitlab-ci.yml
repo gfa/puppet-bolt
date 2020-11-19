@@ -14,6 +14,7 @@ before_script:
   git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b ${CI_COMMIT_REF_NAME} hieradata \
   || git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b master hieradata
   g10k -cachedir g10k-cache -verbose -puppetfile Puppetfile
+  cp -f hieradata/ssh_config ~/.ssh/config
 
 cache:
   paths:

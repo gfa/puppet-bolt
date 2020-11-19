@@ -2,8 +2,8 @@
 
 class profile::hardware::gce {
 
-  if $facts['dmi']['bios']['vendor'] == 'Google' {
-    class { 'gai::preferipv4': }
-  }
+  if $facts['os']['amd64'] and $facts['dmi']['bios']['vendor'] == 'Google' {
+      class { 'gai::preferipv4': }
+    }
 
 }

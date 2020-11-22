@@ -8,7 +8,6 @@ all my servers, which is:
 - unattended upgrades
 - munin agent
 - fail2ban
-- logcheck
 - ntp
 - common packages
 - nullmailer

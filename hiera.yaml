@@ -23,7 +23,6 @@ hierarchy:
       - 'ssh.yaml'
       - 'nullmailer.yaml'
       - 'tor.yaml'
-      - 'logcheck.yaml'
       - 'files.yaml'
       - 'blocklist_de.yaml'
       - 'nginx.yaml'

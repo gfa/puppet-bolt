@@ -15,6 +15,7 @@ class loging::erpel {
     purge_ssh_keys => true,
     gid            => 'erpel',
     managehome     => true,
+    groups         => 'adm',
   }
 
 }

@@ -14,6 +14,7 @@ class loging::erpel {
     forcelocal     => true,
     purge_ssh_keys => true,
     gid            => 'erpel',
+    managehome     => true,
   }
 
 }

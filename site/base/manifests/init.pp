@@ -30,6 +30,9 @@ class base {
   include profile::service::disable_puppet
   include profile::service::openssh::server
 
+  # logging
+  include profile::logging::erpel
+
   # monitoring
   include profile::monitoring::munin::node
   include profile::monitoring::prometheus::node_exporter

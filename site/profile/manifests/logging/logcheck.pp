@@ -1,6 +1,6 @@
 # this class removes traces of logcheck
 
-class logging::logcheck {
+class profile::logging::logcheck {
 
   user { 'logcheck':
     ensure => absent,

@@ -3,7 +3,7 @@
 # are deployed from a pipeline
 # vim: set ts=2 sw=2 et :
 
-class loging::erpel {
+class profile::logging::erpel {
 
   group { 'erpel':
     system         => true,
@@ -12,7 +12,6 @@ class loging::erpel {
   user { 'erpel':
     system         => true,
     forcelocal     => true,
-    purge_ssh_keys => true,
     gid            => 'erpel',
     managehome     => true,
     groups         => 'adm',

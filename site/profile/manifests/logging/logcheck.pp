@@ -12,6 +12,7 @@ class profile::logging::logcheck {
 
   file { '/var/lib/logcheck':
     ensure => absent,
+    force  => true,
   }
 
 }

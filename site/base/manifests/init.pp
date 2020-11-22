@@ -31,6 +31,7 @@ class base {
   include profile::service::openssh::server
 
   # logging
+  include profile::logging::logcheck
   include profile::logging::erpel
 
   # monitoring

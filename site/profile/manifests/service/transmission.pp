@@ -82,4 +82,11 @@ class profile::service::transmission (
     dht_enabled                 => $dht_enabled,
   }
 
+  file { '/usr/local/bin/transmission-cleanup':
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    content => template("${module_name}/service/transmission-daemon.erb"),
+  }
+
 }

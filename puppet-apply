@@ -119,4 +119,5 @@ for host; do
   ssh "root@${host}" puppet apply "${APPLY_OPTIONS} ${TARGET}"
   ssh "root@${host}" find /etc/puppet/code/hieradata -maxdepth 1 -type f -delete
   ssh "root@${host}" find /etc/puppet/code/hieradata/hosts/${host} -type f -delete
+  ssh "root@${host}" "logger puppet ran successfully"
 done

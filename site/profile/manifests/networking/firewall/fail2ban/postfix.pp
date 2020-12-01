@@ -11,11 +11,27 @@ class profile::networking::firewall::fail2ban::postfix {
     ],
   }
 
-  $postfix_params = lookup('fail2ban::jail::postfix-sasl')
+  $postfix_sasl_params = lookup('fail2ban::jail::postfix-sasl')
   fail2ban::jail { 'postfix-sasl':
     filter => 'postfix-sasl',
-    *      => $postfix_params,
+    *      => $postfix_sasl_params,
   }
 
+  fail2ban::filter { 'postfix-brute':
+    failregexes => [
+      'postfix(-\w+)?/(?:submission/|smtps/)?smtp[ds]\[[0-9]+\]: NOQUEUE: reject: RCPT from [-._\w]+\[<HOST>]: 550 5.1.1'
+    ]
+  }
+
+  $postfix_extra_params = {
+    'bantime'  => 420,
+    'findtime' => 360,
+    'maxretry' => 2,
+  }
+  $postfix_params = lookup('fail2ban::jail::postfix') + $postfix_extra_params
+  fail2ban::jail { 'postfix':
+    filter => 'postfix-brute',
+    *      => $postfix_params,
+  }
 
 }

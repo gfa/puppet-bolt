@@ -108,7 +108,7 @@ while true; do
 
 for host; do
   echo  "$host"
-  ssh "root@${host}" 'test -x /usr/bin/puppet || apt -y autoremove --purge puppet-agent puppet+'
+  ssh "root@${host}" 'test -x /usr/bin/puppet || apt -y autoremove --purge puppet-agent puppet+ rsync+'
   ssh "root@${host}" mkdir -p /etc/puppet/code/hieradata/hosts/${host}
   rsync -raq --delete --exclude='.git' --exclude='hieradata' hiera.yaml modules site lib "root@${host}:/etc/puppet/code/"
   rsync -aq --no-r --exclude='.git' hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"

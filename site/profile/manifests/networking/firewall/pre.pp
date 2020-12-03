@@ -14,6 +14,24 @@ class profile::networking::firewall::pre {
     command => '/usr/sbin/invoke-rc.d fail2ban stop || true',
   }
 
+  # moved this here since the default is to use iptables-nft
+  # but due to docker we need to use iptables-legacy.
+  # If this is done outside this class, it breaks the initial
+  # deploy of the machine since some objects which are depended on
+  # are created but then they magically disapear after the change of
+  # iptables implementation
+  # f**k docker
+  if $facts['os']['distro']['codename'] != 'stretch' {
+
+    alternatives { 'iptables':
+      path =>  '/usr/sbin/iptables-legacy',
+    }
+
+    alternatives { 'ip6tables':
+      path =>  '/usr/sbin/ip6tables-legacy',
+    }
+  }
+
   Firewall { require => undef, }
 
   # INPUT

@@ -23,7 +23,6 @@ class base {
   include profile::package::base_packages
   include profile::package::pinning
   include profile::package::unattended_upgrades
-  include profile::package::alternatives
 
   # services
   include profile::service::disable_puppet

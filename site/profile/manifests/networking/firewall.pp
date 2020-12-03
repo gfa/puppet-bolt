@@ -4,6 +4,7 @@
 class profile::networking::firewall (
   Boolean $purge_rules = true,
   Boolean $purge_chains = true,
+  Array[String] $extra_chains = [],
 ) {
 
   class { 'firewall': }
@@ -42,6 +43,12 @@ class profile::networking::firewall (
       'PREROUTING:raw:IPv6',
       'OUTPUT:raw:IPv6',
     ]:
+  }
+
+  if $extra_chains {
+    $extra_chains.each |String $chain| {
+      firewallchain { $chain: }
+    }
   }
 
   Firewall {

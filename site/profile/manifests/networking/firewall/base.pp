@@ -10,7 +10,7 @@ class profile::networking::firewall::base (
 ) {
 
   package { 'ipset-persistent':
-    ensure => present,
+    ensure => latest,
   }
 
   concat { '/etc/iptables/ipsets':

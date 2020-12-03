@@ -1,19 +1,19 @@
 # This is the base class to manage a firewall using puppet
 #
 
-class profile::networking::firewall {
+class profile::networking::firewall (
+  Boolean $purge_rules = true,
+  Boolean $purge_chains = true,
+) {
 
   class { 'firewall': }
 
   resources { 'firewall':
-    # take this value from hiera, default: true
-    # to solve docker problem
-    purge => true,
+    purge => $purge_rules,
   }
 
   resources { 'firewallchain':
-    # take this value from hiera, default: true
-    purge => true,
+    purge => $purge_chains,
   }
 
   Firewall {

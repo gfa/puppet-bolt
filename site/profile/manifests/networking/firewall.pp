@@ -16,6 +16,34 @@ class profile::networking::firewall (
     purge => $purge_chains,
   }
 
+  # add them here so puppet doesnt try to remove it
+  firewallchain {
+    [
+      'PREROUTING:mangle:IPv4',
+      'INPUT:mangle:IPv4',
+      'FORWARD:mangle:IPv4',
+      'OUTPUT:mangle:IPv4',
+      'POSTROUTING:mangle:IPv4',
+      'PREROUTING:nat:IPv4',
+      'INPUT:nat:IPv4',
+      'OUTPUT:nat:IPv4',
+      'POSTROUTING:nat:IPv4',
+      'PREROUTING:raw:IPv4',
+      'OUTPUT:raw:IPv4',
+      'PREROUTING:mangle:IPv6',
+      'INPUT:mangle:IPv6',
+      'FORWARD:mangle:IPv6',
+      'OUTPUT:mangle:IPv6',
+      'POSTROUTING:mangle:IPv6',
+      'PREROUTING:nat:IPv6',
+      'INPUT:nat:IPv6',
+      'OUTPUT:nat:IPv6',
+      'POSTROUTING:nat:IPv6',
+      'PREROUTING:raw:IPv6',
+      'OUTPUT:raw:IPv6',
+    ]:
+  }
+
   Firewall {
     before  => Class['profile::networking::firewall::post'],
     require => Class['profile::networking::firewall::pre'],

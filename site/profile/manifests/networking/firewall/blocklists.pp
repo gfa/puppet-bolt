@@ -12,6 +12,8 @@ class profile::networking::firewall::blocklists (
   Array[String[2,2]] $countries_allow,
 ) {
 
+  require profile::networking::firewall::base
+
   file { '/etc/cron.hourly/update-ipsets-blocklists':
     mode   => '0755',
     owner  => 'root',
@@ -21,7 +23,7 @@ class profile::networking::firewall::blocklists (
   }
 
   exec { 'update_ipsets_blocklists':
-    command     => '/etc/cron.hourly/update-ipsets',
+    command     => '/etc/cron.hourly/update-ipsets-blocklists',
     refreshonly => true,
   }
 

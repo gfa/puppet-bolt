@@ -61,5 +61,6 @@ class profile::networking::firewall (
   contain profile::networking::firewall::common
   contain profile::networking::firewall::base
   contain profile::networking::firewall::fail2ban
+  contain profile::networking::firewall::blocklists
 
 }

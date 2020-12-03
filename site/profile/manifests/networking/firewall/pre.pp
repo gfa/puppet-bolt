@@ -33,13 +33,6 @@ class profile::networking::firewall::pre {
     provider => ['iptables', 'ip6tables'],
   }
 
-  firewall_multi { '099 fail2ban':
-    chain    => 'INPUT',
-    proto    => 'all',
-    jump     => 'FILTERS',
-    provider => ['iptables', 'ip6tables'],
-  }
-
   firewall_multi { '100 allow input ssh':
     chain    => 'INPUT',
     proto    => 'tcp',

@@ -66,4 +66,23 @@ class profile::networking::firewall::fail2ban (
     source => "puppet:///modules/${module_name}/networking/firewall/fail2ban-tmpfiles.override.conf",
   }
 
+  firewallchain { 'FILTERS:filter:IPv4':
+    ensure => present,
+  }
+
+  firewallchain { 'FILTERS:filter:IPv6':
+    ensure => present,
+  }
+
+  firewall_multi { '099 fail2ban':
+    chain    => 'INPUT',
+    proto    => 'all',
+    jump     => 'FILTERS',
+    provider => ['iptables', 'ip6tables'],
+    require  => [
+      Firewallchain['FILTERS:filter:IPv6'],
+      Firewallchain['FILTERS:filter:IPv4'],
+    ]
+  }
+
 }

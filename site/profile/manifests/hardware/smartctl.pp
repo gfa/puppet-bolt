@@ -4,16 +4,22 @@ class profile::hardware::smartctl {
 
   if $facts['is_virtual'] == true {
 
-    package{'smartmontools':
+    package {'smartmontools':
       ensure => purged,
     }
 
   } else {
 
-    package{'smartmontools':
-      ensure => present,
+    if $facts['architecture'] == 'amd64' {
+      if $facts['dmi']['manufacturer'] != 'Joyent' {
+        package {'smartmontools':
+          ensure => present,
+        }
+      }
+    } else {
+      package {'smartmontools':
+        ensure => present,
+      }
     }
-
   }
-
 }

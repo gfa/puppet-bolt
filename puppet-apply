@@ -115,6 +115,7 @@ for host; do
   rsync -aqH --delete --exclude='.git' "hieradata/hosts/${host}.yaml" "root@${host}:/etc/puppet/code/hieradata/hosts/"
   rsync -aqK --delete --exclude='.git' "hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/hosts/${host}/"
   rsync -raq hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"
+  ssh "root@${host}" service fail2ban stop
   # shellcheck disable=SC2029
   ssh "root@${host}" puppet apply "${APPLY_OPTIONS} ${TARGET}"
   ssh "root@${host}" find /etc/puppet/code/hieradata -maxdepth 1 -type f -delete

@@ -1,6 +1,8 @@
 Things to improve and or complete
 =================================
 
+- install per server packages
+- timezone
 - split out the postfix module into an independent module
 - locales
 - root's .bashrc (DEBIAN_FRONTEND, unset HISTFILE)

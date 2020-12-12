@@ -13,7 +13,7 @@ class profile::networking::dn42 {
 
   sysctl { 'net.ipv6.conf.default.forwarding':
     ensure => present,
-    value  => "1",
+    value  => '1',
   }
 
   sysctl { 'net.ipv6.conf.all.forwarding':
@@ -39,7 +39,9 @@ class profile::networking::dn42 {
 
   sysctl {'net.ipv4.conf.default.log_martians':
     ensure => present,
-    value => '1',
+    value  => '1',
   }
+
+  package { 'mtr-tiny': }
 
 }

@@ -9,6 +9,8 @@ class site_bird (
   Stdlib::IP::Address::V6::Nosubnet $ipv6_own,
 ) {
 
+  include profile::monitoring::munin::node::plugin::bird
+
   $directories = [
     '/etc/bird',
     '/etc/bird/peers4',

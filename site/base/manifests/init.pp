@@ -24,6 +24,9 @@ class base {
   include profile::package::pinning
   include profile::package::unattended_upgrades
 
+  # others
+  include profile::package::etckeeper
+
   # services
   include profile::service::disable_puppet
   include profile::service::openssh::server

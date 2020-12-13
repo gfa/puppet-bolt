@@ -45,6 +45,8 @@ class profile::networking::dn42 {
   package { [
     'mtr-tiny',
     'vim-nox',
+    'tcpdump',
+    'tshark',
   ]: }
 
 }

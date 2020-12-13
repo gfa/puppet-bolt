@@ -42,6 +42,9 @@ class profile::networking::dn42 {
     value  => '1',
   }
 
-  package { 'mtr-tiny': }
+  package { [
+    'mtr-tiny',
+    'vim-nox',
+  ]: }
 
 }

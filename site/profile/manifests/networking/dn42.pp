@@ -47,6 +47,7 @@ class profile::networking::dn42 {
     'vim-nox',
     'tcpdump',
     'tshark',
+    'ethtool', #  ethtool -K eth0 tx off rx off
   ]: }
 
 }

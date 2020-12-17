@@ -38,6 +38,7 @@ class base {
   # monitoring
   include profile::monitoring::munin::node
   include profile::monitoring::prometheus::node_exporter
+  include profile::monitoring::vnstat
 
   # security
   include profile::security::account::root

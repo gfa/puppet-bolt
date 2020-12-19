@@ -13,8 +13,7 @@ class site_bird (
 
   $directories = [
     '/etc/bird',
-    '/etc/bird/peers4',
-    '/etc/bird/peers6',
+    '/etc/bird/peers',
   ]
 
   $directories.each | String $directory | {
@@ -23,30 +22,21 @@ class site_bird (
     }
   }
 
-  $files = [
-    '/etc/bird/local6.conf',
-    '/etc/bird/local4.conf',
-  ]
+  package { 'bird2': }
 
-  $files.each | String $file | {
-    file { $file:
-      owner   => 'root',
-      group   => 'bird',
-      mode    => '0640',
-      content => template("${module_name}/${file}.erb"),
-    }
+  service { 'bird':
+    ensure  => running,
+    enable  => true,
+    require => Package['bird2'],
   }
 
-  class { 'bird':
-    enable_v6         => true,
-    config_content_v4 => template("${module_name}/etc/bird/bird.conf.erb"),
-    config_content_v6 => template("${module_name}/etc/bird/bird6.conf.erb"),
-    manage_conf       => true,
-    manage_service    => true,
-    service_v4_ensure => running,
-    service_v6_ensure => running,
-    service_v4_enable => true,
-    service_v6_enable => true,
+  file { '/etc/bird/bird.conf':
+    owner   => 'root',
+    group   => 'bird',
+    mode    => '0640',
+    content => template("${module_name}/etc/bird/bird.conf.erb"),
+    notify  => Service['bird'],
+    require => Package['bird2'],
   }
 
   firewall_multi { '300 allow incoming bgp traffic':

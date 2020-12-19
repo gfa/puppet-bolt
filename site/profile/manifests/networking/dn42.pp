@@ -48,6 +48,31 @@ class profile::networking::dn42 {
     'tcpdump',
     'tshark',
     'ethtool', #  ethtool -K eth0 tx off rx off
+    'curl',
+    'fping',
+    'hping3',
   ]: }
+
+  $roa_files = [
+    '/etc/bird/roa_dn42.conf',
+    '/etc/bird/roa_dn42_v6.conf',
+  ]
+
+  $roa_files.each | String $file | {
+    file { $file:
+      owner   => 'root',
+      mode    => '0644',
+      group   => 'bird',
+      require => Package['bird2'],
+    }
+  }
+
+  file { '/etc/cron.d/dn42_roa':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template("${module_name}/etc/cron.d/dn42_roa.erb"),
+    require => [Package['bird2'], Package['curl']],
+  }
 
 }

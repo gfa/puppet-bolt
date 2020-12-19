@@ -7,14 +7,11 @@ class profile::monitoring::munin::node::plugin::bird {
     ensure  => present,
     source  => "puppet:///modules/${module_name}/etc/munin/plugins/bird",
     config  => ['env.protocols BGP', 'user bird', 'group bird', 'env.socket /run/bird/bird.ctl'],
-    require => Class['bird'],
+    require => Package['bird2'],
   }
 
   munin::plugin { 'bird6':
-    ensure  => present,
-    source  => "puppet:///modules/${module_name}/etc/munin/plugins/bird6",
-    config  => ['env.protocols BGP', 'user bird', 'group bird', 'env.socket /run/bird/bird6.ctl'],
-    require => Class['bird'],
+    ensure  => absent,
   }
 
 }

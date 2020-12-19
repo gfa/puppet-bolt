@@ -9,7 +9,7 @@ class profile::networking::dn42::firewall {
     table    => 'raw',
     chain    => 'PREROUTING',
     jump     => 'NOTRACK',
-    iniface => 'wg+',
+    iniface  => 'wg+',
   }
 
   firewall_multi { '001 do not track wg traffic out':
@@ -30,7 +30,7 @@ class profile::networking::dn42::firewall {
   firewall_multi { '100 allow outgoing traffic on wg+':
     provider => ['iptables', 'ip6tables'],
     chain    => 'OUTPUT',
-    outiface  => 'wg+',
+    outiface => 'wg+',
     action   => 'accept',
   }
 

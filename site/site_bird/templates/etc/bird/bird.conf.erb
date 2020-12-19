@@ -6,6 +6,8 @@ log "/var/log/bird-remote.log" 10485760 "/var/log/bird-remote.log.old" { remote 
 log "/var/log/bird-local.log" 10485760 "/var/log/bird-local.log.old" { debug, trace, info, warning, error, auth, fatal, bug };
 log "/var/log/bird-all.log" 10485760 "/var/log/bird-all.log.old" { info, warning, error, fatal, debug, trace, remote, auth };
 
+debug protocols all;
+
 ################################################
 #               Variable header                #
 ################################################

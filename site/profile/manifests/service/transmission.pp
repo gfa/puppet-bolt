@@ -20,6 +20,7 @@
 # @param incomplete_dir_enabled if enable temporary directory
 # @param home_dir home directory for transmission
 # @param download_dir directory to save downloads
+# @param download_root
 # @param ratio_limit stop seeding at this ratio
 # @param ratio_limit_enabled stop seeding after reaching a ratio
 # @param utp_enabled if utp should be enabled
@@ -27,6 +28,7 @@
 class profile::service::transmission (
   String $rpc_username,
   String $rpc_password,
+  Optional[String] $download_root = undef,
   Stdlib::Port $rpc_port = 9091,
   Stdlib::Port $peer_port_random_low = 49152,
   Stdlib::Port $peer_port_random_high = 65535,
@@ -80,6 +82,7 @@ class profile::service::transmission (
     watch_dir_enabled           => $watch_dir_enabled,
     pex_enabled                 => $pex_enabled,
     dht_enabled                 => $dht_enabled,
+    download_root               => $download_root,
   }
 
   file { '/usr/local/bin/transmission-cleanup':

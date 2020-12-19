@@ -1,10 +1,10 @@
 # # managed by puppet
 
 log syslog { warning, error, auth, fatal, bug };
-log "/var/log/bird.log" 10485760 "/var/log/bird.log.old" { warning, error, auth, fatal, bug };
-log "/var/log/bird-remote.log" 10485760 "/var/log/bird-remote.log.old" { remote };
-log "/var/log/bird-local.log" 10485760 "/var/log/bird-local.log.old" { debug, trace, info, warning, error, auth, fatal, bug };
-log "/var/log/bird-all.log" 10485760 "/var/log/bird-all.log.old" { info, warning, error, fatal, debug, trace, remote, auth };
+log "/var/log/bird.log" { warning, error, auth, fatal, bug };
+log "/var/log/bird-remote.log" { remote };
+log "/var/log/bird-local.log" { debug, trace, info, warning, error, auth, fatal, bug };
+log "/var/log/bird-all.log" { info, warning, error, fatal, debug, trace, remote, auth };
 
 debug protocols all;
 

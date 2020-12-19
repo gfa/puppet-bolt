@@ -1,0 +1,14 @@
+/var/log/bird-all.log
+/var/log/bird-local.log
+/var/log/bird.log
+/var/log/bird-remote.log
+{
+  rotate 10
+  daily
+  compress
+  missingok
+  notifempty
+   postrotate
+        /usr/sbin/birdc configure
+   endscript
+}

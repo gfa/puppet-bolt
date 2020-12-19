@@ -75,4 +75,12 @@ class profile::networking::dn42 {
     require => [Package['bird2'], Package['curl']],
   }
 
+  systemd::unit_file { 'wireguard-tunnels.service':
+    source => "puppet:///modules/${module_name}/etc/systemd/system/wireguard-tunnels.service",
+  }
+
+  service {'wireguard-tunnels':
+    enable => true,
+  }
+
 }

@@ -1,0 +1,17 @@
+[Unit]
+Description=Start wireguard tunnels after reboot
+Before=bird.service
+After=network-online.target nss-lookup.target
+Wants=network-online.target nss-lookup.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# TODO: make this dynamic
+ExecStart=/sbin/ifup wg0
+ExecStart=/sbin/ifup wg1
+ExecStart=/sbin/ifup wg2
+ExecStart=/sbin/ifup wg3
+
+[Install]
+WantedBy=multi-user.target

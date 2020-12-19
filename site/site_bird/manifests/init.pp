@@ -30,6 +30,24 @@ class site_bird (
     require => Package['bird2'],
   }
 
+  file { [
+    '/var/log/bird.log',
+    '/var/log/bird-remote.log',
+    '/var/log/bird-local.log',
+    '/var/log/bird-all.log',
+    '/var/log/bird.log.old',
+    '/var/log/bird-remote.log.old',
+    '/var/log/bird-local.log.old',
+    '/var/log/bird-all.log.old',
+  ]:
+    owner   => 'bird',
+    group   => 'bird',
+    mode    => '0644',
+    require => Package['bird2'],
+    replace => 'no',
+    content => '',
+  }
+
   file { '/etc/bird/bird.conf':
     owner   => 'root',
     group   => 'bird',

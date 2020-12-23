@@ -9,6 +9,6 @@
   missingok
   notifempty
    postrotate
-        /usr/sbin/birdc configure
+        chronic birdc configure
    endscript
 }

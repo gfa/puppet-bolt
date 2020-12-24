@@ -41,9 +41,10 @@ class profile::networking::firewall::blocklists (
     }),
   }
 
+  # TODO: make this a systemd timer and depend on network-online.target
   $update_ipsets_content = "
-    @reboot root /etc/cron.hourly/update-countries-ipset
-    @reboot root /etc/cron.hourly/update-ipsets-blocklists
+    @reboot root sleep 5m ; /etc/cron.hourly/update-countries-ipset
+    @reboot root sleep 5m ; /etc/cron.hourly/update-ipsets-blocklists
     "
 
   file { '/etc/cron.d/update-ipsets':

@@ -4,56 +4,57 @@ set -fue
 COUNTRIES_ALLOW="<%= $countries_allow %>"
 COUNTRIES_BLOCK="<%= $countries_block %>"
 COUNTRIES="$COUNTRIES_BLOCK $COUNTRIES_ALLOW"
+IPSET=/usr/sbin/$IPSET
 
 function cleanup {
-  ipset destroy countries-allow4-temp &>/dev/null || true
-  ipset destroy countries-allow6-temp &>/dev/null || true
-  ipset destroy countries-block4-temp &>/dev/null || true
-  ipset destroy countries-block6-temp &>/dev/null || true
+  $IPSET destroy countries-allow4-temp &>/dev/null || true
+  $IPSET destroy countries-allow6-temp &>/dev/null || true
+  $IPSET destroy countries-block4-temp &>/dev/null || true
+  $IPSET destroy countries-block6-temp &>/dev/null || true
 }
 trap cleanup ERR
 
-mkdir -p /var/tmp/countries-ipset
+mkdir -p /var/tmp/countries-$IPSET
 
 for country in $COUNTRIES
   do
-  wget --timeout=60 --quiet http://ipdeny.com/ipblocks/data/aggregated/${country}-aggregated.zone -O /var/tmp/countries-ipset/${country}-aggregated.zone
-  wget --timeout=60 --quiet http://ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone -O /var/tmp/countries-ipset/${country}-6-aggregated.zone
+  wget --timeout=60 --quiet http://ipdeny.com/ipblocks/data/aggregated/${country}-aggregated.zone -O /var/tmp/countries-$IPSET/${country}-aggregated.zone
+  wget --timeout=60 --quiet http://ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone -O /var/tmp/countries-$IPSET/${country}-6-aggregated.zone
 done
 
-ipset create countries-block4-temp hash:net family inet hashsize 1024 maxelem 65536
-ipset create countries-block6-temp hash:net family inet6 hashsize 1024 maxelem 65536
-ipset create countries-allow4-temp hash:net family inet hashsize 1024 maxelem 65536
-ipset create countries-allow6-temp hash:net family inet6 hashsize 1024 maxelem 65536
+$IPSET create countries-block4-temp hash:net family inet hashsize 1024 maxelem 65536
+$IPSET create countries-block6-temp hash:net family inet6 hashsize 1024 maxelem 65536
+$IPSET create countries-allow4-temp hash:net family inet hashsize 1024 maxelem 65536
+$IPSET create countries-allow6-temp hash:net family inet6 hashsize 1024 maxelem 65536
 
 for country in ${COUNTRIES_BLOCK}
 do
-  for ip in $(cat /var/tmp/countries-ipset/${country}-aggregated.zone)
+  for ip in $(cat /var/tmp/countries-$IPSET/${country}-aggregated.zone)
   do
-    ipset add countries-block4-temp $ip
+    $IPSET add countries-block4-temp $ip
   done
-  for ip in $(cat /var/tmp/countries-ipset/${country}-6-aggregated.zone)
+  for ip in $(cat /var/tmp/countries-$IPSET/${country}-6-aggregated.zone)
   do
-    ipset add countries-block6-temp $ip
+    $IPSET add countries-block6-temp $ip
   done
 done
 
-ipset swap countries-block4-temp countries-block4
-ipset swap countries-block6-temp countries-block6
+$IPSET swap countries-block4-temp countries-block4
+$IPSET swap countries-block6-temp countries-block6
 
 for country in ${COUNTRIES_ALLOW}
 do
-  for ip in $(cat /var/tmp/countries-ipset/${country}-aggregated.zone)
+  for ip in $(cat /var/tmp/countries-$IPSET/${country}-aggregated.zone)
   do
-    ipset add countries-allow4-temp $ip
+    $IPSET add countries-allow4-temp $ip
   done
-  for ip in $(cat /var/tmp/countries-ipset/${country}-6-aggregated.zone)
+  for ip in $(cat /var/tmp/countries-$IPSET/${country}-6-aggregated.zone)
   do
-    ipset add countries-allow6-temp $ip
+    $IPSET add countries-allow6-temp $ip
   done
 done
 
-ipset swap countries-allow4-temp countries-allow4
-ipset swap countries-allow6-temp countries-allow6
+$IPSET swap countries-allow4-temp countries-allow4
+$IPSET swap countries-allow6-temp countries-allow6
 
 cleanup

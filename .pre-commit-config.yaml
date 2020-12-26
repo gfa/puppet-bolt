@@ -1,29 +1,34 @@
 ---
 repos:
-- repo: https://github.com/chriskuehl/puppet-pre-commit-hooks.git
-  rev: v2.1.0
-  hooks:
-    - id: epp-validate
-    - id: erb-validate
-    - id: puppet-lint
-      args:
-        - --fail-on-warnings
-    - id: puppet-validate
-      exclude: >
-        (?x)^(
-          site/base/plans/init.pp|
-          site/base/plans/noop.pp
-        )$
-    - id: r10k-validate
-    - id: ruby-validate
+  - repo: https://github.com/chriskuehl/puppet-pre-commit-hooks.git
+    rev: v2.1.0
+    hooks:
+      - id: epp-validate
+      - id: erb-validate
+      - id: puppet-lint
+        args:
+          - --fail-on-warnings
+      - id: puppet-validate
+        exclude: >
+          (?x)^(
+            site/base/plans/init.pp|
+            site/base/plans/noop.pp
+          )$
+      - id: r10k-validate
+      - id: ruby-validate
 
-- repo: https://github.com/adrienverge/yamllint
-  rev: v1.15.0
-  hooks:
-    - id: yamllint
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.15.0
+    hooks:
+      - id: yamllint
 
-- repo: https://github.com/jumanjihouse/pre-commit-hooks
-  rev: 1.11.0
-  hooks:
-    - id: reek
-    - id: rubocop
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 1.11.0
+    hooks:
+      - id: reek
+      - id: rubocop
+
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.12
+    hooks:
+      - id: shellcheck

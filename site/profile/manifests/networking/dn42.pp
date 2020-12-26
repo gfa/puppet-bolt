@@ -43,14 +43,14 @@ class profile::networking::dn42 {
   }
 
   package { [
-    'mtr-tiny',
-    'vim-nox',
-    'tcpdump',
-    'tshark',
-    'ethtool', #  ethtool -K eth0 tx off rx off
-    'curl',
-    'fping',
-    'hping3',
+      'mtr-tiny',
+      'vim-nox',
+      'tcpdump',
+      'tshark',
+      'ethtool', #  ethtool -K eth0 tx off rx off
+      'curl',
+      'fping',
+      'hping3',
   ]: }
 
   $roa_files = [
@@ -71,7 +71,7 @@ class profile::networking::dn42 {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template("${module_name}/etc/cron.d/dn42_roa.erb"),
+    content => epp("${module_name}/etc/cron.d/dn42_roa.epp"),
     require => [Package['bird2'], Package['curl']],
   }
 
@@ -81,6 +81,13 @@ class profile::networking::dn42 {
 
   service {'wireguard-tunnels':
     enable => true,
+  }
+
+  file_line { 'Append dn42 roa files to /etc/.gitignore':
+    path    => '/etc/.gitignore',
+    line    => "bird/roa_dn42.conf\nbird/roa_dn42.conf_v6.conf\n",
+    match   => '^bird\/\roa_dn42.*$',
+    require => Package['etckeeper'],
   }
 
 }

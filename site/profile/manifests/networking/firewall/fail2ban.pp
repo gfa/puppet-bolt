@@ -1,7 +1,8 @@
 # this class configures fail2ban
 #
 # @param blocklist_de_params contains the local parameters for blocklist.de action
-#
+# @param infrastructure
+# @param ignore_ips
 
 class profile::networking::firewall::fail2ban (
   Hash $blocklist_de_params = lookup('site_firewall::fail2ban::blocklist_de_params'),
@@ -37,9 +38,9 @@ class profile::networking::firewall::fail2ban (
     $ignoreip = $ignore_ips
   } else {
     $all_hosts = $infrastructure[hosts].keys
-    $ignoreipv4 =  $all_hosts.map | $host | { "${infrastructure[hosts][$host][ipv4]}" }
-    $ignoreipv6 =  $all_hosts.map | $host | { "${infrastructure[hosts][$host][ipv6]}" }
-    $ignoreip = $ignoreip4 + $ignoreipv6
+    $ignoreipv4 =  $all_hosts.map | $host | { "${infrastructure[hosts][$host][ipv4]}" } # lint:ignore:only_variable_string
+    $ignoreipv6 =  $all_hosts.map | $host | { "${infrastructure[hosts][$host][ipv6]}" } # lint:ignore:only_variable_string
+    $ignoreip = $ignoreipv4 + $ignoreipv6
   }
 
   class { 'fail2ban':
@@ -64,6 +65,9 @@ class profile::networking::firewall::fail2ban (
 
   file { '/etc/tmpfiles.d/fail2ban-tmpfiles.conf':
     source => "puppet:///modules/${module_name}/networking/firewall/fail2ban-tmpfiles.override.conf",
+    mode   => '0644',
+    owner  => 'root',
+    group  => 'root',
   }
 
   firewallchain { 'FILTERS:filter:IPv4':
@@ -82,7 +86,7 @@ class profile::networking::firewall::fail2ban (
     require  => [
       Firewallchain['FILTERS:filter:IPv6'],
       Firewallchain['FILTERS:filter:IPv4'],
-    ]
+    ],
   }
 
 }

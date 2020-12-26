@@ -10,11 +10,11 @@ class profile::logging::erpel {
   }
 
   user { 'erpel':
-    system         => true,
-    forcelocal     => true,
-    gid            => 'erpel',
-    managehome     => true,
-    groups         => 'adm',
+    system     => true,
+    forcelocal => true,
+    gid        => 'erpel',
+    managehome => true,
+    groups     => 'adm',
   }
 
 }

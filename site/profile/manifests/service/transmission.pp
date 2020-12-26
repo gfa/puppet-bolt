@@ -24,6 +24,8 @@
 # @param ratio_limit stop seeding at this ratio
 # @param ratio_limit_enabled stop seeding after reaching a ratio
 # @param utp_enabled if utp should be enabled
+# @param pex_enabled
+# @param dht_enabled
 
 class profile::service::transmission (
   String $rpc_username,
@@ -86,9 +88,9 @@ class profile::service::transmission (
   }
 
   file { '/usr/local/bin/transmission-cleanup':
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
     content => template("${module_name}/service/transmission-daemon.erb"),
   }
 

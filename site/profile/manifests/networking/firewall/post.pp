@@ -28,17 +28,16 @@ class profile::networking::firewall::post {
   }
 
   firewallchain { 'OUTPUT:filter:IPv6':
-    ensure => present,
-    policy => drop,
-    before => undef,
-    require  => Service['dnsmasq'],
+    ensure  => present,
+    policy  => drop,
+    before  => undef,
+    require => Service['dnsmasq'],
   }
 
   firewallchain { 'OUTPUT:filter:IPv4':
     ensure => present,
-    policy   => drop,
-    before   => undef,
-    # require  => Service['dnsmasq'],
+    policy => drop,
+    before => undef,
   }
 
   exec { 'start_fail2ban':

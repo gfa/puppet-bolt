@@ -16,5 +16,3 @@ Things to improve and or complete
 - extend puppet-clamav to manage clamav-milter on Debian
 - provision adhoc users
   required to bootstrap dn42
-- unbound
-  required to bootstrap dn42

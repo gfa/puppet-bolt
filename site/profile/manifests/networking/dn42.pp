@@ -5,6 +5,7 @@ class profile::networking::dn42 {
 
   include site_bird
   include profile::networking::dn42::firewall
+  include profile::networking::unbound::dn42
 
   sysctl { 'net.ipv4.ip_forward':
     ensure => present,

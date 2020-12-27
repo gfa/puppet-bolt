@@ -44,6 +44,13 @@ class site_bird (
     content => '',
   }
 
+  file { '/etc/logrotate.d/bird':
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => "puppet:///modules/${module_name}/etc/logrotate.d/bird",
+  }
+
   file { '/etc/bird/bird.conf':
     owner   => 'root',
     group   => 'bird',

@@ -4,7 +4,7 @@ set -fue
 COUNTRIES_ALLOW="<%= $countries_allow %>"
 COUNTRIES_BLOCK="<%= $countries_block %>"
 COUNTRIES="$COUNTRIES_BLOCK $COUNTRIES_ALLOW"
-IPSET=/usr/sbin/$IPSET
+IPSET=/usr/sbin/ipset
 
 function cleanup {
   $IPSET destroy countries-allow4-temp &>/dev/null || true

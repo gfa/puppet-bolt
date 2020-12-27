@@ -14,3 +14,7 @@ Things to improve and or complete
   - https://github.com/containrrr/watchtower
   - https://github.com/pyouroboros/ouroboros
 - extend puppet-clamav to manage clamav-milter on Debian
+- provision adhoc users
+  required to bootstrap dn42
+- unbound
+  required to bootstrap dn42

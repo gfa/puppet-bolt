@@ -62,12 +62,9 @@ class base {
   # local facts
   include site_facts
 
-  # include roles from hiera
-  # use a default emtpy class as default result
-  # so the include never fails
-  lookup({
-      name          => 'classes',
-      merge         => 'deep',
-      default_value => 'base::empty',
-  }).include
+  # include classes from hiera
+  $infrastructure = lookup('infrastructure')
+  $classes = $infrastructure['hosts'][$facts['fqdn']]['classes']
+  $classes.include
+
 }

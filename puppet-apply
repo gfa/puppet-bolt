@@ -21,6 +21,7 @@ set -e
 
 TEMP=$(getopt -o 'vtdnh' --long 'trace,verbose,help,test,debug,noop,role:,show_diff,target::' -n 'puppet-apply' -- "$@")
 
+# shellcheck disable=SC2181
 if [ $? -ne 0 ]; then
         echo 'Terminating...' >&2
         exit 1
@@ -109,15 +110,16 @@ while true; do
 for host; do
   echo  "$host"
   ssh "root@${host}" 'test -x /usr/bin/puppet || (rm -f /etc/ssh/ssh_host* && dpkg-reconfigure openssh-server && apt update && apt -y autoremove --purge puppet-agent puppet+ rsync+)'
+  # shellcheck disable=SC2086
   ssh "root@${host}" mkdir -p /etc/puppet/code/hieradata/hosts/${host}
   ssh "root@${host}" 'test ! -f /etc/puppet/do-not-run || (echo "/etc/puppet/do-not-run present" ; exit 1)'
   rsync -raq --delete --exclude='.git' --exclude='hieradata' hiera.yaml modules site lib "root@${host}:/etc/puppet/code/"
   rsync -aq --no-r --exclude='.git' hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"
-  rsync -aqH --delete --exclude='.git' "hieradata/hosts/${host}.yaml" "root@${host}:/etc/puppet/code/hieradata/hosts/"
   rsync -aqK --delete --exclude='.git' "hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/hosts/${host}/"
   rsync -raq hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"
   # shellcheck disable=SC2029
   ssh "root@${host}" puppet apply "${APPLY_OPTIONS} ${TARGET}"
   ssh "root@${host}" find /etc/puppet/code/hieradata -maxdepth 1 -type f -delete
+  # shellcheck disable=SC2086
   ssh "root@${host}" find /etc/puppet/code/hieradata/hosts/${host} -type f -delete
 done

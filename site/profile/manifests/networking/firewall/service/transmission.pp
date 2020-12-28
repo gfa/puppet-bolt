@@ -9,15 +9,15 @@
 #
 
 class profile::networking::firewall::service::transmission (
-  Stdlib::HTTPUrl $blocklist_url = $profile::service::transmission::blocklist_url,
-  Stdlib::Port $peer_port_random_low = $profile::service::transmission::peer_port_random_low,
-  Stdlib::Port $peer_port_random_high = $profile::service::transmission::peer_port_random_high,
-  Stdlib::Port $peer_port = $profile::service::transmission::peer_port,
-  Boolean $peer_port_random = $profile::service::transmission::peer_port_random,
-  Stdlib::Port $rpc_port = $profile::service::transmission::rpc_port,
+  Stdlib::HTTPUrl $blocklist_url = lookup('transmission::blocklist_url'),
+  Optional[Stdlib::Port] $peer_port_random_low = lookup('transmission::peer_port_random_low'),
+  Optional[Stdlib::Port] $peer_port_random_high = lookup('transmission::peer_port_random_high'),
+  $peer_port = lookup('transmission::peer_port', Optional[Stdlib::Port], undef, undef),
+  Boolean $peer_port_random = lookup('transmission::peer_port_random_on_start'),
+  Stdlib::Port $rpc_port = lookup('transmission::rpc_port'),
 ) {
 
-  if $peer_port_random == true {
+  if $peer_port_random {
     firewall_multi { '300 accept transmission incoming':
       chain    => 'INPUT',
       dport    => join([$peer_port_random_low, '-', $peer_port_random_high], ''),

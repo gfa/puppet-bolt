@@ -1,3 +1,9 @@
+# add rubocop comments so the linter is happy
+# frozen_string_literal: true
+
+# this file is interpreted by g10k which doesn't like
+# new ruby hash syntax
+# rubocop:disable Style/HashSyntax
 mod 'puppetlabs/stdlib'
 mod 'thias/sysctl', '1.0.6'
 mod 'unattended_upgrades',
@@ -50,3 +56,5 @@ mod 'herculesteam-augeasproviders_sysctl', '2.5.1'
 mod 'herculesteam-augeasproviders_core', '2.6.0'
 mod 'puppetlabs-puppetdb', '7.7.1'
 mod 'puppetlabs-postgresql', '6.8.0'
+mod 'saz-timezone', '6.1.0'
+# rubocop:enable Style/HashSyntax

@@ -16,7 +16,7 @@ class profile::networking::unbound {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    source  => "puppet:///modules/${module_name}/etc/unbound/unbound.conf.d/local.conf",
+    content => epp("${module_name}/etc/unbound/unbound.conf.d/local.conf.epp"),
     require => Package['unbound'],
     notify  => Service['unbound'],
   }

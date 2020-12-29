@@ -24,7 +24,7 @@ production:
   resource_group: $CI_COMMIT_REF_SLUG
   script:
     - *template1
-    - HOSTS=$(cat hieradata/infrastructure.yaml| yq '.infrastructure.hosts | keys' |  sed 's/"|,|\[|\]//g; s/^ *//; s/ *$//; /^$/d')
+    - HOSTS=$(cat hieradata/infrastructure.yaml| yq '.infrastructure.hosts | keys' | sed -E 's/"|,|\[|\]//g; s/^ *//; s/ *$//; /^$/d')
     - |
       for host in ${HOSTS}
         do

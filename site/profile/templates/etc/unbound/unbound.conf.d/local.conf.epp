@@ -1,6 +1,8 @@
 server:
         interface: 127.0.0.1
-        access-control: 127.0.0.0/8 allow_snoop
+        <%- $::profile::networking::unbound::access_control.each |$client| { %>
+        access-control: <%= $client -%>
+        <% } %>
         port: 5553
 
 remote-control:

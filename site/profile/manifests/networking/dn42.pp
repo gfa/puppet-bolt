@@ -86,8 +86,15 @@ class profile::networking::dn42 {
 
   file_line { 'Append dn42 roa files to /etc/.gitignore':
     path    => '/etc/.gitignore',
-    line    => "bird/roa_dn42.conf\nbird/roa_dn42.conf_v6.conf\n",
+    line    => "bird/roa_dn42.conf\n",
     match   => '^bird\/roa_dn42.conf$',
+    require => Package['etckeeper'],
+  }
+
+  file_line { 'Append dn42 roa v6 files to /etc/.gitignore':
+    path    => '/etc/.gitignore',
+    line    => "bird/roa_dn42_v6.conf\n",
+    match   => '^bird\/roa_dn42_v6.conf$',
     require => Package['etckeeper'],
   }
 

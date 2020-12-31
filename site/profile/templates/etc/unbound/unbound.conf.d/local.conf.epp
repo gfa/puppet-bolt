@@ -4,6 +4,13 @@ server:
         access-control: <%= $client -%>
         <% } %>
         port: 5553
+        # chroot: ""
+        # logfile: /var/log/unbound.log
+        # verbosity: 3
+        # log-queries: yes
+        # log-replies: yes
+        # log-local-actions: yes
+        # log-servfail: yes
 
 remote-control:
         control-enable: no

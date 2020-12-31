@@ -25,6 +25,14 @@ class profile::networking::unbound (
     notify  => Service['unbound'],
   }
 
+  file { '/var/log/unbound.log':
+    ensure  => file,
+    owner   => 'unbound',
+    group   => 'unbound',
+    mode    => '0644',
+    require => Package['unbound'],
+  }
+
   firewall_multi { '300 outgoing unbound':
     dport    => 53,
     proto    => ['udp', 'tcp'],

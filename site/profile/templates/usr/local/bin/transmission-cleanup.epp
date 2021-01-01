@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+cd "$(mktemp -d)"
+
+# shellcheck disable=SC2094,SC2154,SC2086
+for torrent in $(transmission-remote 127.0.0.1:<%= $transmission::rpc_port %> -n <%= $transmission::rpc_username %>:<%= $transmission::rpc_password %> -l 2>/dev/null | awk '$9 == "Finished" {print $1}' | sed 's/*//g'); do
+        transmission-remote 127.0.0.1:<%= $transmission::rpc_port %> -n <%= $transmission::rpc_username %>:<%= $transmission::rpc_password %> -t $torrent -r >/dev/null 2>/dev/null
+done
+
+sleep 10m
+
+# shellcheck disable=SC2094,SC2154,SC2086
+for torrent in $(transmission-remote 127.0.0.1:<%= $transmission::rpc_port %> -n <%= $transmission::rpc_username %>:<%= $transmission::rpc_password %> -l 2>/dev/null | awk '$9 == "Stopped" && $5 == "Done" {print $1}' | sed 's/*//g'); do
+        transmission-remote 127.0.0.1:<%= $transmission::rpc_port %> -n <%= $transmission::rpc_username %>:<%= $transmission::rpc_password %> -t $torrent -r >/dev/null 2>/dev/null
+done
+
+cd /tmp
+rmdir "$OLDPWD"

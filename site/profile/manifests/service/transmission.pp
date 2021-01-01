@@ -9,7 +9,7 @@ class profile::service::transmission {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    content => template("${module_name}/service/transmission-daemon.erb"),
+    content => epp("${module_name}/usr/local/bin/transmission-cleanup.epp"),
   }
 
 }

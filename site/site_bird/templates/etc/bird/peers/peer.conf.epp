@@ -1,0 +1,12 @@
+# puppet managed
+#
+protocol bgp <%= $peer_name %> from dnpeers {
+  neighbor <%= $ipv4 %> as <%= $as %>;
+};
+
+protocol bgp <%= $peer_name %>_v6 from dnpeers {
+  <% if $direct == true { -%>
+  direct;
+  <% } -%>
+  neighbor <%= $ipv6 %> % '<%= $interface %>' as <%= $as %>;
+};

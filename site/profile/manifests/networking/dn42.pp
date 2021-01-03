@@ -4,7 +4,9 @@
 class profile::networking::dn42 {
 
   include site_bird
+  include site_bird::peerings
   include profile::networking::dn42::firewall
+  include profile::networking::dn42::wireguard
   include profile::networking::unbound::dn42
 
   sysctl { 'net.ipv4.ip_forward':
@@ -74,14 +76,6 @@ class profile::networking::dn42 {
     mode    => '0644',
     content => epp("${module_name}/etc/cron.d/dn42_roa.epp"),
     require => [Package['bird2'], Package['curl']],
-  }
-
-  systemd::unit_file { 'wireguard-tunnels.service':
-    source => "puppet:///modules/${module_name}/etc/systemd/system/wireguard-tunnels.service",
-  }
-
-  service {'wireguard-tunnels':
-    enable => true,
   }
 
   file_line { 'Append dn42 roa files to /etc/.gitignore':

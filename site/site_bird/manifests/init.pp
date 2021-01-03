@@ -1,5 +1,11 @@
 # this class wraps the bird module
 #
+# @param as
+# @param ipv4_own
+# @param ipv4_range
+# @param ipv6_own
+# @param ipv6_range
+#
 
 class site_bird (
   Integer $as,
@@ -31,17 +37,17 @@ class site_bird (
   }
 
   file { [
-    '/var/log/bird.log',
-    '/var/log/bird-remote.log',
-    '/var/log/bird-local.log',
-    '/var/log/bird-all.log',
-  ]:
-    owner   => 'bird',
-    group   => 'bird',
-    mode    => '0644',
-    require => Package['bird2'],
-    replace => 'no',
-    content => '',
+      '/var/log/bird.log',
+      '/var/log/bird-remote.log',
+      '/var/log/bird-local.log',
+      '/var/log/bird-all.log',
+    ]:
+      owner   => 'bird',
+      group   => 'bird',
+      mode    => '0644',
+      require => Package['bird2'],
+      replace => 'no',
+      content => '',
   }
 
   file { '/etc/logrotate.d/bird':

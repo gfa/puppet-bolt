@@ -4,7 +4,7 @@
 /var/log/bird-remote.log
 {
   rotate 10
-  daily
+  size 2048M
   compress
   missingok
   notifempty

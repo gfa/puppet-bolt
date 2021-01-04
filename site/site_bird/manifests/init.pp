@@ -57,6 +57,13 @@ class site_bird (
     source => "puppet:///modules/${module_name}/etc/logrotate.d/bird",
   }
 
+  cron { 'logrotate':
+    command => '/usr/bin/chronic logrotate /etc/logrotate.conf',
+    user    => 'root',
+    hour    => '*/2',
+    minute  => 10,
+  }
+
   file { '/etc/bird/bird.conf':
     owner   => 'root',
     group   => 'bird',

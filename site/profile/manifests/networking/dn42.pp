@@ -67,6 +67,8 @@ class profile::networking::dn42 {
       mode    => '0644',
       group   => 'bird',
       require => Package['bird2'],
+      content => '#',
+      replace => no,
     }
   }
 

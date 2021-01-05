@@ -58,10 +58,11 @@ class site_bird (
   }
 
   cron { 'logrotate':
-    command => '/usr/bin/chronic logrotate /etc/logrotate.conf',
-    user    => 'root',
-    hour    => '*/2',
-    minute  => 10,
+    command     => '/usr/bin/chronic logrotate /etc/logrotate.conf',
+    user        => 'root',
+    hour        => '*/2',
+    minute      => 10,
+    environment => 'PATH=/bin:/usr/bin:/usr/sbin:/sbin',
   }
 
   file { '/etc/bird/bird.conf':

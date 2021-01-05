@@ -17,8 +17,8 @@ trap cleanup ERR
 
 for country in $COUNTRIES
   do
-  curl -sfSLR "-o/var/tmp/${country}-aggregated.zone" "-z/var/tmp/${country}-aggregated.zone" "http://ipdeny.com/ipblocks/data/aggregated/${country}-aggregated.zone"
-  curl -sfSLR "-o/var/tmp/${country}-6-aggregated.zone" "-z/var/tmp/${country}-6-aggregated.zone" "http://ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone"
+  curl -sfSLR "-o/var/tmp/${country}-aggregated.zone" "-z/var/tmp/${country}-aggregated.zone" "https://ipdeny.com/ipblocks/data/aggregated/${country}-aggregated.zone"
+  curl -sfSLR "-o/var/tmp/${country}-6-aggregated.zone" "-z/var/tmp/${country}-6-aggregated.zone" "https://ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone"
 done
 
 $IPSET create countries-block4-temp hash:net family inet hashsize 1024 maxelem 65536

@@ -57,4 +57,5 @@ mod 'herculesteam-augeasproviders_core', '2.6.0'
 mod 'puppetlabs-puppetdb', '7.7.1'
 mod 'puppetlabs-postgresql', '6.8.0'
 mod 'saz-timezone', '6.1.0'
+mod 'puppet-cron', '2.0.0'
 # rubocop:enable Style/HashSyntax

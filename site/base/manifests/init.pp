@@ -19,6 +19,7 @@ class base {
   # modules that take their configuration fully from hiera
   include apt
   include needrestart
+  include cron
 
   # profiles included in all servers
 

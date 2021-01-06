@@ -2,23 +2,6 @@
 # vim: set ts=2 sw=2 et :
 set -e
 
-# Example input and output (from the bash prompt):
-#
-# ./getopt-parse.bash -a par1 'another arg' --c-long 'wow!*\?' -cmore -b " very long "
-# Option a
-# Option c, no argument
-# Option c, argument 'more'
-# Option b, argument ' very long '
-# Remaining arguments:
-# --> 'par1'
-# --> 'another arg'
-# --> 'wow!*\?'
-
-# Note that we use "$@" to let each command-line parameter expand to a
-# separate word. The quotes around "$@" are essential!
-# We need TEMP as the 'eval set --' would nuke the return value of getopt.
-# TEMP=$(getopt -o 'ab:c::' --long 'a-long,b-long:,c-long::' -n 'example.bash' -- "$@")
-
 TEMP=$(getopt -o 'vtdnh' --long 'trace,verbose,help,test,debug,noop,role:,show_diff,target::' -n 'puppet-apply' -- "$@")
 
 # shellcheck disable=SC2181
@@ -107,6 +90,17 @@ while true; do
       esac
     done
 
+# for eyaml files
+HIERA_TEMP=$(mktemp -d)
+cleanup() {
+  rm -rf "$HIERA_TEMP"
+}
+
+trap cleanup SIGINT SIGTERM ERR EXIT
+
+EYAML_PUB_KEY=$(<keys/public_key.pkcs7.pem)
+export EYAML_PUB_KEY
+
 for host; do
   echo  "$host"
   ssh "root@${host}" 'test -x /usr/bin/puppet || (rm -f /etc/ssh/ssh_host* && dpkg-reconfigure -fnoninteractive openssh-server && timedatectl set-timezone UTC && apt update && apt -y autoremove --purge puppet-agent puppet+ rsync+)'
@@ -114,8 +108,12 @@ for host; do
   ssh "root@${host}" mkdir -p /etc/puppet/code/hieradata/hosts/${host}
   ssh "root@${host}" 'test ! -f /etc/puppet/do-not-run || (echo "/etc/puppet/do-not-run present" ; exit 1)'
   rsync -raq --delete --exclude='.git' --exclude='hieradata' hiera.yaml modules site lib "root@${host}:/etc/puppet/code/"
-  rsync -aq --no-r --exclude='.git' hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"
-  rsync -aqK --delete --exclude='.git' "hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/hosts/${host}/"
+  rsync -raq keys/* "${HIERA_TEMP}/"
+  rsync -raq hieradata "${HIERA_TEMP}/"
+  # shellcheck disable=SC2156
+  find "${HIERA_TEMP}" -type f -iname '*yaml' -execdir sh -c "eyaml decrypt --pkcs7-private-key-env-var='EYAML_PRIV_KEY' --pkcs7-public-key-env-var='EYAML_PUB_KEY' -f {} | sponge {}" \;
+  rsync -aq --no-r --exclude='.git' "${HIERA_TEMP}"/hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"
+  rsync -aqK --delete --exclude='.git' "${HIERA_TEMP}/hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/hosts/${host}/"
   rsync -raq hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"
   # shellcheck disable=SC2029
   ssh "root@${host}" puppet apply "${APPLY_OPTIONS} ${TARGET}"

@@ -1,5 +1,5 @@
 ---
-image: debian:testing
+image: debian
 
 before_script:
   - apt update

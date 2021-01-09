@@ -2,6 +2,10 @@
 # vim: set ts=2 sw=2 et :
 set -e
 
+if [ "${CI_DEBUG_TRACE}x" != "x" ]; then
+  set -x
+fi
+
 TEMP=$(getopt -o 'vtdnh' --long 'trace,verbose,help,test,debug,noop,role:,show_diff,target::' -n 'puppet-apply' -- "$@")
 
 # shellcheck disable=SC2181

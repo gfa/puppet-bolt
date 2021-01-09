@@ -28,7 +28,7 @@ production:
     - |
       for host in ${HOSTS}
         do
-          bash puppet-apply --show_diff $host || curl -s -X POST \
+          bash puppet-apply -t --show_diff $host || curl -s -X POST \
             -F "title=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             -F "message=$(date)" \
             -F "priority=$GOTIFY_PRIORITY" \
@@ -48,7 +48,7 @@ testing:
     - |
       for host in ${TEST_HOSTS}
         do
-          bash puppet-apply --show_diff $host || curl -s -X POST \
+          bash puppet-apply -t --show_diff $host || curl -s -X POST \
             -F "title=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             -F "message=$(date)" \
             -F "priority=$GOTIFY_PRIORITY" \

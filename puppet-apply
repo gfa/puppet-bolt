@@ -102,8 +102,8 @@ cleanup() {
 
 trap cleanup SIGINT SIGTERM ERR EXIT
 
-echo "$EYAML_PRIV_KEY" > "${HIERA_TEMP}/private_key.pkcs7.pem"
-cp keys/public_key.pkcs7.pem "${HIERA_TEMP}/public_key.pkcs7.pem"
+EYAML_PUB_KEY=$(<keys/public_key.pkcs7.pem)
+export EYAML_PUB_KEY
 
 for host; do
   echo  "$host"
@@ -115,7 +115,7 @@ for host; do
   rsync -raq keys/* "${HIERA_TEMP}/"
   rsync -raq hieradata "${HIERA_TEMP}/"
   # shellcheck disable=SC2156
-  find "${HIERA_TEMP}" -type f -iname '*yaml' -execdir sh -c "eyaml decrypt --pkcs7-private-key=${HIERA_TEMP}/private_key.pkcs7.pem --pkcs7-public-key=${HIERA_TEMP}/public_key.pkcs7.pem -f {} | sponge {}" \;
+  find "${HIERA_TEMP}" -type f -iname '*yaml' -execdir sh -c "eyaml decrypt --pkcs7-private-key-env-var='EYAML_PRIV_KEY' --pkcs7-public-key-env-var='EYAML_PUB_KEY' -f {} | sponge {}" \;
   rsync -aq --no-r --exclude='.git' "${HIERA_TEMP}"/hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"
   rsync -aqK --delete --exclude='.git' "${HIERA_TEMP}/hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/hosts/${host}/"
   rsync -raq hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"

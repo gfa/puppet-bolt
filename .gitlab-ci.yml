@@ -3,7 +3,7 @@ image: debian
 
 before_script:
   - apt update
-  - apt install -y curl jq openssh-client python3-pip git rsync g10k hiera-eyaml
+  - apt install -y curl jq openssh-client python3-pip git rsync g10k hiera-eyaml moreutils
   - pip3 install yq
 
 .template1: &template1 |

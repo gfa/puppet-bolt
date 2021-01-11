@@ -34,6 +34,11 @@ production:
             -F "priority=$GOTIFY_PRIORITY" \
             "${GOTIFY_URL}?token=${GOTIFY_TOKEN}"
       done
+  artifacts:
+    paths:
+      - logs/debug.log
+    expire_in: 1 week
+    when: always
   variables:
     BOLT_PROJECT: /builds/gfa/puppet-bolt
   only:
@@ -54,6 +59,11 @@ testing:
             -F "priority=$GOTIFY_PRIORITY" \
             "${GOTIFY_URL}?token=${GOTIFY_TOKEN}"
       done
+  artifacts:
+    paths:
+      - logs/debug.log
+    expire_in: 1 week
+    when: always
   variables:
     BOLT_PROJECT: /builds/gfa/puppet-bolt
   except:

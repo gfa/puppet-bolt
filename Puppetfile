@@ -39,10 +39,12 @@ mod 'systemd',
     :git => 'https://github.com/camptocamp/puppet-systemd.git',
     :ref => 'master'
 mod 'edestecd-clamav', '1.0.0'
+mod 'puppet-epel', '3.0.1'
 mod 'oxc-dovecot', '2.1.0'
 mod 'prosody',
     :git => 'https://github.com/voxpupuli/puppet-prosody.git',
     :ref => 'master'
+mod 'puppetlabs-vcsrepo', '3.1.1'
 mod 'puppet-posix_acl', '0.1.1'
 mod 'transmission',
     :git => 'https://github.com/gfa/puppet-transmission.git',
@@ -51,6 +53,7 @@ mod 'thrnio-ip', '1.0.1'
 mod 'pltraining-dirtree', '0.3.0'
 mod 'camptocamp-openssl', '1.14.0'
 mod 'icinga-icinga2', '3.0.0'
+mod 'icinga-icinga', '1.0.3'
 mod 'puppet-bird', '3.1.1'
 mod 'herculesteam-augeasproviders_sysctl', '2.5.1'
 mod 'herculesteam-augeasproviders_core', '2.6.0'

@@ -44,6 +44,7 @@ class base {
   # services
   include profile::service::disable_puppet
   include profile::service::openssh::server
+  include profile::service::crond
 
   # logging
   include profile::logging::logcheck

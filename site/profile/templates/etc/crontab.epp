@@ -1,0 +1,18 @@
+# /etc/crontab: system-wide crontab
+# Puppet managed
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+<%= fqdn_rand(59, $facts['networking']['fqdn']) %> * * * * root    cd / && run-parts --report /etc/cron.hourly
+<%= fqdn_rand(59, $facts['networking']['fqdn']) %> <%= fqdn_rand(23, $facts['networking']['fqdn']) %> * * * root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+<%= fqdn_rand(59, $facts['networking']['fqdn']) %> <%= fqdn_rand(23, $facts['networking']['fqdn']) %> * * <%= fqdn_rand(7, $facts['networking']['fqdn']) %> root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+<%= fqdn_rand(59, $facts['networking']['fqdn']) %> <%= fqdn_rand(23, $facts['networking']['fqdn']) %> <%= fqdn_rand(31, $facts['networking']['fqdn']) %> * * root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )

@@ -36,9 +36,10 @@ production:
       done
   artifacts:
     paths:
-      - logs/debug.log
+      - logs/
     expire_in: 1 week
     when: always
+    untracked: true
   variables:
     BOLT_PROJECT: /builds/gfa/puppet-bolt
   only:
@@ -61,9 +62,10 @@ testing:
       done
   artifacts:
     paths:
-      - logs/debug.log
+      - logs/
     expire_in: 1 week
     when: always
+    untracked: true
   variables:
     BOLT_PROJECT: /builds/gfa/puppet-bolt
   except:

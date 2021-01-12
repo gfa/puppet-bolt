@@ -54,6 +54,8 @@ class profile::networking::dn42 {
       'curl',
       'fping',
       'hping3',
+      'ipcalc',
+      'sipcalc',
   ]: }
 
   $roa_files = [

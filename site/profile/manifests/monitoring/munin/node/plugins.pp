@@ -22,4 +22,18 @@ class profile::monitoring::munin::node::plugins {
     }
   }
 
+  $links = [
+    'fw_conntrack',
+    'fw_forwarded_local',
+    'fw_packets',
+  ]
+
+  $links.each |$index, $link| {
+
+    munin::plugin { $link:
+      ensure => link,
+      notify => Service['munin-node', 'munin-async'],
+    }
+  }
+
 }

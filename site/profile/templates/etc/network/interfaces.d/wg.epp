@@ -12,6 +12,14 @@ iface wg<%= $index %> inet static
 iface wg<%= $index %> inet6 static
   address <%= $ipv6_own %>
 
+<% $ipv6_link_local.each |$ip| { -%>
 iface wg<%= $index %> inet6 static
-  # should be local-link
-  address <%= $ipv6_own %>
+  address <%= $ip %>/64
+<% } -%>
+
+<% if $peer['ipv6_link_local'] =~ Array[Data,1] { -%>
+<% $peer['ipv6_link_local'].each |$ip| { -%>
+iface wg<%= $index %> inet6 static
+  address <%= $ip %>/64
+<% } -%>
+<% } -%>

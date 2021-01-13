@@ -19,6 +19,7 @@ class site_bird::peerings (
 
       file { "/etc/bird/peers/${peer_name}.conf":
         ensure  => file,
+        replace => no,
         content => epp(
           "${module_name}/etc/bird/peers/peer.conf.epp",
           { 'peer_name' => $peer_name,
@@ -30,6 +31,20 @@ class site_bird::peerings (
           Package['bird2'],
         ],
         notify  => Exec['birdc configure'],
+      }
+      # keep a copy of how the config should look like
+      file { "/etc/bird/peers/${peer_name}.puppet":
+        ensure  => file,
+        content => epp(
+          "${module_name}/etc/bird/peers/peer.conf.epp",
+          { 'peer_name' => $peer_name,
+            'interface' => "wg${index}",
+          } + $peer,
+        ),
+        require => [
+          Package['wireguard'],
+          Package['bird2'],
+        ],
       }
     }
 

@@ -1,0 +1,10 @@
+# puppet managed
+
+[Interface]
+PrivateKey = <%= $private_key %>
+ListenPort = <%= $peer['listen_port'] %>
+
+[Peer]
+PublicKey = <%= $peer['public_key'] %>
+Endpoint = <%= $peer['endpoint'] %>
+AllowedIPs = 0.0.0.0/0, ::/0

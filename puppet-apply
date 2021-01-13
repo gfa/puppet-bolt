@@ -18,7 +18,7 @@ fi
 eval set -- "$TEMP"
 unset TEMP
 
-APPLY_OPTIONS="--graph --modulepath=/etc/puppet/code/modules:/etc/puppet/code/site --hiera_config=/etc/puppet/hiera.yaml --libdir=/etc/puppet/code/lib"
+APPLY_OPTIONS="--graph --modulepath=/etc/puppet/code/modules:/etc/puppet/code/site --hiera_config=/etc/puppet/hiera.yaml --libdir=/etc/puppet/code/lib --logdest=/tmp/puppet.jsonl"
 TARGET="/etc/puppet/code/site/base/manifests/init.pp"
 TARGET=' -e "include base"'
 
@@ -123,11 +123,19 @@ for host; do
   rsync -raq hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"
   set +e
   # shellcheck disable=SC2029
-  ssh "root@${host}" puppet apply "${APPLY_OPTIONS} ${TARGET}" 2>&1 | tee "logs/${host}.log"
+  ssh "root@${host}" puppet apply "${APPLY_OPTIONS} ${TARGET}"
   PUPPET_EXIT_CODE=$?
   ssh "root@${host}" find /etc/puppet/code/hieradata -maxdepth 1 -type f -delete
   # shellcheck disable=SC2086
   ssh "root@${host}" find /etc/puppet/code/hieradata/hosts/${host} -type f -delete
+  rsync -raq  "root@${host}:/tmp/puppet.jsonl" "logs/${host}.jsonl"
+  if [ "${CI}x" == "x" ]; then
+    # display puppet's output when running directly
+    cat "logs/${host}.jsonl"
+    echo ${PUPPET_EXIT_CODE}
+  fi
+  echo ${PUPPET_EXIT_CODE} >> "logs/${host}.jsonl"
+
   if [ $PUPPET_EXIT_CODE = 1 ]; then
     exit 1
   else

@@ -39,7 +39,6 @@ production:
       - logs/
     expire_in: 1 week
     when: always
-    untracked: true
   variables:
     BOLT_PROJECT: /builds/gfa/puppet-bolt
   only:
@@ -64,7 +63,6 @@ testing:
     paths:
       - logs/
     expire_in: 1 week
-    when: always
     untracked: true
   variables:
     BOLT_PROJECT: /builds/gfa/puppet-bolt

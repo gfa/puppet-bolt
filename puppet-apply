@@ -138,7 +138,5 @@ for host; do
 
   if [ $PUPPET_EXIT_CODE = 1 ] || [ $PUPPET_EXIT_CODE = 255 ]; then
     exit $PUPPET_EXIT_CODE
-  else
-    exit 0
   fi
 done

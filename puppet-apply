@@ -136,8 +136,8 @@ for host; do
   fi
   echo ${PUPPET_EXIT_CODE} >> "logs/${host}.jsonl"
 
-  if [ $PUPPET_EXIT_CODE = 1 ]; then
-    exit 1
+  if [ $PUPPET_EXIT_CODE = 1 ] || [ $PUPPET_EXIT_CODE = 255 ]; then
+    exit $PUPPET_EXIT_CODE
   else
     exit 0
   fi

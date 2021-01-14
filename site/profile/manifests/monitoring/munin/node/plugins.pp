@@ -4,6 +4,7 @@ class profile::monitoring::munin::node::plugins {
 
   include profile::monitoring::munin::node::plugin::vnstat
   include profile::monitoring::munin::node::plugin::ipset
+  include profile::monitoring::munin::node::plugin::timesync_status
 
   $obsolete_checks = [
     "bandwidth_${facts['networking']['primary']}",

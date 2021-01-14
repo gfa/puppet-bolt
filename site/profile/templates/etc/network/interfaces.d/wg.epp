@@ -1,6 +1,7 @@
 # puppet managed
 # do not add auto wg<%= $index %>, wireguard-tunnels.service will start them up
 
+<% if $peer['ipv4'] { -%>
 iface wg<%= $index %> inet static
   pre-up ip link add $IFACE type wireguard
   pre-up wg setconf $IFACE /etc/wireguard/$IFACE.conf
@@ -8,9 +9,16 @@ iface wg<%= $index %> inet static
   post-up wg set $IFACE fwmark 51097
   address <%= $ipv4_own %>
   pointopoint <%= $peer['ipv4'] %>
+<% } -%>
 
 iface wg<%= $index %> inet6 static
   address <%= $ipv6_own %>
+<% unless $peer['ipv4'] { -%>
+  pre-up ip link add $IFACE type wireguard
+  pre-up wg setconf $IFACE /etc/wireguard/$IFACE.conf
+  post-down ip link del $IFACE
+  post-up wg set $IFACE fwmark 51097
+<% } -%>
 
 <% $ipv6_link_local.each |$ip| { -%>
 iface wg<%= $index %> inet6 static

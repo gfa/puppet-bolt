@@ -19,6 +19,7 @@ define OWNNET = <%= @ipv4_range %>;
 define OWNNETv6 = <%= @ipv6_range %>;
 define OWNNETSET = [<%= @ipv4_range %>+];
 define OWNNETSETv6 = [<%= @ipv6_range %>+];
+define DN42_REGION = <%= @dn42_region %>;
 
 ################################################
 #                 Header end                   #
@@ -152,4 +153,5 @@ template bgp dnpeers {
 }
 
 
+include "/etc/bird/community_filters.conf";
 include "/etc/bird/peers/*.conf";

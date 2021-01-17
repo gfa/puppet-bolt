@@ -5,10 +5,12 @@
 # @param ipv4_range
 # @param ipv6_own
 # @param ipv6_range
+# @param dn42_region
 #
 
 class site_bird (
   Integer $as,
+  Integer $dn42_region,
   Stdlib::IP::Address::V4::CIDR $ipv4_range,
   Stdlib::IP::Address::V6::CIDR $ipv6_range,
   Stdlib::IP::Address::V4::Nosubnet $ipv4_own,
@@ -70,6 +72,15 @@ class site_bird (
     group   => 'bird',
     mode    => '0640',
     content => template("${module_name}/etc/bird/bird.conf.erb"),
+    notify  => Service['bird'],
+    require => Package['bird2'],
+  }
+
+  file { '/etc/bird/community_filters.conf':
+    owner   => 'root',
+    group   => 'bird',
+    mode    => '0640',
+    content => epp("${module_name}/etc/bird/community_filters.conf.epp"),
     notify  => Service['bird'],
     require => Package['bird2'],
   }

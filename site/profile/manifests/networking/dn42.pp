@@ -82,6 +82,13 @@ class profile::networking::dn42 {
     require => [Package['bird2'], Package['curl']],
   }
 
+  file { '/usr/local/bin/bgp-community.rb':
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => "puppet:///modules/${module_name}/usr/local/bin/bgp-community.rb",
+  }
+
   file_line { 'Append dn42 roa files to /etc/.gitignore':
     path    => '/etc/.gitignore',
     line    => "bird/roa_dn42.conf\n",

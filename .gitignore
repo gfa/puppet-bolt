@@ -15,3 +15,4 @@ inventory.yaml
 .rerun.json
 .resource_types/
 puppet-editor-services/
+g10k-cache

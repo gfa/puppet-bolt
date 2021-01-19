@@ -1,0 +1,4 @@
+## puppet generated
+# do not edit
+
+<%= $facts %>

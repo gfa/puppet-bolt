@@ -11,6 +11,7 @@ mod 'unattended_upgrades',
     :ref => 'master'
 mod 'puppetlabs-apt', '7.1.0'
 mod 'puppetlabs-mysql', '10.9.1'
+mod 'puppetlabs-resource_api', '1.1.0'
 mod 'puppet-archive', '4.6.0'
 mod 'puppetlabs/translate', '1.2.0'
 mod 'alexharvey-firewall_multi', '1.19.0'

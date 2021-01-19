@@ -5,25 +5,16 @@
 
 class site_facts::installed_packages {
 
+  file { '/var/lib/misc/thishost/pkglist':
+    ensure => absent,
+  }
+
   file { '/var/lib/misc/thishost':
-    ensure => directory,
-    mode   => '0750',
-    owner  => 'root',
-    group  => 'root',
+    ensure => absent,
   }
 
-  -> file { '/etc/apt/apt.conf.d/local-pkglist':
-    source => "puppet:///modules/${module_name}/local-pkglist",
-    mode   => '0644',
-    owner  => 'root',
-    group  => 'root',
-  }
-
-  -> exec { 'dpkg list':
-    # lint:ignore:single_quote_string_with_variables
-    command => '/usr/bin/dpkg-query -W -f \'${Package}\n\' > /var/lib/misc/thishost/pkglist',
-    creates => '/var/lib/misc/thishost/pkglist',
-    # lint:endignore
+  file { '/etc/apt/apt.conf.d/local-pkglist':
+    ensure => absent,
   }
 
 }

@@ -13,4 +13,5 @@ class site_facts {
     show_diff => false,
     content   => epp("${module_name}/var/tmp/puppet-facts.epp"),
   }
+
 }

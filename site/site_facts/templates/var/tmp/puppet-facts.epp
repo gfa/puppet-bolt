@@ -1,4 +1,15 @@
 ## puppet generated
 # do not edit
 
-<%= $facts %>
+<% include stdlib %>
+<% $facts.keys.each |$key| { -%>
+
+<% if $facts[$key] =~ Array { %>
+external_facts::<%= $facts['fqdn'] %>::<%= $key -%>:
+  <% $facts[$key].each |$list| { -%>
+  - <%= $list %>
+  <% } %>
+<% } else { -%>
+external_facts::<%= $facts['fqdn'] %>::<%= $key %>: <%= $facts[$key] -%>
+  <% } -%>
+<% } -%>

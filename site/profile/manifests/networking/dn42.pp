@@ -103,4 +103,23 @@ class profile::networking::dn42 {
     require => Package['etckeeper'],
   }
 
+  apt::key { 'mine':
+    id     => '27263FA42553615F904A7EBE2A40A2ECB8DAD8D5',
+    server => 'subkeys.pgp.net',
+  }
+
+  apt::source { 'personal_backports':
+    location => 'https://zumbi.com.ar/buster-bpo/',
+    release  => './',
+    repos    => '',
+    key      => {
+      'id'     => '27263FA42553615F904A7EBE2A40A2ECB8DAD8D5',
+      'server' => 'subkeys.pgp.net',
+    },
+    include  => {
+      'src' => false,
+      'deb' => true,
+    },
+  }
+
 }

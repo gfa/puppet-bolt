@@ -30,7 +30,9 @@ class site_bird (
     }
   }
 
-  package { 'bird2': }
+  package { 'bird2':
+    ensure => latest,
+  }
 
   service { 'bird':
     ensure  => running,

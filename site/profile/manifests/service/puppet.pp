@@ -1,7 +1,7 @@
-# This class disables the puppet agent
+# This manages puppet
 #
 
-class profile::service::disable_puppet {
+class profile::service::puppet {
 
   service { 'puppet-agent':
     ensure => stopped,
@@ -21,6 +21,18 @@ class profile::service::disable_puppet {
   service { 'pxp-agent':
     ensure => stopped,
     enable => false,
+  }
+
+  file { [
+    '/etc/puppet/code',
+    '/etc/puppet/code/lib',
+    '/etc/puppet/code/site',
+    '/etc/puppet/code/hieradata',
+  ]:
+    ensure => directory,
+    mode   => '0700',
+    owner  => 'root',
+    group  => 'root',
   }
 
 }

@@ -42,7 +42,7 @@ class base {
   include profile::package::etckeeper
 
   # services
-  include profile::service::disable_puppet
+  include profile::service::puppet
   include profile::service::openssh::server
   include profile::service::crond
 

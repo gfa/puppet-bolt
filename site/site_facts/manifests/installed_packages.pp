@@ -5,12 +5,11 @@
 
 class site_facts::installed_packages {
 
-  file { '/var/lib/misc/thishost/pkglist':
-    ensure => absent,
-  }
-
   file { '/var/lib/misc/thishost':
-    ensure => absent,
+    ensure  => directory,
+    recurse => true,
+    purge   => true,
+    force   => true,
   }
 
   file { '/etc/apt/apt.conf.d/local-pkglist':

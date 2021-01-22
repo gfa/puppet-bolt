@@ -2,13 +2,20 @@
 #
 <% if $ipv4 { -%>
 protocol bgp <%= $peer_name %> from dnpeers {
-  neighbor <%= $ipv4 %> as <%= $as %>;
+  <% if $options4 { -%>
+    <% $options4.each |$option| { -%>
+  <%= $option -%>;
+    <% } -%>
+  <% } -%>
+  neighbor <%= $ipv4 %> as <%= $as -%>;
 };
 <% } -%>
 
 protocol bgp <%= $peer_name %>_v6 from dnpeers {
-  <% if $direct == true { -%>
-  direct;
+  <% if $options6 { -%>
+    <% $options6.each |$option| { -%>
+    <%= $option -%>;
+    <% } -%>
   <% } -%>
-  neighbor <%= $ipv6 %> % '<%= $interface %>' as <%= $as %>;
+  neighbor <%= $ipv6 %> % '<%= $interface %>' as <%= $as -%>;
 };

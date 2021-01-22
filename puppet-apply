@@ -115,6 +115,7 @@ for host; do
   ssh "root@${host}" 'test -x /usr/bin/puppet || (rm -f /etc/ssh/ssh_host* && dpkg-reconfigure -fnoninteractive openssh-server && timedatectl set-timezone UTC && apt update && apt -y autoremove --purge puppet-agent puppet+ rsync+)'
   # shellcheck disable=SC2086
   ssh "root@${host}" mkdir -p /etc/puppet/code/hieradata/hosts/${host}
+  ssh "root@${host}" mkdir -p /etc/puppet/code/facts_db
   ssh "root@${host}" 'test ! -f /etc/puppet/do-not-run || (echo "/etc/puppet/do-not-run present" ; exit 1)'
   rsync -raq --delete --exclude='.git' --exclude='hieradata' hiera.yaml modules site lib "root@${host}:/etc/puppet/code/"
   rsync -raq keys/* "${HIERA_TEMP}/"
@@ -132,6 +133,10 @@ for host; do
   ssh "root@${host}" find /etc/puppet/code/hieradata -maxdepth 1 -type f -delete
   # shellcheck disable=SC2086
   ssh "root@${host}" find /etc/puppet/code/hieradata/hosts/${host} -type f -delete
+
+  # copy facts_db
+  mkdir -p facts_db
+  rsync -raq --no-owner "root@${host}:/var/tmp/facts_db.yaml" "facts_db/${host}.yaml"
 
   # save puppet output when running in CI
   if [ "${CI}x" != "x" ]; then

@@ -6,13 +6,13 @@
 <% $facts.keys.each |$key| { -%>
 <%# if the entry is an Array, unpack it into a yaml array %>
 <% if $facts[$key] =~ Array { %>
-external_facts::<%= $facts['fqdn'] %>::<%= $key -%>:
+facts_db::<%= $facts['fqdn'] %>::<%= $key -%>:
   <% $facts[$key].each |$list| { %>
   - <%= $list -%>
   <% } -%>
 <%# if the entry is a Hash, unpack it into a yaml hash %>
 <%- } elsif $facts[$key] =~ Hash { -%>
-external_facts::<%= $facts['fqdn'] %>::<%= $key -%>:
+facts_db::<%= $facts['fqdn'] %>::<%= $key -%>:
   <%# sometimes a hash contains another hash %>
   <% if $v =~ Hash { -%>
     <% $v.each |$subk, $subv|{ %>
@@ -34,6 +34,6 @@ external_facts::<%= $facts['fqdn'] %>::<%= $key -%>:
 <% } -%>
 <%# if the entry is a String, just write it down %>
 <% } else { -%>
-external_facts::<%= $facts['fqdn'] %>::<%= $key %>: <%= $facts[$key] -%>
+facts_db::<%= $facts['fqdn'] %>::<%= $key %>: <%= $facts[$key] -%>
   <% } -%>
 <% } -%>

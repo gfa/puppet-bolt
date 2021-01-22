@@ -16,3 +16,4 @@ inventory.yaml
 .resource_types/
 puppet-editor-services/
 g10k-cache
+facts_db/

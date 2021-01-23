@@ -137,6 +137,7 @@ for host; do
 
   # copy facts_db
   rsync -raq --no-owner "root@${host}:/var/tmp/facts_db.yaml" "facts_db/${host}.yaml"
+  ssh "root@${host}" find /etc/puppet/code/facts_db -type f -delete
 
   # save puppet output when running in CI
   if [ "${CI}x" != "x" ]; then

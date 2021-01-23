@@ -116,6 +116,7 @@ for host; do
   # shellcheck disable=SC2086
   ssh "root@${host}" mkdir -p /etc/puppet/code/hieradata/hosts/${host}
   ssh "root@${host}" mkdir -p /etc/puppet/code/facts_db
+  mkdir -p facts_db
   ssh "root@${host}" 'test ! -f /etc/puppet/do-not-run || (echo "/etc/puppet/do-not-run present" ; exit 1)'
   rsync -raq --no-owner --delete --exclude='.git' --exclude='hieradata' facts_db hiera.yaml modules site lib "root@${host}:/etc/puppet/code/"
   rsync -raq --no-owner keys/* "${HIERA_TEMP}/"
@@ -135,7 +136,6 @@ for host; do
   ssh "root@${host}" find /etc/puppet/code/hieradata/hosts/${host} -type f -delete
 
   # copy facts_db
-  mkdir -p facts_db
   rsync -raq --no-owner "root@${host}:/var/tmp/facts_db.yaml" "facts_db/${host}.yaml"
 
   # save puppet output when running in CI

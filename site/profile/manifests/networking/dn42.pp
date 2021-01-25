@@ -104,8 +104,9 @@ class profile::networking::dn42 {
   }
 
   apt::key { 'mine':
+    ensure => refreshed,
     id     => '27263FA42553615F904A7EBE2A40A2ECB8DAD8D5',
-    server => 'keys.gnupg.net',
+    server => 'keyring.debian.org',
   }
 
   apt::source { 'personal_backports':
@@ -114,12 +115,13 @@ class profile::networking::dn42 {
     repos    => '',
     key      => {
       'id'     => '27263FA42553615F904A7EBE2A40A2ECB8DAD8D5',
-      'server' => 'keys.gnupg.net',
+      'server' => 'keyring.debian.org',
     },
     include  => {
       'src' => false,
       'deb' => true,
     },
+    require  => Apt::Key['mine'],
   }
 
 }

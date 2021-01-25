@@ -24,15 +24,16 @@ class profile::service::puppet {
   }
 
   file { [
-    '/etc/puppet/code',
-    '/etc/puppet/code/lib',
-    '/etc/puppet/code/site',
-    '/etc/puppet/code/hieradata',
-  ]:
-    ensure => directory,
-    mode   => '0700',
-    owner  => 'root',
-    group  => 'root',
+      '/etc/puppet',
+      '/etc/puppet/code',
+      '/etc/puppet/code/lib',
+      '/etc/puppet/code/site',
+      '/etc/puppet/code/hieradata',
+    ]:
+      ensure => directory,
+      mode   => '0700',
+      owner  => 'root',
+      group  => 'root',
   }
 
 }

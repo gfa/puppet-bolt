@@ -14,7 +14,7 @@ class profile::logging::erpel {
     forcelocal => true,
     gid        => 'erpel',
     managehome => true,
-    groups     => 'adm',
+    groups     => ['adm','systemd-journal'],
   }
 
 }

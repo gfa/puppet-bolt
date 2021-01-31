@@ -36,6 +36,10 @@ class profile::service::dovecot (
     ensure => file,
   }
 
+  $ssl_cipher_list = "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:\
+  ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:\
+  DHE-RSA-AES256-GCM-SHA384"
+
   class { 'dovecot':
     config  => {
       '!include_try' => '/usr/share/dovecot/protocols.d/*.protocol',
@@ -104,11 +108,15 @@ class profile::service::dovecot (
         },
       },
       '10-ssl'                     => {
-        ssl               => 'required',
-        ssl_cert          => "</var/lib/dehydrated/certs/${ssl_hostname}/fullchain.pem",
-        ssl_key           => "</var/lib/dehydrated/certs/${ssl_hostname}/privkey.pem",
-        ssl_client_ca_dir => '/etc/ssl/certs',
-        ssl_dh            => "<${ssl_dh_file}",
+        ssl                       => 'required',
+        ssl_cert                  => "</var/lib/dehydrated/certs/${ssl_hostname}/fullchain.pem",
+        ssl_key                   => "</var/lib/dehydrated/certs/${ssl_hostname}/privkey.pem",
+        ssl_client_ca_dir         => '/etc/ssl/certs',
+        ssl_dh                    => "<${ssl_dh_file}",
+        # https://ssl-config.mozilla.org/#server=dovecot&version=2.3.4&config=intermediate&openssl=1.1.1d&guideline=5.6
+        ssl_min_protocol          => 'TLSv1.2',
+        ssl_cipher_list           => $ssl_cipher_list,
+        ssl_prefer_server_ciphers => 'no',
       },
       '15-lda'                     => {
         lda_mailbox_autocreate    => 'yes',

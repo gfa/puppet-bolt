@@ -3,9 +3,15 @@
 
 class profile::monitoring::munin::node::plugin::systemd {
 
-  munin::plugin { 'timesync_status':
-    ensure => present,
-    source => "puppet:///modules/${module_name}/etc/munin/plugins/timesync_status",
+  if has_key($facts['dpkgs'], 'openntpd') {
+    munin::plugin { 'timesync_status':
+      ensure => absent,
+    }
+  } else {
+    munin::plugin { 'timesync_status':
+      ensure => present,
+      source => "puppet:///modules/${module_name}/etc/munin/plugins/timesync_status",
+    }
   }
 
   munin::plugin { 'systemd_status':

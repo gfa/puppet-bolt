@@ -3,10 +3,12 @@
 # tends to atract debt :\
 #
 # @param ipsets contains a hash with ipsets to be created per host
+# @param infrastructure descripts the infrastructure
 #
 
 class profile::networking::firewall::base (
   Hash $ipsets,
+  Hash $infrastructure = lookup('infrastructure'),
 ) {
 
   package { 'ipset-persistent':
@@ -30,6 +32,11 @@ class profile::networking::firewall::base (
         ipset_type => $hash['type'],
       }
     }
+  }
+
+  profile::networking::service::dnsmasq::ipset { 'myhosts':
+    ipset_hosts => $infrastructure['hosts'].keys(),
+    ipset_type  => 'hash:ip',
   }
 
   file { '/etc/default/netfilter-persistent':

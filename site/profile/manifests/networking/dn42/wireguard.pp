@@ -67,7 +67,7 @@ class profile::networking::dn42::wireguard (
           }
         ),
         require => Package['wireguard'],
-        notify  => Exec["ifup wg${index}"],
+        notify  => Exec["ifrestart wg${index}"],
       }
 
       file { "/etc/wireguard/wg${index}.conf":
@@ -80,14 +80,16 @@ class profile::networking::dn42::wireguard (
           }
         ),
         require => Package['wireguard'],
-        notify  => Exec["ifup wg${index}"],
+        notify  => Exec["ifrestart wg${index}"],
 
       }
 
-      exec { "ifup wg${index}":
+      exec { "ifrestart wg${index}":
         path        => ['/sbin', '/usr/sbin'],
         user        => 'root',
         refreshonly => true,
+        command     => "/sbin/ifdown --force wg${index} ; /sbin/ifup wg${index}",
+        returns     => [0, 1],
       }
     }
 

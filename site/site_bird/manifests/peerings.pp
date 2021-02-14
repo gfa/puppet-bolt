@@ -4,7 +4,7 @@
 #
 
 class site_bird::peerings (
-  Optional[Array] $peerings = undef,
+  Optional[Array] $peerings = lookup('site_bird::peerings', default_value => undef),
 ) {
 
   if $peerings {

@@ -13,7 +13,7 @@
 class profile::networking::dn42::wireguard (
   String $private_key,
   String $public_key,
-  Optional[Array] $peerings = undef,
+  Optional[Array] $peerings = lookup('site_bird::peerings', default_value => undef),
   Stdlib::IP::Address::V4::Nosubnet $ipv4_own = lookup('site_bird::ipv4_own'),
   Stdlib::IP::Address::V6::Nosubnet $ipv6_own = lookup('site_bird::ipv6_own'),
   Optional[Array[Stdlib::IP::Address::V6::Nosubnet]] $ipv6_link_local = undef,

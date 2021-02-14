@@ -25,6 +25,7 @@ class profile::networking::dn42::firewall {
     chain    => 'INPUT',
     iniface  => 'wg+',
     action   => 'accept',
+    proto    => 'all',
   }
 
   firewall_multi { '100 allow outgoing traffic on wg+':
@@ -32,6 +33,7 @@ class profile::networking::dn42::firewall {
     chain    => 'OUTPUT',
     outiface => 'wg+',
     action   => 'accept',
+    proto    => 'all',
   }
 
 }

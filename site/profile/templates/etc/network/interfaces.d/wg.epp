@@ -8,6 +8,7 @@ iface wg<%= $index %> inet static
   post-down ip link del $IFACE
   post-up wg set $IFACE fwmark 51097
   address <%= $ipv4_own %>
+  netmask 255.255.255.255
   pointopoint <%= $peer['ipv4'] %>
 <% } -%>
 

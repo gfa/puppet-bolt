@@ -1,0 +1,15 @@
+<% include stdlib %>
+protocol ospf {
+        area 0 {
+                interface "lo" {
+                        stub;
+                };
+                <%- $peerings.each |$index, $peer| { -%>
+                  <%- if has_key($peer, 'ospf') { -%>
+                    <%- if $peer['ospf'] { -%>
+                interface "wg<%= $index -%>" {};
+                    <%- } -%>
+                  <%- } -%>
+                <%- } -%>
+        };
+}

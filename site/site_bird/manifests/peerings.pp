@@ -39,10 +39,4 @@ class site_bird::peerings (
 
   }
 
-  exec { 'birdc configure':
-    command     => 'birdc configure',
-    refreshonly => true,
-    path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin', ],
-  }
-
 }

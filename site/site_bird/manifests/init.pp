@@ -104,4 +104,10 @@ class site_bird (
     outiface => 'wg+',
   }
 
+  exec { 'birdc configure':
+    command     => 'birdc configure',
+    refreshonly => true,
+    path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin', ],
+  }
+
 }

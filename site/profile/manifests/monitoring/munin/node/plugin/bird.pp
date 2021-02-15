@@ -14,4 +14,10 @@ class profile::monitoring::munin::node::plugin::bird {
     ensure  => absent,
   }
 
+  munin::plugin { 'multips_memory':
+    ensure => link,
+    config => ['env.names bird'],
+    notify => Service['munin-node', 'munin-async'],
+  }
+
 }

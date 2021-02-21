@@ -1,5 +1,7 @@
 <% include stdlib %>
-protocol ospf {
+protocol ospf v2 cuatro {
+        ecmp yes;
+        ipv4 {};
         area 0 {
                 interface "lo" {
                         stub;

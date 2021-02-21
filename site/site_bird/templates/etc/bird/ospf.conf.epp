@@ -1,1 +1,17 @@
-# puppet managed
+<% include stdlib %>
+protocol ospf v2 cuatro {
+        ecmp yes;
+        ipv4 {};
+        area 0 {
+                interface "lo" {
+                        stub;
+                };
+                <%- $peerings.each |$index, $peer| { -%>
+                  <%- if has_key($peer, 'ospf') { -%>
+                    <%- if $peer['ospf'] { -%>
+                interface "wg<%= $index -%>" {};
+                    <%- } -%>
+                  <%- } -%>
+                <%- } -%>
+        };
+}

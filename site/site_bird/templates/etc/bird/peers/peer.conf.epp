@@ -1,47 +1,21 @@
 # puppet managed
 #
-<% if $as == 4242421097 { %>
-  # iBGP
-  protocol bgp <%= $peer_name %> {
-    local as OWNAS;
-    neighbor <%= $ipv6 %> % '<%= $interface %>' as OWNAS;
-    <% if $options6 { -%>
-      <% $options6.each |$option| { -%>
-      <%= $option -%>;
-      <% } -%>
+<% if $ipv4 { -%>
+protocol bgp <%= $peer_name %> from dnpeers {
+  <% if $options4 { -%>
+    <% $options4.each |$option| { -%>
+  <%= $option -%>;
     <% } -%>
-
-    ipv4 {
-      import all;
-      export all;
-      next hop self;
-    };
-
-    ipv6 {
-      import all;
-      export all;
-      next hop self;
-    };
-  };
-<% } else { %>
-  # eBGP
-  <% if $ipv4 { -%>
-  protocol bgp <%= $peer_name %> from dnpeers {
-    <% if $options4 { -%>
-      <% $options4.each |$option| { -%>
-    <%= $option -%>;
-      <% } -%>
-    <% } -%>
-    neighbor <%= $ipv4 %> as <%= $as -%>;
-  };
   <% } -%>
+  neighbor <%= $ipv4 %> as <%= $as -%>;
+};
+<% } -%>
 
-  protocol bgp <%= $peer_name %>_v6 from dnpeers {
-    <% if $options6 { -%>
-      <% $options6.each |$option| { -%>
-      <%= $option -%>;
-      <% } -%>
+protocol bgp <%= $peer_name %>_v6 from dnpeers {
+  <% if $options6 { -%>
+    <% $options6.each |$option| { -%>
+    <%= $option -%>;
     <% } -%>
-    neighbor <%= $ipv6 %> % '<%= $interface %>' as <%= $as -%>;
-  };
-<% } %>
+  <% } -%>
+  neighbor <%= $ipv6 %> % '<%= $interface %>' as <%= $as -%>;
+};

@@ -12,14 +12,14 @@
     <% } -%>
 
     ipv4 {
-      import where source = RTS_BGP && is_valid_network() && !is_self_net();
-      export where source = RTS_BGP && is_valid_network() && !is_self_net();
+      import all;
+      export all;
       next hop self;
     };
 
     ipv6 {
-      import where source = RTS_BGP && is_valid_network_v6() && !is_self_net_v6();
-      export where source = RTS_BGP && is_valid_network_v6() && !is_self_net_v6();
+      import all;
+      export all;
       next hop self;
     };
   };

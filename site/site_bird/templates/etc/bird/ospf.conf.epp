@@ -1,7 +1,12 @@
 <% include stdlib %>
-protocol ospf v2 cuatro {
-        ecmp yes;
-        ipv4 {};
+protocol ospf v3 cuatro {
+    ecmp yes;
+    ipv4 {
+        # Only route our internal network using OSPF - ignore
+        # everything sent from BGP. (I'll mention why in detail later)
+        import where is_self_net() && source != RTS_BGP;
+        export where is_self_net() && source != RTS_BGP;
+    };
         area 0 {
                 interface "lo" {
                         stub;
@@ -14,4 +19,24 @@ protocol ospf v2 cuatro {
                   <%- } -%>
                 <%- } -%>
         };
-}
+};
+
+protocol ospf v3 seis {
+    ecmp yes;
+    ipv6 {
+        import where is_self_net_v6() && source != RTS_BGP;
+        export where is_self_net_v6() && source != RTS_BGP;
+    };
+        area 0 {
+                interface "lo" {
+                        stub;
+                };
+                <%- $peerings.each |$index, $peer| { -%>
+                  <%- if has_key($peer, 'ospf') { -%>
+                    <%- if $peer['ospf'] { -%>
+                interface "wg<%= $index -%>" {};
+                    <%- } -%>
+                  <%- } -%>
+                <%- } -%>
+        };
+};

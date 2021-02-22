@@ -125,4 +125,17 @@ class profile::networking::dn42 {
     require  => Apt::Key['mine'],
   }
 
+  $hosts = {
+    'float4' => '172.21.68.13',
+    'float6' => 'fdc5:30f7:af0a:8000::1',
+    'ping4'  => '172.20.129.5',
+    'ping6'  => 'fd42:4242:2601:ac05::1',
+  }
+
+  $hosts.each |$key, $value| {
+    host { $key:
+      ip => $value,
+    }
+  }
+
 }

@@ -4,8 +4,6 @@
 
 class profile::monitoring::vnstat {
 
-  include systemd::systemctl::daemon_reload
-
   file { '/etc/systemd/system/vnstat.service.d':
     ensure => directory,
     owner  => 'root',
@@ -23,8 +21,6 @@ class profile::monitoring::vnstat {
     group   => 'root',
     content => "[Service]\nExecStart=\nExecStart=/usr/sbin/vnstatd -n --alwaysadd\n",
   }
-
-  ~> Class['systemd::systemctl::daemon_reload']
 
   service {'vnstat':
     ensure    => 'running',

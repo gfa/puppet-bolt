@@ -19,15 +19,13 @@ class site_bird (
 
   include profile::monitoring::munin::node::plugin::bird
 
-  $directories = [
-    '/etc/bird',
-    '/etc/bird/peers',
-  ]
-
-  $directories.each | String $directory | {
-    file { $directory:
-      ensure  => directory,
-    }
+  file {
+    '/etc/bird':
+      ensure => directory,
+      ;
+    '/etc/bird/peers':
+      ensure => directory,
+      purge  => true;
   }
 
   package { 'bird2':

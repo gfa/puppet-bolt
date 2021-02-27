@@ -1,11 +1,11 @@
 # this class manages wireguard in the dn42 context
 #
-# @param peerings hash containing peerings
+# @param peerings hash containing peerings, some peers may ask me for a different ipv6_link_local addr
 # @param ipv4_own my own dn42 ip4 address
 # @param ipv6_own my own dn42 ip6 address
 # @param private_key wireguard private key
 # @param public_key wireguard public key
-# @param ipv6_link_local
+# @param ipv6_link_local my link local ipv6 addr for wg tunnels
 #
 # TODO: move wg bits to its own class
 #
@@ -13,10 +13,10 @@
 class profile::networking::dn42::wireguard (
   String $private_key,
   String $public_key,
+  Stdlib::IP::Address::V6::Nosubnet $ipv6_link_local,
   Optional[Array] $peerings = lookup('site_bird::peerings', default_value => undef),
   Stdlib::IP::Address::V4::Nosubnet $ipv4_own = lookup('site_bird::ipv4_own'),
   Stdlib::IP::Address::V6::Nosubnet $ipv6_own = lookup('site_bird::ipv6_own'),
-  Optional[Array[Stdlib::IP::Address::V6::Nosubnet]] $ipv6_link_local = undef,
 ) {
 
   package { 'wireguard': }

@@ -38,12 +38,12 @@ class profile::networking::dn42 {
 
   sysctl { 'net.ipv4.conf.all.log_martians':
     ensure => present,
-    value  => '1',
+    value  => '0',
   }
 
   sysctl {'net.ipv4.conf.default.log_martians':
     ensure => present,
-    value  => '1',
+    value  => '0',
   }
 
   package { [

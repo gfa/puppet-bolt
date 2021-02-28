@@ -13,7 +13,7 @@ iface wg<%= $index %> inet static
   pointopoint <%= $peer['ipv4'] %>
 <% } -%>
 
-iface wg<%= $index %> inet6 manual
+iface wg<%= $index %> inet6 static
 <% unless $peer['ipv4'] { -%>
   pre-up ip link add $IFACE type wireguard
   pre-up wg setconf $IFACE /etc/wireguard/$IFACE.conf
@@ -21,10 +21,16 @@ iface wg<%= $index %> inet6 manual
   post-up wg set $IFACE fwmark 51097
 <% } -%>
   <% if $peer['ipv6_link_local'] { -%>
-  up ip -6 addr add <%= $peer['ipv6_link_local'] %> peer <%= $peer['ipv6'] %> dev $IFACE
+  # up ip -6 addr add <%= $peer['ipv6_link_local'] %> peer <%= $peer['ipv6'] %> dev $IFACE
+  address <%= $peer['ipv6_link_local'] %>
+  pointopoint <%= $peer['ipv6'] %>
   <% } elsif $peer['ipv6_ula'] { -%>
-  up ip -6 addr add <%= $ipv6_own %> peer <%= $peer['ipv6_ula'] %> dev $IFACE
+  # up ip -6 addr add <%= $ipv6_own %> peer <%= $peer['ipv6_ula'] %> dev $IFACE
+  address <%= $ipv6_own %>
+  pointopoint <%= $peer['ipv6_ula'] %>
   <% } else { -%>
-  up ip -6 addr add <%= $ipv6_link_local %> peer <%= $peer['ipv6'] %> dev $IFACE
+  # up ip -6 addr add <%= $ipv6_link_local %> peer <%= $peer['ipv6'] %> dev $IFACE
+  address <%= $ipv6_link_local %>
+  pointopoint <%= $peer['ipv6'] %>
 <% } -%>
 

@@ -3,8 +3,8 @@
 /var/log/bird.log
 /var/log/bird-remote.log
 {
-  rotate 3
-  size 2048M
+  rotate 1
+  size 1048M
   compress
   missingok
   notifempty

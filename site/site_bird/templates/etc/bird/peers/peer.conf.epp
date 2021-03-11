@@ -1,7 +1,5 @@
 # puppet managed
 #
-<%# eBGP peerings %>
-<% if $as != $ownas { -%>
 <% if $ipv4 { -%>
 protocol bgp <%= $peer_name %> from dnpeers {
   <% if $options4 { -%>
@@ -21,30 +19,3 @@ protocol bgp <%= $peer_name %>_v6 from dnpeers {
   <% } -%>
   neighbor <%= $ipv6 %> % '<%= $interface %>' as <%= $as -%>;
 };
-
-<%# iBGP peerings %>
-<% } else { -%>
-
-protocol bgp <%= $peer_name %> {
-    local as OWNAS;
-    neighbor fd86:bad:11b7::1 as OWNAS;
-    direct;
-
-    ipv4 {
-        next hop self;
-        # Optional cost, e.g. based off latency
-        #cost 50;
-
-        import all;
-        export all;
-    };
-
-    ipv6 {
-        next hop self;
-        #cost 50;
-
-        import all;
-        export all;
-    };
-}
-<% } -%>

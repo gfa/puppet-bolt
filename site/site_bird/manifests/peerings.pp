@@ -1,12 +1,10 @@
 # this class configures bird peerings
 #
 # @param peerings
-# @param ownas
 #
 
 class site_bird::peerings (
   Optional[Array] $peerings = lookup('site_bird::peerings', default_value => undef),
-  Integer $ownas = lookup('site_bird::as'),
 ) {
 
   if $peerings {
@@ -25,7 +23,6 @@ class site_bird::peerings (
           "${module_name}/etc/bird/peers/peer.conf.epp",
           { 'peer_name' => $peer_name,
             'interface' => "wg${index}",
-            'ownas'     => $ownas,
           } + $peer,
         ),
         require => [

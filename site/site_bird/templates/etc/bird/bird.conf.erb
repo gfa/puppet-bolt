@@ -155,6 +155,6 @@ template bgp dnpeers {
 #  KRT: Received route ::/0 with strange next-hop
 # "if net.ip = :: then reject;" I think put this in filter should work
 
-#include "/etc/bird/ospf.conf";
+include "/etc/bird/ospf.conf";
 include "/etc/bird/community_filters.conf";
 include "/etc/bird/peers/*.conf";

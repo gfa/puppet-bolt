@@ -57,6 +57,7 @@ class profile::networking::dn42 {
       'hping3',
       'ipcalc',
       'sipcalc',
+      'netcat-traditional',
   ]: }
 
   $roa_files = [

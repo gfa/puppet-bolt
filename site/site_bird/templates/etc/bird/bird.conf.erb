@@ -1,9 +1,9 @@
 # # managed by puppet
 
 log syslog { info, warning, error, auth, fatal, bug };
-log "/var/log/bird.log" { info, warning, error, auth, fatal, bug };
-log "/var/log/bird-remote.log" { remote };
-log "/var/log/bird-local.log" { debug, trace, info, warning, error, auth, fatal, bug };
+# log "/var/log/bird.log" { info, warning, error, auth, fatal, bug };
+# log "/var/log/bird-remote.log" { remote };
+# log "/var/log/bird-local.log" { debug, trace, info, warning, error, auth, fatal, bug };
 log "/var/log/bird-all.log" { info, warning, error, fatal, debug, trace, remote, auth };
 
 debug protocols all;

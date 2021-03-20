@@ -13,4 +13,4 @@ server:
         # log-servfail: yes
 
 remote-control:
-        control-enable: no
+        control-enable: <%= $::profile::networking::unbound::control_enable -%>

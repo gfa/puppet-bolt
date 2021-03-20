@@ -1,10 +1,12 @@
 # this class manages unbound
 #
 # @param access_control
+# @param control_enable
 #
 
 class profile::networking::unbound (
   Array[String] $access_control = ['127.0.0.0/8 allow_snoop'],
+  Enum['yes', 'no'] $control_enable = 'no',
 ) {
 
   package { 'unbound': }

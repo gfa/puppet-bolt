@@ -49,6 +49,7 @@ class base {
   # logging
   include profile::logging::logcheck
   include profile::logging::erpel
+  include profile::logging::journalbeat
 
   # monitoring
   include profile::monitoring::munin::node

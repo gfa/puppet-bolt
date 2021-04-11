@@ -15,6 +15,11 @@ class profile::networking::firewall::blocklists (
   require profile::networking::firewall::base
 
   file { '/etc/cron.hourly/update-ipsets-blocklists':
+    ensure => absent,
+  }
+
+  file { '/usr/local/bin/update-ipsets-blocklists':
+    ensure => file,
     mode   => '0755',
     owner  => 'root',
     group  => 'root',
@@ -23,7 +28,7 @@ class profile::networking::firewall::blocklists (
   }
 
   exec { 'update_ipsets_blocklists':
-    command     => '/etc/cron.hourly/update-ipsets-blocklists',
+    command     => '/usr/local/bin/update-ipsets-blocklists',
     refreshonly => true,
   }
 
@@ -32,6 +37,11 @@ class profile::networking::firewall::blocklists (
   }
 
   file { '/etc/cron.daily/update-countries-ipset':
+    ensure  => absent,
+  }
+
+  file { '/usr/local/bin/update-countries-ipset':
+    ensure  => file,
     mode    => '0755',
     owner   => 'root',
     group   => 'root',
@@ -45,6 +55,8 @@ class profile::networking::firewall::blocklists (
   $update_ipsets_content = "
     @reboot root sleep 5m ; /etc/cron.hourly/update-countries-ipset
     @reboot root sleep 5m ; /etc/cron.hourly/update-ipsets-blocklists
+    */60 * * * * root /usr/local/bin/cronrunner /usr/local/bin/update-ipsets-blocklists
+    59 */24 * * * root /usr/local/bin/cronrunner /usr/local/bin/update-countries-ipsets
     "
 
   file { '/etc/cron.d/update-ipsets':

@@ -53,7 +53,7 @@ run-parts /etc/dehydrated/hooks\n"
 
   $cron_contents = "#!/bin/sh
 set -e
-/usr/bin/chronic -e /usr/bin/dehydrated -c\n"
+/usr/local/bin/cronrunner -e /usr/bin/dehydrated -c\n"
 
   file { '/etc/cron.weekly/dehydrated':
     ensure  => file,

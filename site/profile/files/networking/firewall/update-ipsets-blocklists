@@ -1,6 +1,8 @@
 #!/bin/bash
 set -fue
 
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 # blocklist.de
 URL=https://lists.blocklist.de/lists/all.txt
 

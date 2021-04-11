@@ -37,18 +37,17 @@ def configure_logging(*kwargs):
     syslog_handler.ident = "cronrunner "
 
     root_logger.addHandler(syslog_handler)
-    # I'd use NOTICE but logging does not implement it
-    root_logger.setLevel(logging.ERROR if args["silent"] else logging.INFO)
+    root_logger.setLevel(args["loglevel"])
 
 
 def parse_arguments():
     """Parse CLI arguments."""
-    parser = ArgumentParser()
+    parser = ArgumentParser(allow_abbrev=False)
     parser.add_argument(
-        "--silent",
-        default=True,
-        action="store_true",
-        help="Do not log start and stop messages",
+        "--loglevel",
+        default="ERROR",
+        help="loglevel at which run cronrunner, default 'ERROR'",
+        choices=["ERROR", "INFO", "DEBUG"],
     )
     parser.add_argument(
         "--lock-file",

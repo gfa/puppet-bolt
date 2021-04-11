@@ -40,6 +40,7 @@ class base {
 
   # others
   include profile::package::etckeeper
+  include profile::package::cronrunner
 
   # services
   include profile::service::puppet

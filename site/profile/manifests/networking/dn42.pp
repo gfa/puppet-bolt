@@ -81,7 +81,7 @@ class profile::networking::dn42 {
     group   => 'root',
     mode    => '0644',
     content => epp("${module_name}/etc/cron.d/dn42_roa.epp"),
-    require => [Package['bird2'], Package['curl']],
+    require => [Package['bird2'], Package['curl'], File['/usr/local/bin/cronrunner']],
   }
 
   file { '/usr/local/bin/bgp-community.rb':

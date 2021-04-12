@@ -63,7 +63,7 @@ def parse_arguments():
     )
     parser.add_argument(
         "--console",
-        default=True,
+        default=False,
         action="store_true",
         help="output program's output to console",
     )

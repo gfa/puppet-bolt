@@ -56,7 +56,7 @@ class profile::networking::firewall::blocklists (
     @reboot root sleep 5m ; /etc/cron.hourly/update-countries-ipset
     @reboot root sleep 5m ; /etc/cron.hourly/update-ipsets-blocklists
     */60 * * * * root /usr/local/bin/cronrunner /usr/local/bin/update-ipsets-blocklists
-    59 */24 * * * root /usr/local/bin/cronrunner /usr/local/bin/update-countries-ipsets
+    59 */24 * * * root /usr/local/bin/cronrunner /usr/local/bin/update-countries-ipset
     "
 
   file { '/etc/cron.d/update-ipsets':

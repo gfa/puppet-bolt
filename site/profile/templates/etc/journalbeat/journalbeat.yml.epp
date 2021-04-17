@@ -166,6 +166,9 @@ processors:
 # "publisher", "service".
 #logging.selectors: ["*"]
 
+logging.metrics.enabled: false
+
+
 # ============================= X-Pack Monitoring ==============================
 # Journalbeat can export internal metrics to a central Elasticsearch monitoring
 # cluster.  This requires xpack monitoring to be enabled in Elasticsearch.  The

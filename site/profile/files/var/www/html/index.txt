@@ -1,0 +1,89 @@
+# AS 4242421097
+
+
+## Peering details:
+
+### General Info
+
+| Key            | Value                       |
+|----------------|-----------------------------|
+| AS             | 4242421097                  |
+| Contact        | gfa AT zumbi.com.ar         |
+| Contact        | IRC OFTC: gfa               |
+| Contact        | IRC Freenode: gfa           |
+| Contact        | IRC Hackint: gfa            |
+| IPv4 Range     | 172.21.68.0/27              |
+| IPv6 Range     | fdc5:30f7:af0a::/48         |
+| Wireguard port | 5<last 4 digits of your AS> |
+
+- multiprotocol BGP over IPv6 link-local is preferred
+
+### Node Info
+
+#### Node nl-1
+
+| Key              | Value                                                |
+|------------------|------------------------------------------------------|
+| Location         | Netherlands                                          |
+| Hostname         | dn42-nl-1.4679.ar                                    |
+| Peer policy      | open                                                 |
+| IPv4 dn42        | 172.21.68.9                                          |
+| IPv6 dn42        | fdc5:30f7:af0a:1000::1                               |
+| Wireguard pubkey | pfyRUFiS/9rGVycbM4D1lyT2NDGQr+Cpx+/AoIl2J2I=         |
+| IPv6 link-local  | fe80::9:100                                          |
+| Notes            | It will be decommisioned before 09/2021              |
+| Notes            | Peers will be moved to a new host in The Netherlands |
+
+
+#### Node nl-2
+
+| Key              | Value                                                |
+|------------------|------------------------------------------------------|
+| Location         | Netherlands                                          |
+| Hostname         | dn42-nl-2.4679.ar                                    |
+| Peer policy      | open                                                 |
+| IPv4 dn42        | 172.21.68.29                                         |
+| IPv6 dn42        | fdc5:30f7:af0a:4000::1                               |
+| Wireguard pubkey | iYvucYTTYVSketQvKkRuG5PKEE/UgpxSKZWSX0CUuzk=         |
+| IPv6 link-local  | fe80::29:100                                         |
+| Notes            | It will be decommisioned before 02/2022              |
+| Notes            | Peers will be moved to a new host in The Netherlands |
+
+
+#### Node md-1
+
+| Key              | Value                                        |
+|------------------|----------------------------------------------|
+| Location         | Moldova                                      |
+| Hostname         | dn42-md-1.4679.ar                            |
+| Peer policy      | open                                         |
+| IPv4 dn42        | 172.21.68.1                                  |
+| IPv6 dn42        | fdc5:30f7:af0a::1                            |
+| Wireguard pubkey | Ta3fZ2A2FVhyD6cOzXdqF5zo0mYG5x9pmFJPbI6p8X4= |
+| IPv6 link-local  | fe80::1:100                                  |
+
+
+#### Node hk-1
+
+| Key              | Value                                        |
+|------------------|----------------------------------------------|
+| Location         | Hong Kong                                    |
+| Hostname         | dn42-hk-1.4679.ar                            |
+| Peer policy      | open                                         |
+| IPv4 dn42        | 172.21.68.25                                 |
+| IPv6 dn42        | fdc5:30f7:af0a:3000::1                       |
+| Wireguard pubkey | 9l0rn3+cJOwpKpHsGSch7no8yqUTtS8wSjlwiGSjU3Y= |
+| IPv6 link-local  | fe80::25:100                                 |
+
+
+#### Node sg-1
+
+| Key              | Value                                        |
+|------------------|----------------------------------------------|
+| Location         | Singapore                                    |
+| Hostname         | dn42-sg-1.4679.ar                            |
+| Peer policy      | open                                         |
+| IPv4 dn42        | 172.21.68.17                                 |
+| IPv6 dn42        | fdc5:30f7:af0a:2000::1                       |
+| Wireguard pubkey | 4i0zEZfSQatgbZi0BMYH2xWtZy6nAtfnLWzF5PKP7hY= |
+| IPv6 link-local  | fe80::17:100                                 |

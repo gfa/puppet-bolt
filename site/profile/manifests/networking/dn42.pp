@@ -7,6 +7,7 @@ class profile::networking::dn42 {
   include site_bird::peerings
   include site_bird::peerings::ospf
   include profile::networking::dn42::firewall
+  include profile::networking::dn42::apache
   include profile::networking::dn42::wireguard
   include profile::networking::unbound::dn42
 

@@ -27,3 +27,4 @@ hierarchy:
       - 'blocklist_de.yaml'
       - 'nginx.yaml'
       - 'monitoring.yaml'
+      - 'apache.yaml'

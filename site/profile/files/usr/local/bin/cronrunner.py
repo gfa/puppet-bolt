@@ -50,18 +50,6 @@ def parse_arguments():
         choices=["ERROR", "INFO", "DEBUG"],
     )
     parser.add_argument(
-        "--lock-file",
-        help="path to create a lock file, if the lock \
-        exist the program won't run",
-    )
-    parser.add_argument(
-        "--lock-fatal",
-        default=False,
-        action="store_true",
-        help="if the existence of the lock should \
-                terminate the program with an error",
-    )
-    parser.add_argument(
         "--console",
         default=False,
         action="store_true",

@@ -10,16 +10,39 @@ class profile::networking::firewall::pre {
   # are created but then they magically disapear after the change of
   # iptables implementation
   # f**k docker
-  if $facts['os']['distro']['codename'] != 'stretch' {
+  # double f**k docker as i'm switching away to podman in bullseye
+  case $facts['os']['distro']['codename'] {
+    'buster': {
+      alternatives { 'iptables':
+        path =>  '/usr/sbin/iptables-legacy',
+      }
 
-    alternatives { 'iptables':
-      path =>  '/usr/sbin/iptables-legacy',
+      alternatives { 'ip6tables':
+        path =>  '/usr/sbin/ip6tables-legacy',
+      }
     }
+    'bullseye', 'bullseye/sid', 'sid': {
+      alternatives { 'iptables':
+        path =>  '/usr/sbin/iptables-nft',
+      }
 
-    alternatives { 'ip6tables':
-      path =>  '/usr/sbin/ip6tables-legacy',
+      alternatives { 'ip6tables':
+        path =>  '/usr/sbin/ip6tables-nft',
+      }
+
+    }
+    default: {
+      fail('which distro is this?')
     }
   }
+
+  reboot { 'reboot after iptables alternatives changed':
+    subscribe => [
+      Alternatives['iptables'],
+      Alternatives['ip6tables'],
+    ]
+  }
+
 
   Firewall { require => undef, }
 

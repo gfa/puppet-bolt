@@ -25,7 +25,14 @@ facts_db::<%= $facts['fqdn'] %>::<%= $key -%>:
     <% if $v =~ Hash { %>
       <%= $k %>:
       <% $v.each |$subk2, $subv2| { %>
+      <% if $subv2 =~ Hash { -%>
+        <% $subv2.each |$subk3, $subv3| { -%>
+          <%= $subk3 -%>:
+          <%= $subv3 -%>
+      <% } %>
+          <% } else { %>
       <%= $subk2 %>: <%= $subv2 -%>
+        <% } %>
       <% } %>
     <% } else { %>
     <%= $k %>: <%= $v %>

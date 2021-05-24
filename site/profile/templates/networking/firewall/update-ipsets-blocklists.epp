@@ -16,10 +16,10 @@ CF6=https://www.cloudflare.com/ips-v6
 # huge address spaces but still smaller than the wholes inet
 LE6="2600:1F00::/24 2600:1F14::/35 2600:3000::/29"
 
-TEMP=`mktemp -d`
+TEMP=$(mktemp -d)
 
 function cleanup {
-  rm -rf ${TEMP}
+  rm -rf "${TEMP}"
   ipset destroy block6-temp &>/dev/null || true
   ipset destroy block-temp &>/dev/null || true
 }
@@ -38,25 +38,34 @@ cat edrop.txt dropv6.txt | grep -v '^;' | awk '{print $1}' > spamhaus.txt
 ipset create block-temp hash:net family inet hashsize 2048 maxelem 65536
 ipset create block6-temp hash:net family inet6 hashsize 2048 maxelem 65536
 
-for ip in $(cat all.txt | grep -v : | sort | uniq)
+for ip in $(grep -v : all.txt | sort | uniq)
   do
-        ipset add block-temp $ip
+        ipset add block-temp "$ip"
 done
 
-for ip in $(cat spamhaus.txt | grep -v : | sort | uniq)
+for ip in $(grep -v : spamhaus.txt | sort | uniq)
   do
-        ipset add block-temp $ip
+        ipset add block-temp "$ip"
 done
 
 
-for ip in $(cat all.txt | grep : | sort | uniq)
+for ip in $(grep : all.txt | sort | uniq)
   do
-        ipset add block6-temp $ip
+        ipset add block6-temp "$ip"
 done
 
-for ip in $(cat spamhaus.txt | grep : | sort | uniq)
+for ip in $(grep : spamhaus.txt | sort | uniq)
   do
-        ipset add block6-temp $ip
+        ipset add block6-temp "$ip"
+done
+
+
+networks_allow="<% $networks_allow.each |$network| { %><%= $network %> <% } %>"
+networks_block="<% $networks_block.each |$network| { %><%= $network %> <% } %>"
+
+for ip in $networks_block
+  do
+    ipset add block-temp "$ip"
 done
 
 ipset swap block-temp block4
@@ -65,14 +74,14 @@ ipset swap block6-temp block6
 ipset flush block-temp
 ipset flush block6-temp
 
-for ip in $(cat ips-v4)
+while IFS= read -r ip
   do
-        ipset add block-temp $ip
-done
+    ipset add block-temp "$ip"
+done  < ips-v4
 
 for ip in $(cat ips-v6) ${LE6}
   do
-        ipset add block6-temp $ip
+    ipset add block6-temp "$ip"
 done
 
 ipset swap block-temp cf4

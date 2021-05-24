@@ -5,11 +5,15 @@
 #
 # @param countries_block countries to block in alpha-2 format
 # @param countries_allow countries to allow in alpha-2 format
+# @param networks_block networks to block
+# @param networks_allow networks to allow
 #
 
 class profile::networking::firewall::blocklists (
   Array[String[2,2]] $countries_block,
   Array[String[2,2]] $countries_allow,
+  Array[String] $networks_block,
+  Array[String] $networks_allow,
 ) {
 
   require profile::networking::firewall::base
@@ -19,12 +23,16 @@ class profile::networking::firewall::blocklists (
   }
 
   file { '/usr/local/bin/update-ipsets-blocklists':
-    ensure => file,
-    mode   => '0755',
-    owner  => 'root',
-    group  => 'root',
-    source => "puppet:///modules/${module_name}/networking/firewall/update-ipsets-blocklists",
-    notify => Exec['update_ipsets_blocklists'],
+    ensure  => file,
+    mode    => '0755',
+    owner   => 'root',
+    group   => 'root',
+    content => epp("${module_name}/networking/firewall/update-ipsets-blocklists.epp",
+    {
+      'networks_allow' => $networks_allow,
+      'networks_block' => $networks_block,
+    }),
+    notify  => Exec['update_ipsets_blocklists'],
   }
 
   exec { 'update_ipsets_blocklists':

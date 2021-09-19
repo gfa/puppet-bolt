@@ -13,4 +13,10 @@ class profile::package::pinning (
     require  => Class['apt'],
   }
 
+  apt::ping { 'journalbeat':
+    packages => ['journalbeat'],
+    priority => 990,
+    version  => '7.14.1',
+  }
+
 }

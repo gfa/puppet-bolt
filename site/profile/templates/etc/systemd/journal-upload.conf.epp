@@ -1,0 +1,5 @@
+[Upload]
+URL=<%= $profile::logging::journald::upload::server %>
+ServerKeyFile=/etc/systemd/journal-remote.key
+ServerCertificateFile=/etc/systemd/journal-remote.crt
+TrustedCertificateFile=/etc/systemd/journal-remote.ca

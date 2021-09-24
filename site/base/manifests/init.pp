@@ -11,11 +11,6 @@ class base {
 
   Stage['main'] -> Stage['last']
 
-  # stop fail2ban before anything else
-  class { 'profile::networking::firewall::fail2ban::stop':
-    stage => first,
-  }
-
   # modules that take their configuration fully from hiera
   include apt
   include needrestart

@@ -40,8 +40,4 @@ class profile::networking::firewall::post {
     before => undef,
   }
 
-  exec { 'start_fail2ban':
-    command => '/usr/sbin/invoke-rc.d fail2ban start',
-  }
-
 }

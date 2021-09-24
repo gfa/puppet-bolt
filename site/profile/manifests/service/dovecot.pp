@@ -26,7 +26,6 @@ class profile::service::dovecot (
 ) {
 
   include profile::networking::firewall::service::dovecot
-  include profile::networking::firewall::fail2ban::dovecot
 
   openssl::dhparam { $ssl_dh_file:
     size =>  2048,

@@ -45,10 +45,15 @@ class profile::logging::journald::upload (
       owner   => 'root',
     }
 
-    service { 'systemd-journal-remote':
+    service { 'systemd-journal-upload':
       ensure => running,
       enable => true,
     }
+  }
+
+  service { 'systemd-journal-remote':
+    ensure => stopped,
+    enable => false,
   }
 
 }

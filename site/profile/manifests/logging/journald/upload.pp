@@ -14,8 +14,8 @@ class profile::logging::journald::upload (
     File {
       ensure  => file,
       mode    => '0440',
-      group   => 'systemd-journal-remote',
-      owner   => 'root',
+      group   => 'systemd-journal',
+      owner   => 'systemd-journal-upload',
       require => Package['systemd-journal-remote'],
       notify  => Service['systemd-journal-remote'],
     }
@@ -41,8 +41,8 @@ class profile::logging::journald::upload (
         File['/etc/systemd/journal-remote.crt'],
         File['/etc/systemd/journal-remote.ca']],
       mode    => '0440',
-      group   => 'systemd-journal-remote',
-      owner   => 'root',
+      group   => 'systemd-journal',
+      owner   => 'systemd-journal-upload',
     }
 
     service { 'systemd-journal-upload':

@@ -56,4 +56,10 @@ class profile::logging::journald::upload (
     enable => false,
   }
 
+  service { 'systemd-journal-remote.socket':
+    ensure => stopped,
+    enable => false,
+  }
+
+
 }

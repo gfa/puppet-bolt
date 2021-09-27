@@ -10,12 +10,22 @@ class profile::logging::journald::upload (
 
   package { 'systemd-journal-remote': }
 
+  #  if $facts['os']['distro']['codename'] == 'buster' {
+  #
+  #  user { 'systemd-journal-upload':
+  #    ensure => present,
+  #    gid    => 'systemd-journal',
+  #    shell  => '/bin/false',
+  #    home   => '/run/systemd',
+  #  }
+  # }
+
   if $key {
     File {
       ensure  => file,
       mode    => '0440',
       group   => 'systemd-journal',
-      owner   => 'systemd-journal-upload',
+      owner   => 'root',
       require => Package['systemd-journal-remote'],
       notify  => Service['systemd-journal-remote'],
     }
@@ -42,7 +52,7 @@ class profile::logging::journald::upload (
         File['/etc/systemd/journal-remote.ca']],
       mode    => '0440',
       group   => 'systemd-journal',
-      owner   => 'systemd-journal-upload',
+      owner   => 'root',
     }
 
     service { 'systemd-journal-upload':

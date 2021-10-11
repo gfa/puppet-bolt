@@ -27,4 +27,9 @@ class profile::package::unattended_upgrades (
 
   }
 
+  service { 'unattended-upgrades':
+    ensure => stopped,
+    enable => false,
+  }
+
 }

@@ -8,19 +8,11 @@ class profile::logging::journald::upload (
   String $key = undef,
 ) {
 
-  package { 'systemd-journal-remote': }
-
-  #  if $facts['os']['distro']['codename'] == 'buster' {
-  #
-  #  user { 'systemd-journal-upload':
-  #    ensure => present,
-  #    gid    => 'systemd-journal',
-  #    shell  => '/bin/false',
-  #    home   => '/run/systemd',
-  #  }
-  # }
 
   if $key {
+
+    package { 'systemd-journal-remote': }
+
     File {
       ensure  => file,
       mode    => '0440',
@@ -59,17 +51,31 @@ class profile::logging::journald::upload (
       ensure => running,
       enable => true,
     }
-  }
 
-  service { 'systemd-journal-remote':
-    ensure => stopped,
-    enable => false,
-  }
+    service { 'systemd-journal-remote':
+      ensure => stopped,
+      enable => false,
+    }
 
-  service { 'systemd-journal-remote.socket':
-    ensure => stopped,
-    enable => false,
-  }
+    service { 'systemd-journal-remote.socket':
+      ensure => stopped,
+      enable => false,
+    }
 
+  } else {
+
+    package { 'systemd-journal-remote':
+      ensure => purged,
+    }
+
+    file { [
+      '/etc/systemd/journal-upload.conf',
+      '/etc/systemd/journal-remote.key',
+      '/etc/systemd/journal-remote.crt',
+      '/etc/systemd/journal-remote.ca',
+    ]:
+      ensure => absent,
+    }
+  }
 
 }

@@ -2,10 +2,10 @@
 
 
 class profile::logging::journald::upload (
-  String $ca = undef,
-  String $crt = undef,
-  String $server = undef,
-  String $key = undef,
+  Optional[String] $ca = undef,
+  Optional[String] $crt = undef,
+  Optional[String] $server = undef,
+  Optional[String] $key = undef,
 ) {
 
 

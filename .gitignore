@@ -17,3 +17,4 @@ inventory.yaml
 puppet-editor-services/
 g10k-cache
 facts_db/
+.gems/

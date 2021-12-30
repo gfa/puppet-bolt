@@ -26,7 +26,7 @@ class profile::monitoring::prometheus::node_exporter (
     dport    => 9100,
     proto    => 'tcp',
     action   => 'accept',
-    provider => 'iptables',
+    provider => 'ip6tables',
     source   => $prometheus_host6,
   }
 

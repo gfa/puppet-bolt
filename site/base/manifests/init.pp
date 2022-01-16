@@ -49,7 +49,7 @@ class base {
   include profile::logging::journald::upload
 
   # monitoring
-  include profile::monitoring::munin::node
+  include profile::monitoring::munin::remove
   include profile::monitoring::prometheus::node_exporter
   include profile::monitoring::vnstat
 

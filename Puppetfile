@@ -22,7 +22,6 @@ mod 'fail2ban',
     :git => 'https://github.com/lelutin/puppet-fail2ban.git',
     :ref => 'master'
 mod 'hetzner-needrestart', '1.0.3'
-mod 'ssm-munin', '0.2.0'
 mod 'stm-debconf', '2.3.0'
 mod 'saz-ssh', '5.0.0'
 mod 'puppetlabs-concat', '6.1.0'

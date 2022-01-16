@@ -7,7 +7,7 @@
 # @param ipv6_range
 # @param dn42_region
 #
-
+#
 class site_bird (
   Integer $as,
   Integer $dn42_region,
@@ -16,8 +16,6 @@ class site_bird (
   Stdlib::IP::Address::V4::Nosubnet $ipv4_own,
   Stdlib::IP::Address::V6::Nosubnet $ipv6_own,
 ) {
-
-  include profile::monitoring::munin::node::plugin::bird
 
   file {
     '/etc/bird':

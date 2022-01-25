@@ -6,7 +6,8 @@
 # @param ipv6_own
 # @param ipv6_range
 # @param dn42_region
-#
+# @param prometheus_host4
+# @param prometheus_host6
 #
 class site_bird (
   Integer $as,
@@ -15,6 +16,8 @@ class site_bird (
   Stdlib::IP::Address::V6::CIDR $ipv6_range,
   Stdlib::IP::Address::V4::Nosubnet $ipv4_own,
   Stdlib::IP::Address::V6::Nosubnet $ipv6_own,
+  Stdlib::Host $prometheus_host4 = lookup('profile::monitoring::prometheus::node_exporter::prometheus_host4'),
+  Stdlib::Host $prometheus_host6 = lookup('profile::monitoring::prometheus::node_exporter::prometheus_host6'),
 ) {
 
   file {
@@ -105,5 +108,26 @@ class site_bird (
     refreshonly => true,
     path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin', ],
   }
+
+  package { 'prometheus-bird-exporter': }
+
+  firewall { '400 incoming bird exporter ipv4':
+    chain    => 'INPUT',
+    dport    => 9200,
+    proto    => 'tcp',
+    action   => 'accept',
+    provider => 'iptables',
+    source   => $prometheus_host4,
+  }
+
+  firewall { '400 incoming bird exporter ipv6':
+    chain    => 'INPUT',
+    dport    => 9200,
+    proto    => 'tcp',
+    action   => 'accept',
+    provider => 'ip6tables',
+    source   => $prometheus_host6,
+  }
+
 
 }

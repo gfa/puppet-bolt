@@ -8,6 +8,9 @@ log "/var/log/bird-all.log" { info, warning, error, fatal, debug, trace, remote,
 
 debug protocols all;
 
+# for prometheus exporter
+timeformat protocol     iso long;
+
 ################################################
 #               Variable header                #
 ################################################

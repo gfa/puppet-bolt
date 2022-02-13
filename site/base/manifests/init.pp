@@ -1,6 +1,6 @@
 # base class
 #
-
+#
 class base {
 
   stage { 'first':
@@ -37,6 +37,7 @@ class base {
   # others
   include profile::package::etckeeper
   include profile::package::cronrunner
+  include site_tunnels
 
   # services
   include profile::service::puppet

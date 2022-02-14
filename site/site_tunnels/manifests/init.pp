@@ -1,5 +1,7 @@
 # this class manages tunnels towards places
 #
+# @param tunnels
+#
 class site_tunnels (
   Array[Hash] $tunnels,
 ) {
@@ -13,7 +15,7 @@ class site_tunnels (
     home           => '/etc/tunnels',
   }
 
-  file { '/etc/tunnels/.ssh':
+  file { ['/etc/tunnels/.ssh', '/etc/tunnels']:
     ensure => directory,
     mode   => '0700',
     owner  => 'tunnels',
@@ -29,16 +31,25 @@ class site_tunnels (
     }
 
     systemd::unit_file { "${data['name']}.service":
+      ensure  => absent,
+    }
+
+    systemd::unit_file { "${data['name']}-tunnel.service":
       ensure  => present,
       enable  => true,
       content =>  template("${module_name}/etc/systemd/system/tunnel.service.erb"),
+    }
+
+    service { "${data['name']}-tunnel":
+      ensure => running,
+      enable => true,
     }
 
     firewall_multi { "300 allow outgoing tunnel to ${data['name']}":
       chain       => 'OUTPUT',
       dport       => 22,
       action      => 'accept',
-      destination => "${data['remote']}",
+      destination => $data['remote'],
     }
 
   }

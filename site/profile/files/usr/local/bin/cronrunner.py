@@ -4,7 +4,7 @@
 # Implemented:
 # - chronic
 # - flock -E 0 -xn
-# exit 666 (not really, just 154) when the command failed more than X times (3 by default)
+# exit the_number_of_times_the_command_has_failed when the command failed more than X times (3 by default)
 
 import logging
 import logging.config
@@ -79,7 +79,6 @@ def run_process(**kargs):
         )
     except FileNotFoundError:
         logger.error("command not found: %s", kargs["command"])
-        # sys.exit(127)
         return 127
 
     stdout, stderr = proc.communicate()
@@ -174,7 +173,7 @@ def check_fail_counter(child_arguments, max_fails):
             logger.error(
                 "'%s' has failed more than %s times", child_arguments, max_fails
             )
-            return 666
+            return failures
 
 
 def main():

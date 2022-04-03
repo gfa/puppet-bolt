@@ -1,6 +1,6 @@
-# this class manages main.cf
+# this class manages master.cf
 #
-class postfix::main_cf {
+class postfix::master_cf {
 
   $postfix::config.keys().each |$instance| {
 
@@ -11,9 +11,9 @@ class postfix::main_cf {
       $suffix = "-${instance}"
     }
 
-    file { "/etc/postfix${suffix}/main.cf":
+    file { "/etc/postfix${suffix}/master.cf":
       ensure  => file,
-      content => template("${module_name}/main.cf.erb"),
+      content => template("${module_name}/master.cf.erb"),
       owner   => 'root',
       group   => 'root',
       mode    => '0644',

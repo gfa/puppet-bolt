@@ -50,9 +50,6 @@ smtpd_tls_dh512_param_file = ${config_directory}/dh512.pem
 
 smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
 
-# mta-sts
-smtp_tls_policy_maps = <%= scope.lookupvar('postfix::config')[@instance]['smtp_tls_policy_maps'] %>
-
 # Disable SSL compression
 tls_ssl_options = NO_COMPRESSION
 
@@ -69,7 +66,6 @@ smtpd_tls_exclude_ciphers = aNULL, eNULL, EXPORT, DES, RC4, MD5, PSK, aECDH, EDH
 # See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
 # information on enabling SSL in the smtp client.
 
-#smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 myhostname = <%= @networking['fqdn'] %>
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
@@ -83,18 +79,18 @@ inet_protocols = all
 
 
 # spamassassin
-non_smtpd_milters = <%= scope.lookupvar('postfix::config')[@instance]['non_smtpd_milters'] %>
-smtpd_milters = <%= scope.lookupvar('postfix::config')[@instance]['smtpd_milters'] %>
+non_smtpd_milters = <%= scope.lookupvar('postfix::config')[@instance]['non_smtpd_milters'].join(', ') %>
+smtpd_milters = <%= scope.lookupvar('postfix::config')[@instance]['smtpd_milters'].join(', ') %>
 milter_default_action = accept
 milter_connect_macros = j {daemon_name} v {if_name} _
 milter_data_macros = j i {daemon_name} v {if_name} _
-
 
 # AUTH
 smtpd_sasl_type = dovecot
 smtpd_sasl_auth_enable = yes
 #smtpd_recipient_restrictions = permit_sasl_authenticated permit_mynetworks reject_unauth_destination
 smtpd_sasl_path = private/auth
+smtpd_sasl_authenticated_header = yes
 
 # Virtual domains
 virtual_transport = lmtp:unix:private/dovecot-lmtp
@@ -102,7 +98,7 @@ virtual_mailbox_domains = <%= scope.lookupvar('postfix::config')[@instance]['vir
 virtual_mailbox_maps = <%= scope.lookupvar('postfix::config')[@instance]['virtual_mailbox_maps'].join(', ')  %>
 virtual_alias_maps = <%= scope.lookupvar('postfix::config')[@instance]['virtual_alias_maps'].join(', ') %>
 
-transport_maps = hash:/etc/postfix/transport
+transport_maps = hash:/etc/postfix/transport_maps
 
 # Restrictions
 smtpd_helo_required = yes
@@ -112,7 +108,7 @@ smtpd_helo_restrictions =
 #       permit_sasl_authenticated,
 #       check_client_access hash:/etc/postfix/servers,
 #       check_client_access hash:/etc/postfix/check_client_access,
-#       check_helo_access pcre:/etc/postfix/helo_deny,
+#       check_helo_access pcre:/etc/postfix/helo_deny, hash:/etc/postfix/helo_deny_map
         reject_invalid_helo_hostname,
         reject_non_fqdn_hostname
 
@@ -167,3 +163,7 @@ initial_destination_concurrency = 2
 default_destination_concurrency_limit = 10
 smtp_destination_recipient_limit = 10
 lmtp_destination_concurrency_limit = 1
+
+smtp_address_preference = ipv4
+
+postscreen_greet_action = drop

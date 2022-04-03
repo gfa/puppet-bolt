@@ -41,7 +41,7 @@ mod 'systemd',
     :ref => '2.12.0'
 mod 'edestecd-clamav', '2.0.0'
 mod 'puppet-epel', '3.0.1'
-mod 'oxc-dovecot', '2.1.0'
+mod 'oxc-dovecot', '3.1.0'
 mod 'prosody',
     :git => 'https://github.com/voxpupuli/puppet-prosody.git',
     :ref => 'master'

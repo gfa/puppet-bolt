@@ -12,7 +12,7 @@
 # @param ssl_hostname hostname under which the ssl certificates where issues
 # @param sieve_bin_dir location where the binaries called by sieve scripts live
 #
-
+#
 class profile::service::dovecot (
   Stdlib::UnixPath $users_file = '/etc/dovecot/users',
   Stdlib::UnixPath $ssl_dh_file = '/etc/dovecot-dh.pem',
@@ -33,6 +33,15 @@ class profile::service::dovecot (
 
   file { $users_file:
     ensure => file,
+  }
+
+  group { $store_group:
+    gid => $store_gid,
+  }
+
+  user { $store_username:
+    uid => $store_uid,
+    gid => $store_gid,
   }
 
   $ssl_cipher_list = "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:\
@@ -132,18 +141,20 @@ class profile::service::dovecot (
           },
           'mailbox Junk'            => {
             special_use => '\Junk',
-            auto        => 'subscribe',
+            auto        => 'create',
+            autoexpunge => '90d',
           },
           'mailbox Trash'           => {
-            special_use => '\Sent',
+            special_use => '\Trash',
             auto        => 'subscribe',
+            autoexpunge => '30d',
           },
           'mailbox Sent'            => {
             special_use => '\Sent',
             auto        => 'subscribe',
           },
           'mailbox "Sent Messages"' => {
-            special_use => '\Drafts',
+            special_use => '\Sent',
           },
         },
       },

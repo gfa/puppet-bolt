@@ -6,8 +6,6 @@
 # @param ssl_dh_file location of the dh file
 # @param store_username user used to store all mail on disk, imap proc runs under this user
 # @param store_group the group for the user above
-# @param store_uid the uid for the user
-# @param store_gid the gid for the user
 # @param store_home the home for the user and root of the mail store
 # @param ssl_hostname hostname under which the ssl certificates where issues
 # @param sieve_bin_dir location where the binaries called by sieve scripts live
@@ -15,11 +13,9 @@
 #
 class profile::service::dovecot (
   Stdlib::UnixPath $users_file = '/etc/dovecot/users',
-  Stdlib::UnixPath $ssl_dh_file = '/etc/dovecot-dh.pem',
+  Stdlib::UnixPath $ssl_dh_file = '/etc/dovecot/dh.pem',
   String $store_username = 'vmail',
   String $store_group = 'vmail',
-  Integer $store_uid = 999,
-  Integer $store_gid = 999,
   Stdlib::UnixPath $store_home = '/srv/vmail',
   Stdlib::Fqdn $ssl_hostname = $facts['networking']['fqdn'],
   Stdlib::UnixPath $sieve_bin_dir = '/usr/local/bin'
@@ -36,12 +32,20 @@ class profile::service::dovecot (
   }
 
   group { $store_group:
-    gid => $store_gid,
+    system => true,
   }
 
   user { $store_username:
-    uid => $store_uid,
-    gid => $store_gid,
+    gid    => $store_group,
+    system => true,
+    home   => $store_home,
+  }
+
+  file { $store_home:
+    ensure  => directory,
+    owner   => $store_username,
+    group   => $store_group,
+    recurse => false,
   }
 
   $ssl_cipher_list = "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:\
@@ -72,7 +76,8 @@ class profile::service::dovecot (
       '10-master'                  => {
         'service imap-login'  => {
           'inet_listener imap'  => {
-            port => 143,
+            port    => 143,
+            address => '127.0.0.1',
           },
           'inet_listener imaps' => {
             port => 993,
@@ -160,7 +165,8 @@ class profile::service::dovecot (
       },
       '20-imap'                    => {
         'protocol imap' => {
-          mail_plugins => '$mail_plugins imap_acl acl imap_sieve zlib imap_zlib',
+          mail_plugins    => '$mail_plugins imap_acl acl imap_sieve zlib imap_zlib',
+          imap_capability => '+SPECIAL-USE',
         },
       },
       '20-lmtp'                    => {

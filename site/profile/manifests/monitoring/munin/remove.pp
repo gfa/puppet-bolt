@@ -12,7 +12,7 @@ class profile::monitoring::munin::remove {
   }
 
   file { '/etc/munin/plugins':
-    ensure  => directory,
+    ensure  => absent,
     recurse => true,
     purge   => true,
     force   => true,

@@ -1,5 +1,5 @@
 # this class manages main.cf
-
+#
 class postfix::main_cf {
 
   $postfix::config.keys().each |$instance| {

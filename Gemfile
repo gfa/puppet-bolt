@@ -17,7 +17,6 @@ source ENV['GEM_SOURCE'] || 'https://rubygems.org' do
   gem 'puppet-lint-global_resource-check'
   gem 'puppet-lint-leading_zero-check'
   gem 'puppet-lint-legacy_facts-check'
-  gem 'puppet-lint-no_erb_template-check'
   gem 'puppet-lint-no_file_path_attribute-check'
   gem 'puppet-lint-no_symbolic_file_modes-check'
   gem 'puppet-lint-package_ensure-check'

@@ -124,7 +124,7 @@ for host; do
   # shellcheck disable=SC2156
   find "${HIERA_TEMP}" -type f -iname '*yaml' -execdir sh -c "eyaml decrypt --pkcs7-private-key-env-var='EYAML_PRIV_KEY' --pkcs7-public-key-env-var='EYAML_PUB_KEY' -f {} | sponge {}" \;
   rsync -aq --no-r --chown=root:root --exclude='.git' "${HIERA_TEMP}"/hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"
-  rsync -aqK --delete --chown=root:root --exclude='.git' "${HIERA_TEMP}/hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/hosts/${host}/"
+  rsync -aqK --delete --chown=root:root --exclude='.git' "${HIERA_TEMP}/hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/hosts/${host}/" || true
   rsync -raq --chown=root:root hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"
   set +e
   ssh "root@${host}" rm -f /tmp/puppet.jsonl
@@ -136,8 +136,8 @@ for host; do
   ssh "root@${host}" find /etc/puppet/code/hieradata/hosts/${host} -type f -delete
 
   # copy facts_db
-  rsync -raq --no-owner "root@${host}:/var/tmp/facts_db.yaml" "facts_db/${host}.yaml"
-  ssh "root@${host}" find /etc/puppet/code/facts_db -type f -delete
+  rsync -raq --no-owner "root@${host}:/var/tmp/facts_db.yaml" "facts_db/${host}.yaml" || true
+  ssh "root@${host}" find /etc/puppet/code/facts_db -type f -delete || true
 
   # save puppet output when running in CI
   if [ "${CI}x" != "x" ]; then

@@ -65,7 +65,9 @@ class base {
 
   # include classes from hiera
   $infrastructure = lookup('infrastructure')
-  $classes = $infrastructure['hosts'][$facts['fqdn']]['classes']
-  $classes.include
+  if $infrastructure['hosts'][$facts['fqdn']] and $infrastructure['hosts'][$facts['fqdn']]['classes'] {
+    $classes = $infrastructure['hosts'][$facts['fqdn']]['classes']
+    $classes.include
+  }
 
 }

@@ -11,7 +11,7 @@ class site_facts {
     owner     => 'root',
     group     => 'root',
     show_diff => false,
-    content   => epp("${module_name}/var/tmp/facts_db.yaml.epp"),
+    content   => template("${module_name}/var/tmp/facts_db.yaml.erb"),
   }
 
 }

@@ -1,16 +1,16 @@
 # this class manages resolv.conf
 #
-
+#
 class profile::networking::service::resolvconf {
 
   package { 'resolvconf':
-    ensure => present,
+    ensure => purged,
   }
 
   file { '/etc/resolv.conf':
-    ensure  => link,
-    target  => '/run/resolvconf/resolv.conf',
-    require => Package['dnsmasq', 'resolvconf'],
+    ensure  => file,
+    require => Package['dnsmasq'],
+    content => "nameserver 127.0.0.1\n",
   }
 
 }

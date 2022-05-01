@@ -66,7 +66,7 @@ class profile::networking::firewall::pre {
   firewall_multi { '100 allow input ssh':
     chain    => 'INPUT',
     proto    => 'tcp',
-    dport    => '22',
+    dport    => [22, 9022],
     state    => 'NEW',
     action   => 'accept',
     provider => ['iptables', 'ip6tables'],

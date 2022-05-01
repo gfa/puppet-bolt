@@ -47,7 +47,7 @@ class site_tunnels (
 
     firewall_multi { "300 allow outgoing tunnel to ${data['name']}":
       chain       => 'OUTPUT',
-      dport       => 22,
+      dport       => 9022,
       action      => 'accept',
       destination => $data['remote'],
     }

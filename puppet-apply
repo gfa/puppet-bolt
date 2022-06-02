@@ -112,7 +112,7 @@ export EYAML_PUB_KEY
 
 for host; do
   echo  "$host"
-  ssh "root@${host}" 'test -x /usr/bin/puppet || (rm -f /etc/ssh/ssh_host* && dpkg-reconfigure -fnoninteractive openssh-server && timedatectl set-timezone UTC && apt update && apt -y autoremove --purge puppet-agent puppet+ rsync+ && date > /etc/adoption_date)'
+  ssh "root@${host}" 'test -x /usr/bin/puppet || (rm -f /etc/ssh/ssh_host* && dpkg-reconfigure -fnoninteractive openssh-server && timedatectl set-timezone UTC && apt update && apt -y autoremove --purge puppet-agent puppet+ rsync+ iptables+ && date > /etc/adoption_date)'
   # shellcheck disable=SC2086
   ssh "root@${host}" mkdir -p /etc/puppet/code/hieradata/hosts/${host}
   ssh "root@${host}" mkdir -p /etc/puppet/code/facts_db

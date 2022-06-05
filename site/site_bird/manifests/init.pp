@@ -16,8 +16,8 @@ class site_bird (
   Stdlib::IP::Address::V6::CIDR $ipv6_range,
   Stdlib::IP::Address::V4::Nosubnet $ipv4_own,
   Stdlib::IP::Address::V6::Nosubnet $ipv6_own,
-  Stdlib::Host $prometheus_host4 = lookup('profile::monitoring::prometheus::node_exporter::prometheus_host4'),
-  Stdlib::Host $prometheus_host6 = lookup('profile::monitoring::prometheus::node_exporter::prometheus_host6'),
+  Array[Stdlib::Host] $prometheus_host4 = lookup('profile::monitoring::prometheus::node_exporter::prometheus_hosts4'),
+  Array[Stdlib::Host] $prometheus_host6 = lookup('profile::monitoring::prometheus::node_exporter::prometheus_hosts6'),
 ) {
 
   file {
@@ -111,7 +111,7 @@ class site_bird (
 
   package { 'prometheus-bird-exporter': }
 
-  firewall { '400 incoming bird exporter ipv4':
+  firewall_multi { '400 incoming bird exporter ipv4':
     chain    => 'INPUT',
     dport    => 9200,
     proto    => 'tcp',
@@ -120,7 +120,7 @@ class site_bird (
     source   => $prometheus_host4,
   }
 
-  firewall { '400 incoming bird exporter ipv6':
+  firewall_multi { '400 incoming bird exporter ipv6':
     chain    => 'INPUT',
     dport    => 9200,
     proto    => 'tcp',

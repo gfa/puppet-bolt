@@ -2,9 +2,9 @@
 #
 # @param contact_email contact email
 #
-
+#
 class profile::service::tor::exit (
-  String $contact_email,
+  String $contact_email = lookup('tor::contact_email'),
 ) {
 
   include tor

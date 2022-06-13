@@ -3,7 +3,7 @@ BridgeRelay 1
 # Replace "TODO1" with a Tor port of your choice.
 # This port must be externally reachable.
 # Avoid port 9001 because it's commonly associated with Tor and censors may be scanning the Internet for this port.
-ORPort <%= @bridge_port1 %>
+ORPort <%= @bridge_port1 %> IPv4Only
 
 ServerTransportPlugin obfs4 exec /usr/bin/obfs4proxy
 

@@ -1,34 +1,76 @@
 ---
 repos:
-  - repo: https://github.com/chriskuehl/puppet-pre-commit-hooks.git
-    rev: v2.1.0
+  - repo: local
     hooks:
-      - id: epp-validate
-      - id: erb-validate
-      - id: puppet-lint
-        args:
-          - --fail-on-warnings
       - id: puppet-validate
-        exclude: >
-          (?x)^(
-            site/base/plans/init.pp|
-            site/base/plans/noop.pp
-          )$
-      - id: r10k-validate
-      - id: ruby-validate
-
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.15.0
-    hooks:
+        description: Validate syntax of Puppet manifests
+        entry: puppet parser validate
+        files: \.pp$
+        language: system
+        name: Validate Puppet manifests
+      - id: puppet-lint
+        description: Check Puppet manifests for stylistic problems
+        entry: puppet-lint
+        files: \.pp$
+        language: system
+        name: puppet-lint
+      - id: shellcode
+        description: Validate syntax of shell scripts
+        entry: shellcheck
+        files: \.sh$
+        language: system
+        name: shellcode
+      - id: shfmt
+        description: Validate shell scripts formating
+        entry: shfmt shfmt -d
+        files: \.sh$
+        language: system
+        name: shfmt
+      - id: ruby
+        description: Validate syntax of ruby code
+        entry: ruby -c
+        files: \.rb$
+        language: system
+        name: ruby
+      - id: pycodestyle
+        description: Validate syntax of python code using pycodestyle
+        entry: pycodestyle --ignore=W503
+        files: \.py$
+        language: system
+        name: pycodestyle
+      - id: black
+        description: Validate format of python code usin black
+        entry: black --check
+        files: \.py$
+        language: system
+        name: black
       - id: yamllint
-
-  - repo: https://github.com/jumanjihouse/pre-commit-hooks
-    rev: 1.11.0
-    hooks:
-      - id: reek
-      - id: rubocop
-
-  - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.12
-    hooks:
-      - id: shellcheck
+        description: Validate yaml files
+        entry: yamllint
+        files: \.yaml$
+        language: system
+        name: yamllint
+      - id: eyamllint
+        description: Validate eyaml files
+        entry: yamllint
+        files: \.eyaml$
+        language: system
+        name: eyamllint
+      - id: ymllint
+        description: Validate eyaml files
+        entry: yamllint
+        files: \.yml$
+        language: system
+        name: ymllint
+      - id: epp
+        description: Validate epp files
+        entry: puppet epp validate
+        files: \.epp$
+        language: system
+        name: epp
+      - id: erb
+        description: Validate erb files
+        files: \.erb$
+        language: system
+        name: erb
+        entry: bash -c 'echo "$@" | xargs -r -I FILE erb -P -x -T '-' FILE | ruby -c' --

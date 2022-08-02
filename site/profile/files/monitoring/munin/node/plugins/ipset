@@ -47,11 +47,9 @@ GPLv2
 
 set -eu
 
-
 get_ipset_list() {
 	ipset list -n
 }
-
 
 if [ "${1:-}" = "autoconf" ]; then
 	if [ -e /sbin/ipset ] || [ -n "$(which ipset)" ]; then
@@ -75,6 +73,6 @@ if [ "${1:-}" = "config" ]; then
 fi
 
 get_ipset_list | while read -r list; do
-	echo "$list.value $(( $(ipset list "$list" | wc -l) - 7 ))"
+	echo "$list.value $(($(ipset list "$list" | wc -l) - 7))"
 done
 exit 0

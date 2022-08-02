@@ -1,7 +1,7 @@
 #!/bin/bash
 # -*- sh -*-
 
-: << =cut
+: <<=cut
 
 =head1 NAME
 
@@ -83,14 +83,14 @@ include="${include:-.*}"
 exclude="${exclude:-^$}"
 
 autoconf() {
-	which systemctl >/dev/null && \
-			systemctl  --state=failed --no-pager --no-legend >/dev/null 2>&1 && \
-			echo yes || \
-			echo "no (No systemctl or error running it)"
+	which systemctl >/dev/null &&
+		systemctl --state=failed --no-pager --no-legend >/dev/null 2>&1 &&
+		echo yes ||
+		echo "no (No systemctl or error running it)"
 }
 
-config () {
-	cat << EOF
+config() {
+	cat <<EOF
 graph_title Systemd units state
 graph_args -l 0
 graph_category system
@@ -105,13 +105,13 @@ EOF
 	done
 }
 
-fetch () {
+fetch() {
 	# Get all units, filtering by global include/exclude rules
 	local state_include_var state_include state_exclude_var state_exclude global_unit_list state_unit_list
 	global_unit_list=$(systemctl --no-pager --no-legend --all | grep -E "$include" | grep -Ev "$exclude" | awk '{print $1, $3}')
 
 	# For each state, echo the number of units and some extra info, filtering for state-specific include/excludes
-	for state in $states ; do
+	for state in $states; do
 		# Get state-specific include/excludes, if present
 		state_include_var="${state}_include"
 		state_include="${!state_include_var}"
@@ -144,13 +144,13 @@ fetch () {
 }
 
 case $1 in
-	"autoconf")
-		autoconf
-		;;
-	"config")
-		config
-		;;
-	*)
-		fetch
-		;;
+"autoconf")
+	autoconf
+	;;
+"config")
+	config
+	;;
+*)
+	fetch
+	;;
 esac

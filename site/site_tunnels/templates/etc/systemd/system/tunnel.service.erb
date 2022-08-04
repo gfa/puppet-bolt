@@ -7,7 +7,7 @@ After=network.target
 
 [Service]
 User=tunnels
-ExecStart=/usr/bin/ssh -i /etc/tunnels/.ssh/id_<%= @data['name'] %> -N -o "ExitOnForwardFailure=yes" -o UserKnownHostsFile=/dev/null -o "StrictHostKeyChecking=no" -o "ServerAliveInterval=55" <%= @data['forwards'] %> <%= @data['destination'] %> -Nn
+ExecStart=/usr/bin/ssh -i /etc/tunnels/.ssh/id_<%= @data['name'] %> -N -o "ExitOnForwardFailure=yes" -o "StrictHostKeyChecking=accept-new" -o "ServerAliveInterval=55" <%= @data['forwards'] %> <%= @data['destination'] %> -Nn
 Restart=always
 RestartSec=3
 

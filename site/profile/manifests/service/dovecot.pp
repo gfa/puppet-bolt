@@ -222,7 +222,7 @@ class profile::service::dovecot (
         },
       },
     },
-    plugins => ['lmtp', 'imap'],
+    plugins => ['lmtp', 'imap', 'sieve', 'managesieve'],
   }
 
   package { 'mblaze':

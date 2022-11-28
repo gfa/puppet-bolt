@@ -3,7 +3,7 @@ image: debian:bullseye
 
 before_script:
   - apt update
-  - apt install -y curl jq openssh-client python3-pip git rsync g10k hiera-eyaml moreutils
+  - apt install -y curl jq openssh-client python3-pip git rsync g10k hiera-eyaml moreutils nullmailer bsd-mailx
   - pip3 install yq
 
 .template1: &template1 |
@@ -15,6 +15,7 @@ before_script:
   || git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b master hieradata
   g10k -cachedir g10k-cache -verbose -puppetfile Puppetfile
   cp -f hieradata/ssh_config ~/.ssh/config
+  ssh -o "ExitOnForwardFailure=yes" -o "ServerAliveInterval=55" -L 127.0.0.1:10025:127.0.0.1:25 $SMTP_SERVER -fNn
 
 cache:
   paths:
@@ -29,11 +30,12 @@ production:
     - |
       for host in ${HOSTS}
         do
-          bash puppet-apply -t --show_diff $host || curl -s -X POST \
+          bash puppet-apply -t --show_diff $host || ( curl -s -X POST \
             -F "title=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             -F "message=$(date) $?" \
             -F "priority=$GOTIFY_PRIORITY" \
-            "${GOTIFY_URL}?token=${GOTIFY_TOKEN}"
+            "${GOTIFY_URL}?token=${GOTIFY_TOKEN}" ; \
+            mail -s "puppet failed on $host" < logs/$host.jsonl $EMAIL_ADDR )
       done
   artifacts:
     paths:

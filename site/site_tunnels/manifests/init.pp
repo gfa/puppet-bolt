@@ -16,9 +16,11 @@ class site_tunnels (
   }
 
   file { ['/etc/tunnels/.ssh', '/etc/tunnels']:
-    ensure => directory,
-    mode   => '0700',
-    owner  => 'tunnels',
+    ensure  => directory,
+    mode    => '0700',
+    owner   => 'tunnels',
+    recurse => true,
+    purge   => true,
   }
 
   $tunnels.each | Hash $data | {

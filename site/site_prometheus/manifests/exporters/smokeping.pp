@@ -12,7 +12,7 @@ class site_prometheus::exporters::smokeping (
     seen  => 'true',
   }
 
-  package { 'prometheus-smokeping-exporter':
+  package { 'prometheus-smokeping-prober':
     ensure  => installed,
     require => Debconf['prometheus-smokeping-prober/want_cap_net_raw'],
   }
@@ -29,7 +29,7 @@ class site_prometheus::exporters::smokeping (
   service { 'prometheus-smokeping-prober':
     ensure  => running,
     enable  => true,
-    require => Package['prometheus-smokeping-exporter'],
+    require => Package['prometheus-smokeping-prober'],
   }
 
 }

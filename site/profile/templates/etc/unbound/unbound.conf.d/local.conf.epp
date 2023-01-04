@@ -11,6 +11,7 @@ server:
         # log-replies: yes
         # log-local-actions: yes
         # log-servfail: yes
+        extended-statistics: yes
 
 remote-control:
         control-enable: <%= $::profile::networking::unbound::control_enable -%>

@@ -10,8 +10,8 @@ TEMP=$(getopt -o 'vtdnh' --long 'trace,verbose,help,test,debug,noop,role:,show_d
 
 # shellcheck disable=SC2181
 if [ $? -ne 0 ]; then
-        echo 'Terminating...' >&2
-        exit 1
+  echo 'Terminating...' >&2
+  exit 1
 fi
 
 # Note the quotes around "$TEMP": they are essential!
@@ -29,75 +29,75 @@ fi
 
 while true; do
   case "$1" in
-    '-h'|'--help')
-      echo 'Usage: puppet-apply [-n|--noop] [-t|--test] [-d|--debug] [--show_dif] [--role foo] [--target [/etc/puppet/code/manifests/foo.pp]] host1 [hostN]'
-      APPLY_OPTIONS+=" --help"
-      shift
-      continue
-      exit 0
+  '-h' | '--help')
+    echo 'Usage: puppet-apply [-n|--noop] [-t|--test] [-d|--debug] [--show_dif] [--role foo] [--target [/etc/puppet/code/manifests/foo.pp]] host1 [hostN]'
+    APPLY_OPTIONS+=" --help"
+    shift
+    continue
+    exit 0
+    ;;
+  '-v' | '--verbose')
+    APPLY_OPTIONS+=" --verbose"
+    shift
+    continue
+    ;;
+  '-t' | '--test')
+    APPLY_OPTIONS+=" --test"
+    shift
+    continue
+    ;;
+  '-d' | '--debug')
+    APPLY_OPTIONS+=" --debug"
+    shift
+    continue
+    ;;
+  '-n' | '--noop')
+    APPLY_OPTIONS+=" --noop"
+    shift
+    continue
+    ;;
+  '--trace')
+    APPLY_OPTIONS+=" --trace"
+    shift
+    continue
+    ;;
+  '--show_diff')
+    APPLY_OPTIONS+=" --show_diff"
+    shift
+    continue
+    ;;
+  '-r' | '--role')
+    echo "unimplemented, argument '$2'"
+    shift 2
+    continue
+    ;;
+  '--target')
+    # c has an optional argument. As we are in quoted mode,
+    # an empty parameter will be generated if its optional
+    # argument is not found.
+    case "$2" in
+    '')
+      echo 'targeting default /etc/puppet/code/site/base/manifests/init.pp'
+      TARGET="/etc/puppet/code/site/base/manifests/init.pp"
       ;;
-    '-v'|'--verbose')
-      APPLY_OPTIONS+=" --verbose"
-      shift
-      continue
+    *)
+      echo "targeting $2"
+      TARGET="$2"
       ;;
-    '-t'|'--test')
-      APPLY_OPTIONS+=" --test"
-      shift
-      continue
-      ;;
-    '-d'|'--debug')
-      APPLY_OPTIONS+=" --debug"
-      shift
-      continue
-      ;;
-    '-n'|'--noop')
-      APPLY_OPTIONS+=" --noop"
-      shift
-      continue
-      ;;
-    '--trace')
-      APPLY_OPTIONS+=" --trace"
-      shift
-      continue
-      ;;
-    '--show_diff')
-      APPLY_OPTIONS+=" --show_diff"
-      shift
-      continue
-      ;;
-    '-r'|'--role')
-      echo "unimplemented, argument '$2'"
-      shift 2
-      continue
-      ;;
-    '--target')
-      # c has an optional argument. As we are in quoted mode,
-      # an empty parameter will be generated if its optional
-      # argument is not found.
-      case "$2" in
-        '')
-          echo 'targeting default /etc/puppet/code/site/base/manifests/init.pp'
-          TARGET="/etc/puppet/code/site/base/manifests/init.pp"
-          ;;
-        *)
-          echo "targeting $2"
-          TARGET="$2"
-          ;;
-          esac
-          shift 2
-          continue
-          ;;
-        '--')
-          shift
-          break
-          ;;
-        *)
-          echo 'Internal error!' >&2
-          exit 1
-          ;;
-      esac
-    done
+    esac
+    shift 2
+    continue
+    ;;
+  '--')
+    shift
+    break
+    ;;
+  *)
+    echo 'Internal error!' >&2
+    exit 1
+    ;;
+  esac
+done
 
 # for eyaml files
 HIERA_TEMP=$(mktemp -d)
@@ -111,7 +111,7 @@ EYAML_PUB_KEY=$(<keys/public_key.pkcs7.pem)
 export EYAML_PUB_KEY
 
 for host; do
-  echo  "$host"
+  echo "$host"
   ssh "root@${host}" 'test -x /usr/bin/puppet || (rm -f /etc/ssh/ssh_host* && dpkg-reconfigure -fnoninteractive openssh-server && timedatectl set-timezone UTC && apt update && apt -y autoremove --purge puppet-agent puppet+ rsync+ iptables+ && date > /etc/adoption_date)'
   # shellcheck disable=SC2086
   ssh "root@${host}" mkdir -p /etc/puppet/code/hieradata/hosts/${host}
@@ -144,7 +144,7 @@ for host; do
   if [ "${CI}x" != "x" ]; then
     mkdir -p logs
     rsync -raq "root@${host}:/tmp/puppet.jsonl" "logs/${host}.jsonl"
-    echo ${PUPPET_EXIT_CODE} >> "logs/${host}.jsonl"
+    echo ${PUPPET_EXIT_CODE} >>"logs/${host}.jsonl"
   fi
 
   if [ $PUPPET_EXIT_CODE = 1 ] || [ $PUPPET_EXIT_CODE = 255 ]; then

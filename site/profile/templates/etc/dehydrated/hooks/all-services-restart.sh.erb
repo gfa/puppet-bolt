@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+#
+# this script tries to restart all common services that use letsencrypt certs
+#
+
+RELOAD="nginx"
+RESTART="prosody postfix"
+
+for service in $RELOAD;
+do
+  systemctl --quiet is-enabled $service && systemctl --quiet condreload $service
+done
+
+for service in $RESTART;
+do
+  systemctl --quiet is-enabled $service && systemctl --quiet condrestart $service
+done

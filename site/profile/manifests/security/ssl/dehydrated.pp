@@ -63,4 +63,14 @@ set -e
     content => $cron_contents,
   }
 
+  file { '/etc/dehydrated/hooks/all-services-restart.sh':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0744',
+    content => template("${module_name}/etc/dehydrated/hooks/all-services-restart.sh.erb"),
+  }
+
+
+
 }

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# rubocop:disable BlockLength
+# rubocop:disable Metrics/BlockLength
 source ENV['GEM_SOURCE'] || 'https://rubygems.org' do
-  # rubocop:enable BlockLength
+  # rubocop:enable Metrics/BlockLength
   gem 'bolt'
   gem 'hiera-eyaml'
   gem 'puppet-lint'

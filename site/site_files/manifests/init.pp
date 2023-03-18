@@ -16,8 +16,8 @@
 #      defaults will be used
 
 # @param files a hash containing files, their permissions, ownership and contents
-
-define site_files (
+#
+class site_files (
   Variant[Hash, Type[Undef]] $files = lookup({
       name          => 'site_files::files',
       merge         => 'deep',

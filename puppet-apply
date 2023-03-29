@@ -118,6 +118,7 @@ for host; do
   ssh "root@${host}" mkdir -p /etc/puppet/code/facts_db
   mkdir -p facts_db
   ssh "root@${host}" 'test ! -f /etc/puppet/do-not-run || (echo "/etc/puppet/do-not-run present" ; exit 1)'
+  ssh "root@${host}" '[ $(hostname) = $(cat /etc/hostname) ] || (echo "my hostname does not match whats on disk" ; exit 1)'
   g10k -cachedir g10k-cache -puppetfile Puppetfile
   rsync -raq --chown=root:root --delete --exclude='.git' --exclude='hieradata' facts_db hiera.yaml modules site lib "root@${host}:/etc/puppet/code/"
   rsync -raq --chown=root:root keys/* "${HIERA_TEMP}/"

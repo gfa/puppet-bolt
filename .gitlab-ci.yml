@@ -29,12 +29,10 @@ production:
     - |
       for host in ${HOSTS}
         do
-          bash puppet-apply -t --show_diff $host || ( curl -s -X POST \
-            -F "title=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
-            -F "message=$(date) $?" \
-            -F "priority=$GOTIFY_PRIORITY" \
-            "${GOTIFY_URL}?token=${GOTIFY_TOKEN}" ; \
-            mail -s "puppet failed on $host" < logs/$host.jsonl $EMAIL_ADDR )
+          bash puppet-apply -t --show_diff $host || ( curl -s \
+            -d "puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
+            -H "Authorization: Bearer ${GOTIFY_TOKEN}" \
+            "${GOTIFY_URL}")
       done
   artifacts:
     paths:

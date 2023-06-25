@@ -21,7 +21,7 @@ class profile::networking::firewall::pre {
         path =>  '/usr/sbin/ip6tables-legacy',
       }
     }
-    'bullseye', 'bullseye/sid', 'sid': {
+    'bullseye', 'bookworm', 'bookworm/sid', 'sid': {
       alternatives { 'iptables':
         path =>  '/usr/sbin/iptables-nft',
       }

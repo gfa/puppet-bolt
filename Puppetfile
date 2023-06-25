@@ -63,6 +63,7 @@ mod 'puppetlabs-puppetdb', '7.7.1'
 mod 'puppetlabs-postgresql', '6.8.0'
 mod 'saz-timezone', '6.1.0'
 mod 'puppet-cron', '2.0.0'
+mod 'puppetlabs-cron_core'
 mod 'puppetlabs-apache', '6.0.0'
 mod 'puppetlabs-reboot', '4.0.2'
 # rubocop:enable Style/HashSyntax

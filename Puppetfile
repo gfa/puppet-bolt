@@ -16,7 +16,7 @@ mod 'puppetlabs-puppetserver_gem', '1.1.1'
 mod 'puppet-archive', '4.6.0'
 mod 'puppetlabs/translate', '1.2.0'
 mod 'alexharvey-firewall_multi', '1.19.0'
-mod 'puppetlabs-firewall', '2.8.0'
+mod 'puppetlabs-firewall', '5.0.0'
 mod 'saz-dnsmasq', '1.4.0'
 mod 'fail2ban',
     :git => 'https://github.com/lelutin/puppet-fail2ban.git',

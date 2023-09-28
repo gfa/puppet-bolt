@@ -4,12 +4,12 @@
 # this file is interpreted by g10k which doesn't like
 # new ruby hash syntax
 # rubocop:disable Style/HashSyntax
-mod 'puppetlabs-stdlib', '9.3.0'
+mod 'puppetlabs/stdlib'
 mod 'thias/sysctl', '1.0.6'
 mod 'unattended_upgrades',
     :git => 'https://github.com/voxpupuli/puppet-unattended_upgrades.git',
     :ref => 'master'
-mod 'puppetlabs-apt', '9.1.0'
+mod 'puppetlabs-apt', '7.1.0'
 mod 'puppetlabs-mysql', '10.9.1'
 mod 'puppetlabs-resource_api', '1.1.0'
 mod 'puppetlabs-puppetserver_gem', '1.1.1'

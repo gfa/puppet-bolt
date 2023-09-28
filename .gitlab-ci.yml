@@ -32,6 +32,7 @@ production:
           bash puppet-apply -t --show_diff $host || ( curl -s \
             -d "puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             -H "Authorization: Bearer ${GOTIFY_TOKEN}" \
+            -H "Filename: logs/${host}.jsonl" \
             "${GOTIFY_URL}")
       done
   artifacts:
@@ -57,6 +58,7 @@ testing:
             -F "title=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             -F "message=$(date) $?" \
             -F "priority=$GOTIFY_PRIORITY" \
+            -H "Filename: logs/${host}.jsonl" \
             "${GOTIFY_URL}?token=${GOTIFY_TOKEN}"
       done
   artifacts:

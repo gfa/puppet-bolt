@@ -43,6 +43,7 @@ class base {
   include profile::service::puppet
   include profile::service::openssh::server
   include profile::service::crond
+  include profile::service::uuid
 
   # logging
   include profile::logging::logcheck

@@ -6,9 +6,7 @@
 # rubocop:disable Style/HashSyntax
 mod 'puppetlabs/stdlib'
 mod 'thias/sysctl', '1.0.6'
-mod 'unattended_upgrades',
-    :git => 'https://github.com/voxpupuli/puppet-unattended_upgrades.git',
-    :ref => 'master'
+mod 'puppet-unattended_upgrades', '8.0.0'
 mod 'puppetlabs-apt', '7.1.0'
 mod 'puppetlabs-mysql', '10.9.1'
 mod 'puppetlabs-resource_api', '1.1.0'

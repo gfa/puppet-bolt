@@ -1,0 +1,30 @@
+---
+server:
+  http_listen_port: 0
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: https://<%= $profile::logging::promtail::hostname %>/loki/api/v1/push
+    basic_auth:
+      username: <%= $profile::logging::promtail::username %>
+      password: <%= $profile::logging::promtail::password %>
+    backoff_config:
+      min_period: 1m
+      max_period: 60m
+      max_retries: 1000
+    timeout: 10s
+
+scrape_configs:
+  - job_name: journal
+    journal:
+      json: false
+      max_age: 12h
+      labels:
+        job: systemd-journal
+        hostname: <%= $facts[hostname] %>
+    relabel_configs:
+      - source_labels: ['__journal__systemd_unit']
+        target_label: 'unit'

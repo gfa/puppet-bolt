@@ -1,6 +1,6 @@
 # This manages puppet
 #
-
+#
 class profile::service::puppet {
 
   service { 'puppet-agent':
@@ -31,7 +31,7 @@ class profile::service::puppet {
       '/etc/puppet/code/hieradata',
     ]:
       ensure => directory,
-      mode   => '0700',
+      mode   => '0755',
       owner  => 'root',
       group  => 'root',
   }

@@ -27,4 +27,10 @@ scrape_configs:
         hostname: <%= $facts[hostname] %>
     relabel_configs:
       - source_labels: ['__journal__systemd_unit']
-        target_label: 'unit'
+        target_label: unit
+      - source_labels: ['__syslog_message_severity']
+        target_label: syslog_severity
+      - source_labels: ['__syslog_message_facility']
+        target_label: syslog_facility
+      - source_labels: ['__syslog_message_app_name']
+        target_label: syslog_identifier

@@ -12,22 +12,23 @@ class profile::monitoring::prometheus::node_exporter (
     ensure => present,
   }
 
-  firewall_multi { '400 incoming prometheus ipv4':
-    chain    => 'INPUT',
-    dport    => 9100,
-    proto    => 'tcp',
-    action   => 'accept',
-    provider => 'iptables',
-    source   => $prometheus_hosts4,
-  }
+  if lookup('manage_iptables', Boolean, undef, true) {
+    firewall_multi { '400 incoming prometheus ipv4':
+      chain    => 'INPUT',
+      dport    => 9100,
+      proto    => 'tcp',
+      action   => 'accept',
+      provider => 'iptables',
+      source   => $prometheus_hosts4,
+    }
 
-  firewall_multi { '400 incoming prometheus ipv6':
-    chain    => 'INPUT',
-    dport    => 9100,
-    proto    => 'tcp',
-    action   => 'accept',
-    provider => 'ip6tables',
-    source   => $prometheus_hosts6,
+    firewall_multi { '400 incoming prometheus ipv6':
+      chain    => 'INPUT',
+      dport    => 9100,
+      proto    => 'tcp',
+      action   => 'accept',
+      provider => 'ip6tables',
+      source   => $prometheus_hosts6,
+    }
   }
-
 }

@@ -38,13 +38,16 @@ class profile::logging::promtail (
     require => Package['promtail'],
   }
 
-  firewall { '300 output promtail':
-    chain       => 'OUTPUT',
-    dport       => 443,
-    proto       => 'tcp',
-    action      => 'accept',
-    destination => $hostname,
-    require     => Package['promtail'],
+  if lookup('manage_iptables', Boolean, undef, true) {
+
+    firewall { '300 output promtail':
+      chain       => 'OUTPUT',
+      dport       => 443,
+      proto       => 'tcp',
+      action      => 'accept',
+      destination => $hostname,
+      require     => Package['promtail'],
+    }
   }
 
 }

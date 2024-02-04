@@ -47,11 +47,13 @@ class site_tunnels (
       enable => true,
     }
 
-    firewall_multi { "300 allow outgoing tunnel to ${data['name']}":
-      chain       => 'OUTPUT',
-      dport       => 9022,
-      action      => 'accept',
-      destination => $data['remote'],
+    if lookup('manage_iptables', Boolean, undef, true) {
+      firewall_multi { "300 allow outgoing tunnel to ${data['name']}":
+        chain       => 'OUTPUT',
+        dport       => 9022,
+        action      => 'accept',
+        destination => $data['remote'],
+      }
     }
 
   }

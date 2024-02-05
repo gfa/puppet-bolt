@@ -5,10 +5,9 @@ class profile::networking::firewall (
   Boolean $purge_rules = true,
   Boolean $purge_chains = true,
   Array[String] $extra_chains = [],
-  Boolean $manage_iptables = false,
 ) {
 
-  if $manage_iptables == false {
+  if lookup('manage_iptables', Boolean, undef, true) {
 
     class { 'firewall': }
 

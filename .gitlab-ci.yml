@@ -15,6 +15,7 @@ before_script:
   || git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b master hieradata
   cp -f hieradata/ssh_config ~/.ssh/config
   ssh -o "ExitOnForwardFailure=yes" -o "ServerAliveInterval=55" -L 127.0.0.1:10025:127.0.0.1:25 $SMTP_SERVER -fNn
+  cat ~/.ssh/config
 
 cache:
   paths:

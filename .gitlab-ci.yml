@@ -15,7 +15,6 @@ before_script:
   || git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gfa/hieradata.git -b master hieradata
   cp -f hieradata/ssh_config ~/.ssh/config
   ssh -o "ExitOnForwardFailure=yes" -o "ServerAliveInterval=55" -L 127.0.0.1:10025:127.0.0.1:25 $SMTP_SERVER -fNn
-  cat ~/.ssh/config
 
 cache:
   paths:
@@ -30,6 +29,9 @@ production:
     - |
       for host in ${HOSTS}
         do
+          if [[ ${host::-9} == ".lan.home" ]]; then
+            echo 127.0.0.1 $host >> /etc/hosts
+          fi
           bash puppet-apply -t --show_diff $host || ( curl -s \
             -d "puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             -H "Authorization: Bearer ${GOTIFY_TOKEN}" \
@@ -55,6 +57,9 @@ testing:
     - |
       for host in ${TEST_HOSTS}
         do
+          if [[ ${host::-9} == ".lan.home" ]]; then
+            echo 127.0.0.1 $host >> /etc/hosts
+          fi
           bash puppet-apply -t --show_diff $host || curl -s -X POST \
             -F "title=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             -F "message=$(date) $?" \

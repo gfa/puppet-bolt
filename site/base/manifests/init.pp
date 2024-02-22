@@ -49,6 +49,7 @@ class base {
   include profile::logging::logcheck
   include profile::logging::erpel
   include profile::logging::promtail
+  include site_vector
 
   # monitoring
   include profile::monitoring::munin::remove

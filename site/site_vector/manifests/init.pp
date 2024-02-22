@@ -22,8 +22,8 @@ class site_vector {
 
 
   service { 'vector':
-    ensure  => running,
-    enable  => true,
+    ensure  => stopped,
+    enable  => false,
     require => [Package['vector'], File['/etc/vector/vector.yaml']]
   }
 }

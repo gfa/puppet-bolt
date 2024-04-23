@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo '[all]'
+yq -M '.infrastructure.hosts | keys' <hieradata/infrastructure.yaml | sed 's/- //g'

@@ -1,4 +1,4 @@
-ARGS="<%= $site_prometheus::exporters::smokeping::parameters %>"
+ARGS="<%= $site_prometheus::exporters::smokeping::parameters %> <%= $site_prometheus::exporters::smokeping::extra_parameters %>"
 
 # usage: prometheus-smokeping-prober [<flags>] <hosts>...
 #

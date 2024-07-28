@@ -4,6 +4,7 @@
 #
 class site_prometheus::exporters::smokeping (
   Optional[String[1]] $parameters,
+  Optional[String[1]] $extra_parameters = ' ',
 ) {
 
   debconf { 'prometheus-smokeping-prober/want_cap_net_raw':

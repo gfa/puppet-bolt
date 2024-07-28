@@ -33,4 +33,20 @@ class site_prometheus::exporters::smokeping (
     require => Package['prometheus-smokeping-prober'],
   }
 
+  if lookup('manage_iptables', Boolean, undef, true) {
+    firewall { '300 allow incoming smokeping exporter ipv4':
+      chain    => 'INPUT',
+      dport    => 9374,
+      action   => 'accept',
+      provider => 'iptables',
+      source   => lookup('prometheus_hosts_ipv4', undef, undef , ['127.0.0.1']),
+    }
+    firewall { '300 allow incoming smokeping exporter ipv6':
+      chain    => 'INPUT',
+      dport    => 9374,
+      action   => 'accept',
+      provider => 'ip6tables',
+      source   => lookup('prometheus_hosts_ipv6', undef , undef, ['::1']),
+    }
+  }
 }

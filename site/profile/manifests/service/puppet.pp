@@ -36,4 +36,13 @@ class profile::service::puppet {
       group  => 'root',
   }
 
+  cron { 'purge-puppet-cache':
+    command     => '/usr/bin/find /var/cache/puppet/ -mtime +7d -delete >/dev/null || /usr/bin/true',
+    user        => 'root',
+    hour        => '23',
+    minute      => 10,
+    weekday     => 4,
+    environment => 'PATH=/bin:/usr/bin:/usr/sbin:/sbin',
+  }
+
 }

@@ -37,7 +37,7 @@ class profile::service::puppet {
   }
 
   cron { 'purge-puppet-cache':
-    command     => '/usr/bin/find /var/cache/puppet/ -mtime +7d -delete >/dev/null || /usr/bin/true',
+    command     => '/usr/bin/find /var/cache/puppet/ -mtime +7 -delete >/dev/null || /usr/bin/true',
     user        => 'root',
     hour        => '23',
     minute      => 10,

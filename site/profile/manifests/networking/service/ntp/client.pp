@@ -20,6 +20,14 @@ class profile::networking::service::ntp::client {
       ensure => running,
       enable => true,
     }
-  }
 
+    firewall_multi { '200 accept output ntp':
+      dport    => '123',
+      proto    => 'udp',
+      chain    => 'OUTPUT',
+      action   => 'accept',
+      provider => ['iptables', 'ip6tables'],
+      uid      => systemd-timesync,
+    }
+  }
 }

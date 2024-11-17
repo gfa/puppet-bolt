@@ -28,8 +28,8 @@ class profile::logging::promtail (
   }
 
   service { 'promtail':
-    ensure  => running,
-    enable  => true,
+    ensure  => stopped,
+    enable  => false,
     require => Package['promtail'],
   }
 

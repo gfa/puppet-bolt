@@ -115,12 +115,11 @@ for host; do
   ssh "root@${host}" 'test -x /usr/bin/puppet || (rm -f /etc/ssh/ssh_host* && dpkg-reconfigure -fnoninteractive openssh-server && timedatectl set-timezone UTC && apt update && apt -y autoremove --purge puppet+ rsync+ iptables+ && date > /etc/adoption_date)'
   # shellcheck disable=SC2086
   ssh "root@${host}" mkdir -p /etc/puppet/code/hieradata/hosts/${host}
-  ssh "root@${host}" mkdir -p /etc/puppet/code/facts_db
   mkdir -p facts_db
   ssh "root@${host}" 'test ! -f /etc/puppet/do-not-run || (echo "/etc/puppet/do-not-run present" ; exit 1)'
   ssh "root@${host}" '[ $(hostname) = $(cat /etc/hostname) ] || (echo "my hostname does not match whats on disk" ; exit 1)'
   g10k -cachedir g10k-cache -puppetfile Puppetfile
-  rsync -raq --chown=root:root --delete --exclude='.git' --exclude='hieradata' facts_db hiera.yaml modules site lib "root@${host}:/etc/puppet/code/"
+  rsync -raq --chown=root:root --delete --exclude='.git' --exclude='hieradata' hiera.yaml modules site lib "root@${host}:/etc/puppet/code/"
   rsync -raq --chown=root:root keys/* "${HIERA_TEMP}/"
   rsync -raq --chown=root:root hieradata "${HIERA_TEMP}/"
   # shellcheck disable=SC2156
@@ -128,6 +127,8 @@ for host; do
   rsync -aq --no-r --chown=root:root --exclude='.git' "${HIERA_TEMP}"/hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"
   rsync -aqK --delete --chown=root:root --exclude='.git' "${HIERA_TEMP}/hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/hosts/${host}/" || true
   rsync -raq --chown=root:root hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"
+  ssh "root@${host}" mkdir -p /etc/puppet/code/hieradata/facts_db
+  rsync -raq --chown=root:root --delete facts_db/ "root@${host}:/etc/puppet/code/hieradata/facts_db/"
   set +e
   ssh "root@${host}" rm -f /tmp/puppet.jsonl
   # shellcheck disable=SC2029
@@ -135,11 +136,10 @@ for host; do
   PUPPET_EXIT_CODE=$?
   ssh "root@${host}" find /etc/puppet/code/hieradata -maxdepth 1 -type f -delete
   # shellcheck disable=SC2086
-  ssh "root@${host}" find /etc/puppet/code/hieradata/hosts/${host} -type f -delete
+  ssh "root@${host}" find /etc/puppet/code/hieradata/ -type f -delete
 
   # copy facts_db
   rsync -raq --no-owner "root@${host}:/var/tmp/facts_db.yaml" "facts_db/${host}.yaml" || true
-  ssh "root@${host}" find /etc/puppet/code/facts_db -type f -delete || true
 
   # save puppet output when running in CI
   if [ "${CI}x" != "x" ]; then

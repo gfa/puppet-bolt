@@ -28,3 +28,4 @@ hierarchy:
       - 'nginx.yaml'
       - 'monitoring.yaml'
       - 'apache.yaml'
+      - 'vpn.yaml'

@@ -5,7 +5,7 @@ class site_vpn::client {
 
   include site_vpn::common
 
-  $ip_last = fqdn_rand(254, 'wireguard inner ip')
+  $ip_last = (fqdn_rand(253, 'wireguard inner ip') + 1)
 
   # change the format for the lookup to work
   $server_hostname = regsubst(lookup('wireguard::server::hostname'), '\.', '_', 'G')

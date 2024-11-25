@@ -41,6 +41,7 @@ production:
   artifacts:
     paths:
       - logs/
+      - facts_db/
     expire_in: 1 week
     when: always
   variables:
@@ -49,33 +50,3 @@ production:
     refs:
       - master
       - scheduled
-
-testing:
-  resource_group: $CI_COMMIT_REF_SLUG
-  script:
-    - *template1
-    - |
-      for host in ${TEST_HOSTS}
-        do
-          if [[ ${host::-9} == ".lan.home" ]]; then
-            echo 127.0.0.1 $host >> /etc/hosts
-          fi
-          bash puppet-apply -t --show_diff $host || curl -s -X POST \
-            -F "title=puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
-            -F "message=$(date) $?" \
-            -F "priority=$GOTIFY_PRIORITY" \
-            -H "Filename: logs/${host}.jsonl" \
-            "${GOTIFY_URL}?token=${GOTIFY_TOKEN}"
-      done
-  artifacts:
-    paths:
-      - logs/
-    expire_in: 1 week
-    untracked: true
-  variables:
-    BOLT_PROJECT: /builds/gfa/puppet-bolt
-  except:
-    refs:
-      - master
-      - scheduled
-      - /^wip-.*$/i

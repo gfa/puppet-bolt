@@ -5,10 +5,9 @@ class site_vpn::client {
 
   include site_vpn::common
 
-  $ip_last = (fqdn_rand(253, 'wireguard inner ip') + 1)
-
   # change the format for the lookup to work
   $server_hostname = regsubst(lookup('wireguard::server::hostname'), '\.', '_', 'G')
+  $ip_last = (fqdn_rand(253, 'wireguard inner ip') + 1)
 
   wireguard::interface { 'vpn0':
     dport                => lookup('wireguard::port'),
@@ -18,12 +17,19 @@ class site_vpn::client {
     persistent_keepalive => 5,
     mtu                  => 1412,
     provider             => lookup('wireguard::provider', Enum['systemd', 'wgquick'], undef, 'wgquick'),
+    notify               => Service['wg-quick@vpn0'],
   }
 
-  file { '/etc/facter/facts.d/vpn0.yaml':
-    content => @("YAML"),
-          ---
-          vpn0_ip_last: ${ip_last}
-          | YAML
+  if $facts['wireguard_pubkeys'] {
+    file { '/etc/facter/facts.d/vpn0_peer_config.yaml':
+      content => @("YAML"),
+            ---
+            vpn0_peer_config:
+              public_key: ${facts['wireguard_pubkeys']['vpn0']}
+              persistent_keepalive: 5
+              allowed_ips: [ "192.168.99.${ip_last}", "fc00::abcd:${ip_last}" ]
+              description: ${facts['networking']['fqdn']}
+            | YAML
+    }
   }
 }

@@ -30,12 +30,20 @@ class profile::service::puppet {
       '/etc/puppet/code/site',
       '/etc/puppet/code/hieradata',
       '/etc/facter',
-      '/etc/facter/facts.d',
     ]:
       ensure => directory,
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
+  }
+
+  file { '/etc/facter/facts.d':
+    ensure  => directory,
+    mode    => '0755',
+    owner   => 'root',
+    group   => 'root',
+    recurse => true,
+    purge   => true,
   }
 
   cron { 'purge-puppet-cache':

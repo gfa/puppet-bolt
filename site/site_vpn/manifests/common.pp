@@ -21,5 +21,11 @@ class site_vpn::common {
     match_mark => lookup('wireguard::firewall_mark', Integer[0, 4294967295], undef, 1),
   }
 
-
+  if lookup('wireguard::provider', Enum['systemd', 'wgquick'], undef, 'wgquick') == 'wgquick' {
+    service { 'wg-quick@vpn0':
+      ensure  => 'running',
+      enable  => true,
+      require => Package['wireguard-tools'],
+    }
+  }
 }

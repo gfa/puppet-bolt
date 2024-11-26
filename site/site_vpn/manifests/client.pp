@@ -20,4 +20,10 @@ class site_vpn::client {
     provider             => lookup('wireguard::provider', Enum['systemd', 'wgquick'], undef, 'wgquick'),
   }
 
+  file { '/etc/facter/facts.d/vpn0.yaml':
+    content => @("YAML"),
+          ---
+          vpn0_ip_last: ${ip_last}
+          | YAML
+  }
 }

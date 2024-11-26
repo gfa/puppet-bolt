@@ -29,6 +29,8 @@ class profile::service::puppet {
       '/etc/puppet/code/lib',
       '/etc/puppet/code/site',
       '/etc/puppet/code/hieradata',
+      '/etc/facter',
+      '/etc/facter/facts.d',
     ]:
       ensure => directory,
       mode   => '0755',

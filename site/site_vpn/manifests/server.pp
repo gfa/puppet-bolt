@@ -21,4 +21,12 @@ class site_vpn::server {
     notify               => Service['wg-quick@vpn0'],
   }
 
+  firewall_multi { '100 accept incoming wg':
+    dport    => lookup('wireguard::port'),
+    proto    => 'udp',
+    chain    => 'INPUT',
+    action   => 'accept',
+    provider => ['iptables', 'ip6tables'],
+  }
+
 }

@@ -4,16 +4,7 @@ class site_vpn::common {
 
   class { 'wireguard': }
 
-  firewall_multi { '100 accept incoming wg':
-    dport    => lookup('wireguard::port'),
-    proto    => 'udp',
-    chain    => 'INPUT',
-    action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
-  }
-
   firewall_multi { '100 accept outgoing wg':
-    sport      => lookup('wireguard::port'),
     proto      => 'udp',
     chain      => 'OUTPUT',
     action     => 'accept',

@@ -17,6 +17,7 @@ class site_vpn::client {
     persistent_keepalive => 5,
     mtu                  => 1412,
     provider             => lookup('wireguard::provider', Enum['systemd', 'wgquick'], undef, 'wgquick'),
+    firewall_mark        => lookup('wireguard::firewall_mark', Integer[0, 4294967295], undef, 1),
     notify               => Service['wg-quick@vpn0'],
   }
 

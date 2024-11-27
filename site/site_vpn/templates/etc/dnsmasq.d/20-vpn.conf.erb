@@ -1,0 +1,6 @@
+<%- @clients.each do | data | -%>
+address=/<%= data['description'].split('.')[0]%>.vpn0.home/<%= data['allowed_ips'][0]%>
+address=/<%= data['description'].split('.')[0]%>.vpn0.home/<%= data['allowed_ips'][1]%>
+<%- end -%>
+address=/<%= @server_data['networking']['hostname']%>.vpn0.home/<%= @server_data['ipaddress_vpn0']%>
+address=/<%= @server_data['networking']['hostname']%>.vpn0.home/<%= @server_data['ipaddress6_vpn0']%>

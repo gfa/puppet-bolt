@@ -2,6 +2,8 @@
 #
 class site_vpn::common {
 
+  include site_vpn::resolver
+
   class { 'wireguard': }
 
   firewall_multi { '100 accept outgoing wg':

@@ -1,6 +1,8 @@
 # this class manages the common bits of vpn config
 #
-class site_vpn::common {
+class site_vpn::common (
+  Boolean $enable_wg_quick_service = true,
+) {
 
   include site_vpn::resolver
 
@@ -30,11 +32,12 @@ class site_vpn::common {
     outiface => 'vpn0',
   }
 
-  if lookup('wireguard::provider', Enum['systemd', 'wgquick'], undef, 'wgquick') == 'wgquick' {
+  if lookup('wireguard::provider', Enum['systemd', 'wgquick'], undef, 'wgquick') == 'wgquick' and $enable_wg_quick_service {
     service { 'wg-quick@vpn0':
-      ensure  => 'running',
-      enable  => true,
-      require => Package['wireguard-tools'],
+      ensure    => 'running',
+      enable    => true,
+      require   => Package['wireguard-tools'],
+      subscribe => Wireguard::Interface['vpn0'],
     }
   }
 }

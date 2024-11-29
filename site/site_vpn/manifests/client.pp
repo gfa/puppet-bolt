@@ -1,7 +1,9 @@
 # this class manages the client config for
 # my vpn
 #
-class site_vpn::client {
+class site_vpn::client (
+  Array[Stdlib::IP::Address] $additional_allowed_ips = []
+) {
 
   include site_vpn::common
 
@@ -20,6 +22,8 @@ class site_vpn::client {
     firewall_mark        => lookup('wireguard::firewall_mark', Integer[0, 4294967295], undef, 1),
   }
 
+  $allowed_ips = [ "192.168.99.${ip_last}", "fc00::abcd:${ip_last}" ] + $additional_allowed_ips
+
   if $facts['wireguard_pubkeys'] {
     file { '/etc/facter/facts.d/vpn0_peer_config.yaml':
       content => @("YAML"),
@@ -27,7 +31,7 @@ class site_vpn::client {
             vpn0_peer_config:
               public_key: ${facts['wireguard_pubkeys']['vpn0']}
               persistent_keepalive: 5
-              allowed_ips: [ "192.168.99.${ip_last}", "fc00::abcd:${ip_last}" ]
+              allowed_ips: ${allowed_ips}
               description: ${facts['networking']['fqdn']}
             | YAML
     }

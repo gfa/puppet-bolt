@@ -10,10 +10,12 @@ class site_vpn::client (
   # change the format for the lookup to work
   $server_hostname = regsubst(lookup('wireguard::server::hostname'), '\.', '_', 'G')
   $ip_last = (fqdn_rand(253, 'wireguard inner ip') + 1)
+  # we want the ipv4 endpoint otherwise the performance is not good
+  $endpoint_ip = dnsquery::a(lookup('wireguard::server::hostname'))[0]
 
   wireguard::interface { 'vpn0':
     dport                => lookup('wireguard::port'),
-    endpoint             => sprintf('%s:%s', lookup('wireguard::server::hostname'), lookup('wireguard::port')),
+    endpoint             => sprintf('%s:%s', $endpoint_ip, lookup('wireguard::port')),
     addresses            => [{'Address' => "192.168.99.${ip_last}/24",},{'Address' => "fc00::abcd:${ip_last}/64"}],
     public_key           => lookup('facts_db', Hash, deep, undef)[$server_hostname]['wireguard_pubkeys']['vpn0'],
     persistent_keepalive => 5,

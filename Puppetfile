@@ -63,4 +63,5 @@ mod 'puppetlabs-apache', '6.0.0'
 mod 'puppetlabs-reboot', '4.0.2'
 mod 'puppetlabs-sshkeys_core', '2.4.0'
 mod 'puppet-wireguard', '4.1.0'
+mod 'puppet-dnsquery', '5.1.0'
 # rubocop:enable Style/HashSyntax

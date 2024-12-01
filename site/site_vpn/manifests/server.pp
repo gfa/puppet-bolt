@@ -17,7 +17,7 @@ class site_vpn::server {
     peers                => compact($peers),
     addresses            => [{'Address' => "192.168.99.${ip_last}/24",},{'Address' => "fc00::abcd:${ip_last}/64"}],
     persistent_keepalive => 5,
-    mtu                  => 1412,
+    mtu                  => 1450,
     notify               => Service['wg-quick@vpn0'],
   }
 

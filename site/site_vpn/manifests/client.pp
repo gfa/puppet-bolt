@@ -17,7 +17,7 @@ class site_vpn::client (
     addresses            => [{'Address' => "192.168.99.${ip_last}/24",},{'Address' => "fc00::abcd:${ip_last}/64"}],
     public_key           => lookup('facts_db', Hash, deep, undef)[$server_hostname]['wireguard_pubkeys']['vpn0'],
     persistent_keepalive => 5,
-    mtu                  => 1412,
+    mtu                  => 1450,
     provider             => lookup('wireguard::provider', Enum['systemd', 'wgquick'], undef, 'wgquick'),
     firewall_mark        => lookup('wireguard::firewall_mark', Integer[0, 4294967295], undef, 1),
   }

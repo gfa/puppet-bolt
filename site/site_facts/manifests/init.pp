@@ -3,6 +3,8 @@
 
 class site_facts {
 
+  noop(false)
+
   include site_facts::installed_packages
 
   file { '/var/tmp/facts_db.yaml':

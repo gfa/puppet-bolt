@@ -4,7 +4,7 @@
 #
 class site_tunnels (
   Array[Hash] $tunnels,
-  Boolean $enabled = true,
+  Boolean $enabled = false,
 ) {
 
   if $enabled {
@@ -59,6 +59,13 @@ class site_tunnels (
         }
       }
 
+    }
+  } else {
+
+    file { '/etc/tunnels/':
+      ensure  => directory,
+      purge   => true,
+      recurse => true,
     }
   }
 }

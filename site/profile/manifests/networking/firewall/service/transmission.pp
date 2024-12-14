@@ -55,7 +55,7 @@ class profile::networking::firewall::service::transmission (
   firewall_multi { '300 accept transmission outgoing':
     chain    => 'OUTPUT',
     proto    => ['tcp', 'udp'],
-    dport    => '1024-65535',
+    dport    => ['1024-65535', '563'],
     action   => 'accept',
     provider => ['iptables', 'ip6tables'],
     require  => Package['transmission-daemon'],

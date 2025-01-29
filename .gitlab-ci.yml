@@ -3,7 +3,7 @@ image: debian:bullseye
 
 before_script:
   - apt update
-  - DEBIAN_FRONTEND=noninteractive apt install -y curl jq openssh-client python3-pip git rsync g10k hiera-eyaml moreutils nullmailer bsd-mailx
+  - DEBIAN_FRONTEND=noninteractive apt install -y curl jq openssh-client python3-pip git rsync g10k hiera-eyaml moreutils nullmailer bsd-mailx screen sysvinit-utils
   - pip3 install yq
 
 .template1: &template1 |
@@ -32,12 +32,15 @@ production:
           if [[ ${host::-9} == ".lan.home" ]]; then
             echo 127.0.0.1 $host >> /etc/hosts
           fi
-          bash puppet-apply -t --show_diff $host || ( curl -s \
+          screen -dm bash -c "./puppet-apply -t --show_diff $host || ( curl -s \
             -d "puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
             -H "Authorization: Bearer ${GOTIFY_TOKEN}" \
             -H "Filename: logs/${host}.jsonl" \
-            "${GOTIFY_URL}")
+            "${GOTIFY_URL}")"
       done
+    - |
+      while pidof /usr/bin/screen ; do sleep 10 ; done
+
   artifacts:
     paths:
       - logs/

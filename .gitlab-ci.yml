@@ -34,8 +34,7 @@ production:
           fi
           ./puppet-apply -t --show_diff $host &
       done
-    - |
-      while pidof /usr/bin/puppet ; do sleep 10 ; done
+    - sleep 5m
 
   artifacts:
     paths:

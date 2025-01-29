@@ -55,7 +55,7 @@ class profile::service::puppet {
     environment => 'PATH=/bin:/usr/bin:/usr/sbin:/sbin',
   }
 
-  $timestamp = generate('/bin/date', '+%s')
+  $timestamp = generate('/bin/date', '-u', '+%s')
 
   file {'/var/lib/prometheus/node-exporter/puppet.prom':
     content   => "puppet_last_run ${timestamp}\n",

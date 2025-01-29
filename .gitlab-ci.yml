@@ -32,14 +32,10 @@ production:
           if [[ ${host::-9} == ".lan.home" ]]; then
             echo 127.0.0.1 $host >> /etc/hosts
           fi
-          screen -dm bash -c "./puppet-apply -t --show_diff $host || ( curl -s \
-            -d "puppet failed to apply on $host ref: $CI_COMMIT_REF_NAME" \
-            -H "Authorization: Bearer ${GOTIFY_TOKEN}" \
-            -H "Filename: logs/${host}.jsonl" \
-            "${GOTIFY_URL}")"
+          ./puppet-apply -t --show_diff $host &
       done
     - |
-      while pidof /usr/bin/screen ; do sleep 10 ; done
+      while pidof /usr/bin/puppet ; do sleep 10 ; done
 
   artifacts:
     paths:

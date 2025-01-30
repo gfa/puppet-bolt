@@ -66,6 +66,7 @@ class site_tunnels (
       ensure  => directory,
       purge   => true,
       recurse => true,
+      force   => true,
     }
   }
 }

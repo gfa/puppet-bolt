@@ -3,7 +3,7 @@ image: debian:bullseye
 
 before_script:
   - apt update
-  - DEBIAN_FRONTEND=noninteractive apt install -y curl jq openssh-client python3-pip git rsync g10k hiera-eyaml moreutils nullmailer bsd-mailx screen sysvinit-utils
+  - DEBIAN_FRONTEND=noninteractive apt install -y curl jq openssh-client python3-pip git rsync g10k hiera-eyaml moreutils nullmailer bsd-mailx procps
   - pip3 install yq
 
 .template1: &template1 |
@@ -38,7 +38,7 @@ production:
              -H "Filename: logs/${host}.jsonl" \
             "${GOTIFY_URL}") &
        done
-    - sleep 5m
+    - while pgrep -f 'bash puppet-apply' >/dev/null ; do sleep 1m ; done
 
   artifacts:
     paths:

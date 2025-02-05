@@ -38,7 +38,7 @@ production:
              -H "Filename: logs/${host}.jsonl" \
             "${GOTIFY_URL}") &
        done
-    - while pgrep -f 'bash puppet-apply' >/dev/null ; do sleep 1m ; done
+    - while pgrep -f 'bash puppet-apply' ; do sleep 1m ; done
 
   artifacts:
     paths:

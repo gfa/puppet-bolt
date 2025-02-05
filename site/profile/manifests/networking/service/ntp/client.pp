@@ -7,7 +7,7 @@ class profile::networking::service::ntp::client {
     ensure => purged,
   }
 
-  if has_key($facts['dpkgs'], 'openntpd') {
+  if 'openntpd' in $facts['dpkgs'] {
     service { 'systemd-timesyncd':
       ensure => stopped,
       enable => false,

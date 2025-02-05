@@ -7,6 +7,7 @@ before_script:
   - pip3 install yq
 
 .template1: &template1 |
+  set -x
   eval $(ssh-agent -s)
   echo "$SSH_KEY_PUPPET" | tr -d '\r' | ssh-add - > /dev/null
   install -m 0700 -d ~/.ssh

@@ -7,9 +7,12 @@ class site_vpn::resolver {
   $server_hostname = regsubst(lookup('wireguard::server::hostname'), '\.', '_', 'G')
   $server_data = $facts_db[$server_hostname]
 
-  file { '/etc/dnsmasq.d/20-vpn.conf':
-    content => template("${module_name}/etc/dnsmasq.d/20-vpn.conf.erb"),
-    notify  => Service['dnsmasq'],
+  if $clients.length > 0 {
+    if $server_data['networking'] {
+      file { '/etc/dnsmasq.d/20-vpn.conf':
+        content => template("${module_name}/etc/dnsmasq.d/20-vpn.conf.erb"),
+        notify  => Service['dnsmasq'],
+      }
+    }
   }
-
 }

@@ -48,7 +48,7 @@ class base {
   # logging
   include profile::logging::logcheck
   include profile::logging::erpel
-  include profile::logging::promtail
+  include profile::logging::promtail::clean
   include site_vector
 
   # monitoring

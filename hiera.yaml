@@ -6,7 +6,7 @@ defaults:
 hierarchy:
   - name: 'Per host data'
     globs:
-      - "hosts/%{::fqdn}/*.yaml"
+      - "hosts/%{facts.networking.fqdn}/*.yaml"
       - "facts_db/*.yaml"
   - name: 'Global data'
     paths:

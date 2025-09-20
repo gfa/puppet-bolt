@@ -125,7 +125,7 @@ for host; do
   rsync -raq --chown=root:root keys/* "${HIERA_TEMP}/"
   rsync -raq --chown=root:root hieradata "${HIERA_TEMP}/"
   # shellcheck disable=SC2156
-  find "${HIERA_TEMP}" -type f -iname '*yaml' -execdir sh -c "eyaml decrypt --pkcs7-private-key-env-var='private_key_env_var' --pkcs7-public-key-env-var='public_key_env_var' -f {} | sponge {}" \;
+  find "${HIERA_TEMP}" -type f -iname '*yaml' -execdir sh -c "eyaml decrypt -f {} | sponge {}" \;
   rsync -aq --no-r --chown=root:root --exclude='.git' "${HIERA_TEMP}"/hieradata/*yaml "root@${host}:/etc/puppet/code/hieradata/"
   rsync -aqK --delete --chown=root:root --exclude='.git' "${HIERA_TEMP}/hieradata/hosts/${host}/" "root@${host}:/etc/puppet/code/hieradata/hosts/${host}/" || true
   rsync -raq --chown=root:root hiera.yaml "root@${host}:/etc/puppet/hiera.yaml"

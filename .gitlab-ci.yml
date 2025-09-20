@@ -17,6 +17,7 @@ before_script:
   cp -f hieradata/ssh_config ~/.ssh/config
   ssh -o "ExitOnForwardFailure=yes" -o "ServerAliveInterval=55" -L 127.0.0.1:10025:127.0.0.1:25 $SMTP_SERVER -fNn
   g10k -cachedir g10k-cache -puppetfile Puppetfile
+  echo "${private_key_env_var}" > keys/private_key.pkcs7.pem
 
 cache:
   paths:

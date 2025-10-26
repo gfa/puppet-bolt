@@ -46,7 +46,7 @@ run-parts /etc/dehydrated/hooks\n"
 
   exec { 'run_dehydrated':
     cwd         => '/',
-    command     => '/usr/bin/dehydrated -c',
+    command     => '/usr/bin/dehydrated -c -k /etc/dehydrated/hook.sh',
     refreshonly => true,
     user        => 'root',
   }

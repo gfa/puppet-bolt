@@ -28,6 +28,7 @@ class base {
   include profile::networking::service::resolvconf
   include profile::networking::firewall
   include profile::networking::hosts
+  include profile::networking::bbr
 
   # package management
   include profile::package::base_packages

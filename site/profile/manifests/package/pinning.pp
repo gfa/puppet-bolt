@@ -7,6 +7,7 @@ class profile::package::pinning (
 ) {
 
   apt::pin { 'backports':
+    ensure   => absent,
     packages => $backports,
     priority => 990,
     release  => "${facts['os']['distro']['codename']}-backports",
@@ -14,6 +15,7 @@ class profile::package::pinning (
   }
 
   apt::pin { 'journalbeat':
+    ensure   => absent,
     packages => ['journalbeat'],
     priority => 990,
     version  => '7.14.1',

@@ -29,4 +29,19 @@ class site_vpn::server {
     provider => ['iptables', 'ip6tables'],
   }
 
+  $allowed_ips = [ "192.168.99.${ip_last}", "fc00::abcd:${ip_last}" ]
+
+  if $facts['wireguard_pubkeys'] {
+    file { '/etc/facter/facts.d/vpn0_peer_config.yaml':
+      content => @("YAML"),
+            ---
+            vpn0_peer_config:
+              public_key: ${facts['wireguard_pubkeys']['vpn0']}
+              allowed_ips: ${allowed_ips}
+              persistent_keepalive: 5
+              description: ${facts['networking']['fqdn']}
+            | YAML
+    }
+  }
+
 }

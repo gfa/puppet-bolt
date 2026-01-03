@@ -3,7 +3,7 @@ image: debian:bullseye
 
 before_script:
   - apt update
-  - DEBIAN_FRONTEND=noninteractive apt install -y curl jq openssh-client python3-pip git rsync g10k hiera-eyaml moreutils nullmailer bsd-mailx procps
+  - DEBIAN_FRONTEND=noninteractive apt install -y curl jq openssh-client python3-pip git rsync g10k hiera-eyaml moreutils nullmailer bsd-mailx procps awscli
   - pip3 install yq
 
 .template1: &template1 |

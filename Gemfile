@@ -5,6 +5,10 @@ source ENV['GEM_SOURCE'] || 'https://rubygems.org' do
   # rubocop:enable Metrics/BlockLength
   gem 'bolt'
   gem 'hiera-eyaml'
+  gem 'base64'
+  gem 'abbrev'
+  gem 'mutex_m'
+  gem 'getoptlong'
   gem 'puppet-lint'
   gem 'puppet-lint-absolute_template_path'
   gem 'puppet-lint-classes_and_types_beginning_with_digits-check'

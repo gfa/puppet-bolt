@@ -5,6 +5,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     CFPropertyList (2.3.6)
+    abbrev (0.1.2)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
@@ -21,6 +22,7 @@ GEM
     aws-sigv4 (1.5.2)
       aws-eventstream (~> 1, >= 1.0.2)
     backport (1.2.0)
+    base64 (0.3.0)
     benchmark (0.2.1)
     bindata (2.4.15)
     bolt (3.27.1)
@@ -86,6 +88,7 @@ GEM
     fast_gettext (2.3.0)
     ffi (1.15.5)
     forwardable (1.3.3)
+    getoptlong (0.2.1)
     gettext (3.4.4)
       erubi
       locale (>= 2.0.5)
@@ -127,6 +130,7 @@ GEM
     molinillo (0.8.0)
     multi_json (1.15.0)
     multipart-post (2.3.0)
+    mutex_m (0.3.0)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
     net-scp (1.2.1)
@@ -343,8 +347,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  abbrev!
+  base64!
   bolt!
+  getoptlong!
   hiera-eyaml!
+  mutex_m!
   puppet-lint!
   puppet-lint-absolute_template_path!
   puppet-lint-classes_and_types_beginning_with_digits-check!
@@ -382,4 +390,4 @@ DEPENDENCIES
   yaml-lint!
 
 BUNDLED WITH
-   2.4.14
+  2.7.2

@@ -28,9 +28,15 @@ class site_prometheus::exporters::smokeping (
   }
 
   service { 'prometheus-smokeping-prober':
-    ensure  => running,
-    enable  => true,
-    require => Package['prometheus-smokeping-prober'],
+    ensure    => running,
+    enable    => true,
+    require   => Package['prometheus-smokeping-prober'],
+    subscribe => Systemd::Dropin_file['prometheus-smokeping-prober-restart.conf'],
+  }
+
+  systemd::dropin_file { 'prometheus-smokeping-prober-restart.conf':
+    unit    => 'prometheus-smokeping-prober.service',
+    content => "[Service]\nRestart=always\nRestartSec=5s\n",
   }
 
   if lookup('manage_iptables', Boolean, undef, true) {
